@@ -4,30 +4,43 @@ from gui.components.button import Button
 
 class BottomBar(lv.obj):
 	clock = ""
+	buttons = [
+		{
+			'button_text': "A",
+			'text': "Start",
+			'color': lv.PALETTE.BLUE
+		},
+		{
+			'button_text': "B",
+			'text': "Back",
+			'color': lv.PALETTE.RED
+		},
+		{
+			'button_text': "X",
+			'text': "Info",
+			'color': lv.PALETTE.YELLOW
+		},
+		{
+			'button_text': "Y",
+			'text': "Options",
+			'color': lv.PALETTE.GREEN
+		}
+	]
 
 
 	def __init__(self, container):
-		col_dsc = [70, 180, 70, lv.GRID_TEMPLATE_LAST]
-		row_dsc = [32, lv.GRID_TEMPLATE_LAST]
-
 		super().__init__(container)
 
-		self.set_style_grid_column_dsc_array(col_dsc, 0)
-		self.set_style_grid_row_dsc_array(row_dsc, 0)
-		self.set_size(320, 32)
-		self.set_layout(lv.LAYOUT_GRID.value)
-		self.set_style_pad_all(0, 0)
-		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.set_style_shadow_width(0, 0)
+		self.set_size(320, 240)
+		self.align(lv.ALIGN.CENTER, 0, 0)
+		self.set_flex_flow(lv.FLEX_FLOW.ROW)
+		self.clear_flag(self.FLAG.SCROLLABLE)
 
-		label = lv.label(self)
-		label.set_text("10:30")
-		label.set_grid_cell(lv.GRID_ALIGN.STRETCH, 0, 1,
-							lv.GRID_ALIGN.STRETCH, 0, 1)
-		label.set_style_pad_all(0, 0)
+		for button in self.buttons:
+			button1 = Button(self, button['button_text'])
+			button1.set_size(20, 20)
+			button1.label.center()
+			button1.set_style_bg_color(lv.palette_main(button['color']), 0)
 
-		label1 = lv.label(self)
-		label1.set_text("87%")
-		label1.set_grid_cell(lv.GRID_ALIGN.STRETCH, 2, 1,
-							lv.GRID_ALIGN.STRETCH, 0, 1)
-		label1.set_style_pad_all(0, 0)
+			label = lv.label(self)
+			label.set_text(button['text'])

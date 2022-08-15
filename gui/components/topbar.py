@@ -1,33 +1,44 @@
 import lvgl as lv
+import time
+
 from gui.components.button import Button
 
 
 class TopBar(lv.obj):
-	clock = ""
+	label_time = ""
+	timer = ""
 
 
 	def __init__(self, container):
-		col_dsc = [70, 180, 70, lv.GRID_TEMPLATE_LAST]
-		row_dsc = [32, lv.GRID_TEMPLATE_LAST]
-
 		super().__init__(container)
 
-		self.set_style_grid_column_dsc_array(col_dsc, 0)
-		self.set_style_grid_row_dsc_array(row_dsc, 0)
-		self.set_size(320, 32)
-		self.set_layout(lv.LAYOUT_GRID.value)
-		self.set_style_pad_all(0, 0)
-		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.set_style_shadow_width(0, 0)
+		self.set_size(320, 24)
+		self.align(lv.ALIGN.CENTER, 0, 0)
+		self.set_flex_flow(lv.FLEX_FLOW.ROW)
+		self.clear_flag(self.FLAG.SCROLLABLE)
 
-		label = lv.label(self)
-		label.set_text("10:30")
-		label.set_grid_cell(lv.GRID_ALIGN.STRETCH, 0, 1,
-							lv.GRID_ALIGN.STRETCH, 0, 1)
-		label.set_style_pad_all(0, 0)
+		self.label_time = lv.label(self)
+		#self.label_time.center()
+		self.label_time.set_text('10:15')
 
-		label1 = lv.label(self)
-		label1.set_text("87%")
-		label1.set_grid_cell(lv.GRID_ALIGN.STRETCH, 2, 1,
-							lv.GRID_ALIGN.STRETCH, 0, 1)
-		label1.set_style_pad_all(0, 0)
+		spacer = lv.obj(self)
+		spacer.set_flex_grow(1)
+
+		self.label1 = lv.label(self)
+		self.label1.set_text('W')
+
+		self.label1 = lv.label(self)
+		self.label1.set_text('B')
+
+		self.timer = lv.timer_create(self.update_time, 1000, self)
+
+	def update_time(obj, timer):
+		current_time = time.localtime()
+		hour = str(current_time[3])
+		minute = str(current_time[4])
+
+		if(len(hour) == 1):
+			hour = '0' + hour
+		if(len(minute) == 1):
+			minute = '0' + minute
+		obj.label_time.set_text(hour + ':' + minute)
