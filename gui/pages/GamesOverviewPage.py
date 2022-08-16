@@ -6,15 +6,23 @@ from gui.components.games import Games
 
 
 class GamesOverviewPage():
+	container = ""
 
-	def click_handle(ev, element):
-		print(ev)
+	def click_handle(self, event):
+		code = event.get_code()
+
+		if(event.get_indev()):
+			indev = event.get_indev()
+			print(indev.get_key())
+
+		if code == lv.EVENT.KEY:
+			print("clicked")
+		if code == lv.EVENT.PRESSED:
+			print("clicked")
 
 	def __init__(self, indev1):
-		#super().__init__(container)
-
 		col_dsc = [320, lv.GRID_TEMPLATE_LAST]
-		row_dsc = [32, 160, 48, lv.GRID_TEMPLATE_LAST]
+		row_dsc = [20, 180, 40, lv.GRID_TEMPLATE_LAST]
 
 		container = lv.obj(lv.scr_act())
 		container.set_style_grid_column_dsc_array(col_dsc, 0)
@@ -25,6 +33,10 @@ class GamesOverviewPage():
 		container.set_style_pad_row(0, 0)
 		container.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 		container.clear_flag(container.FLAG.SCROLLABLE)
+		container.set_style_border_width(0, 0)
+		self.container = container
+
+		self.container.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
 
 
 		tobpar1 = TopBar(container)

@@ -32,16 +32,21 @@ disp_drv.register()
 #indev = indev_drv.register()
 
 
+def global_key_callback(drv, data):
+    #print(indev1.get_key())
+    pass
+
+
 indev_drv1 = lv.indev_drv_t()
 indev_drv1.init()
 indev_drv1.type = lv.INDEV_TYPE.KEYPAD
 indev_drv1.read_cb = SDL.keyboard_read
+indev_drv1.feedback_cb = global_key_callback
 indev1 = indev_drv1.register()
 
 
 scr = lv.obj()
 lv.scr_load(scr)
-
 
 gamesOverviewPage = GamesOverviewPage(indev1)
 
