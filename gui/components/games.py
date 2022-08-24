@@ -2,6 +2,9 @@ import lvgl as lv
 from gui.components.button import Button
 from imagetools import get_png_info, open_png
 
+from libs.data_manager import DATA_MANAGER
+from libs.init_drv import indev1
+
 
 def anim_game_sizes(game, v):
 	game.set_size(v, v)
@@ -22,7 +25,7 @@ class Games(lv.obj):
 		if code == lv.EVENT.CLICKED:
 			print("clicked")
 
-	def __init__(self, container, indev):
+	def __init__(self, container):
 		super().__init__(container)
 
 		self.set_size(320, 240)
@@ -53,7 +56,7 @@ class Games(lv.obj):
 			
 		group = lv.group_create()
 		group.add_obj(self)
-		indev.set_group(group)
+		indev1.set_group(group)
 
 		# Register PNG image decoder
 		decoder = lv.img.decoder_create()

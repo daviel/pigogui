@@ -1,0 +1,13 @@
+[
+    {
+        "title": "TinyRTS",
+        "description": "An medieval fantasy RTS",
+        "image": "banner.png",
+        "exec": "tinyrts",
+        "requirements": ["godot-3.4.4"],
+        "last_start": null,
+        "is_installed": false,
+        "rating": null,
+        "tags": ["RTS", "strategy", "godot"]
+    }
+]

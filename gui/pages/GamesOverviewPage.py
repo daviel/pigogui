@@ -20,7 +20,7 @@ class GamesOverviewPage():
 		if code == lv.EVENT.PRESSED:
 			print("clicked")
 
-	def __init__(self, indev1):
+	def __init__(self):
 		col_dsc = [320, lv.GRID_TEMPLATE_LAST]
 		row_dsc = [20, 180, 40, lv.GRID_TEMPLATE_LAST]
 
@@ -43,7 +43,7 @@ class GamesOverviewPage():
 		tobpar1.set_grid_cell(lv.GRID_ALIGN.STRETCH, 0, 1,
 		                     lv.GRID_ALIGN.STRETCH, 0, 1)
 
-		games1 = Games(container, indev1)
+		games1 = Games(container)
 		games1.set_grid_cell(lv.GRID_ALIGN.STRETCH, 0, 1,
 		                     lv.GRID_ALIGN.STRETCH, 1, 1)
 
