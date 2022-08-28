@@ -1,7 +1,5 @@
 import lvgl as lv
 from gui.components.button import Button
-from imagetools import get_png_info, open_png
-
 from libs.data_manager import DATA_MANAGER
 from libs.init_drv import indev1
 
@@ -57,26 +55,6 @@ class Games(lv.obj):
 		group = lv.group_create()
 		group.add_obj(self)
 		indev1.set_group(group)
-
-		# Register PNG image decoder
-		decoder = lv.img.decoder_create()
-		decoder.info_cb = get_png_info
-		decoder.open_cb = open_png
-
-		# Create an image from the png file
-		f = open('./imgs/covers/picowar.png','rb')
-		imgbtn_left_data = f.read()
-
-		imgbtn_left_dsc = lv.img_dsc_t({
-		'data_size': len(imgbtn_left_data),
-		'data': imgbtn_left_data
-		})
-
-		#button6 = lv.imgbtn(self)
-		#button6.set_grid_cell(lv.GRID_ALIGN.STRETCH, 2, 1,
-		#					  lv.GRID_ALIGN.STRETCH, 1, 1)
-
-		#button6.set_src(lv.imgbtn.STATE.RELEASED, imgbtn_left_dsc, imgbtn_left_dsc, imgbtn_left_dsc)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
