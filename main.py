@@ -1,4 +1,5 @@
 #!/usr/bin/micropython -i
+import usys as sys
 import lvgl as lv
 lv.init()
 
@@ -9,14 +10,20 @@ import time
 
 from libs.data_manager import DataManager
 from gui.pages.GamesOverviewPage import GamesOverviewPage
-from gui.pages.LaunchScreen import LaunchScreen
+from gui.pages.LaunchScreenPage import LaunchScreenPage
+from libs.imagetools2 import get_png_info, open_png
+
+# Register PNG image decoder
+decoder = lv.img.decoder_create()
+decoder.info_cb = get_png_info
+decoder.open_cb = open_png
 
 
 scr = lv.obj()
 lv.scr_load(scr)
 
 #gamesOverviewPage = GamesOverviewPage()
-launchScreen = LaunchScreen()
+launchScreenPage = LaunchScreenPage()
 
 
 while(1):
