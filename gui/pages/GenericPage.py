@@ -9,9 +9,12 @@ from gui.anims.PageAnim import ANIM_PAGE_SLIDE_OUT_LEFT, ANIM_PAGE_SLIDE_IN_LEFT
 class GenericPage(lv.obj):
 	animOut = ANIM_PAGE_SLIDE_OUT_LEFT
 	animIn = ANIM_PAGE_SLIDE_IN_LEFT
+	group = ""
 
 	def __init__(self):
 		super().__init__(lv.scr_act())
+		self.group = lv.group_create()
+		self.group.add_obj(self)
 
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 		self.clear_flag(self.FLAG.SCROLLABLE)
@@ -23,25 +26,22 @@ class GenericPage(lv.obj):
 		self.animIn.target = self
 
 	def focusPage(self):
-		group = lv.group_create()
-		group.add_obj(self)
-		indev1.set_group(group)
+		indev1.set_group(self.group)
 
 	def click_handle(self, event):
 		code = event.get_code()
 
 		if code == lv.EVENT.KEY:
 			key = event.get_key()
-			print(key)
 			if key == 120:
-				print("MoveOut")
 				self.moveOut()
 			if key == 121:
-				print("MoveIn")
 				self.moveIn()
 
 	def moveIn(self):
-		self.animIn.start()
+		if(self.animIn.is_running() == False):
+			self.animIn.start()
 
 	def moveOut(self):
-		self.animOut.start()
+		if(self.animOut.is_running() == False):
+			self.animOut.start()

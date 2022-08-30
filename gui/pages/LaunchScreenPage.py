@@ -23,5 +23,3 @@ class LaunchScreenPage(GenericPage):
 		label = lv.label(img1)
 		label.set_text("< Press Start >")
 		label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
-
-		self.focusPage()

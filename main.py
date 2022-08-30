@@ -9,8 +9,7 @@ SDL.init(w=320,h=240)
 import time
 
 from libs.data_manager import DataManager
-from gui.pages.GamesOverviewPage import GamesOverviewPage
-from gui.pages.LaunchScreenPage import LaunchScreenPage
+from libs.PageManager import PageManager
 from libs.imagetools2 import get_png_info, open_png
 
 # Register PNG image decoder
@@ -22,8 +21,7 @@ decoder.open_cb = open_png
 scr = lv.obj()
 lv.scr_load(scr)
 
-#gamesOverviewPage = GamesOverviewPage()
-launchScreenPage = LaunchScreenPage()
+pagemanager = PageManager()
 
 
 while(1):
