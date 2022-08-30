@@ -14,8 +14,6 @@ GENERIC_PAGE_STYLE.set_border_width(0)
 
 
 SETUP_PAGE_STYLE = lv.style_t()
-SETUP_PAGE_STYLE.set_grid_column_dsc_array([280, lv.GRID_TEMPLATE_LAST])
-SETUP_PAGE_STYLE.set_grid_row_dsc_array([24, 40, 24, lv.GRID_TEMPLATE_LAST])
 SETUP_PAGE_STYLE.set_size(320, 240)
-SETUP_PAGE_STYLE.set_layout(lv.LAYOUT_GRID.value)
-SETUP_PAGE_STYLE.set_pad_all(10)
+SETUP_PAGE_STYLE.set_flex_flow(lv.FLEX_FLOW.COLUMN)
+SETUP_PAGE_STYLE.set_pad_all(8)
