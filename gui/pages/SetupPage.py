@@ -20,16 +20,21 @@ class SetupPage(GenericPage):
 		self.add_flag(self.FLAG.SCROLLABLE)
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		
-		self.set_flex_flow(lv.FLEX_FLOW.COLUMN)
+		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		self.set_style_pad_column(8, 0)
+		self.set_style_pad_row(8, 0)
 		
 		label = lv.label(self)
-		label.set_text("Your nickname:")
+		label.set_text("Your nickname: ")
 		
 		self.nametextarea = lv.textarea(self)
 		self.nametextarea.set_one_line(True)
 		self.nametextarea.set_max_length(16)
-		self.nametextarea.set_size(280, 40)
+		self.nametextarea.set_height(40)
 		self.nametextarea.set_placeholder_text("JANE")
+		self.nametextarea.add_state(lv.STATE.FOCUSED)
+		
+		self.nametextarea.add_state(lv.STATE.PRESSED)
 		
 		self.nametextarea.add_event_cb(self.nameinput, lv.EVENT.VALUE_CHANGED, None)
 		self.nametextarea.add_event_cb(self.nameinputdone, lv.EVENT.READY, None)
@@ -38,38 +43,30 @@ class SetupPage(GenericPage):
 		self.errLabel = lv.label(self)
 		self.errLabel.set_text("#ff0000 Should at least have 3 characters #")
 		self.errLabel.set_recolor(True)
+		self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
 		
 		primcolorlabel = lv.label(self)
 		primcolorlabel.set_text("Primary color: ")
-		
-		primarycolordd = lv.dropdown(self)
-		primarycolordd.set_options("\n".join([
-			"White",
-			"Black"]))
-		primarycolordd.set_height(40)
-		primarycolordd.set_dir(lv.DIR.RIGHT)
-		primarycolordd.set_symbol(lv.SYMBOL.RIGHT)
-		primarycolordd.add_event_cb(self.dropdown, lv.EVENT.ALL, None)
-		
+		primcolorlabel.set_width(128)
+
 		seccolorlabel = lv.label(self)
 		seccolorlabel.set_text("Secondary color: ")
+		seccolorlabel.set_width(128)
+		
+		primarycolordd = lv.dropdown(self)
+		primarycolordd.set_options("\n".join(["White", "Black"]))
+		primarycolordd.set_size(128, 40)
+		primarycolordd.add_event_cb(self.dropdown, lv.EVENT.ALL, None)
 		
 		secondarycolordd = lv.dropdown(self)
-		secondarycolordd.set_options("\n".join([
-			lv.SYMBOL.FILE + " Blue",
-			"Green",
-			"Red",
-			"Yellow",
-			"Pink",
-			"Purple"]))
-		secondarycolordd.set_height(40)
-		secondarycolordd.set_dir(lv.DIR.RIGHT)
-		secondarycolordd.set_symbol(lv.SYMBOL.RIGHT)
+		secondarycolordd.set_options("\n".join([lv.SYMBOL.FILE + " Blue", "Green", "Red", "Yellow", "Pink", "Purple"]))
+		secondarycolordd.set_size(128, 40)
 		secondarycolordd.add_event_cb(self.dropdown, lv.EVENT.ALL, None)
 		
-		nextbutton = Button(self, "Proceed")
-		nextbutton.set_height(40)
-		nextbutton.label.center()
+		self.nextbutton = Button(self, "Proceed")
+		self.nextbutton.set_size(264, 40)
+		self.nextbutton.label.center()
+		self.nextbutton.set_style_pad_row(32, 0)
 		
 		self.group = lv.group_create()
 		#self.group.add_obj(self.nametextarea)
@@ -92,6 +89,7 @@ class SetupPage(GenericPage):
 
 			indev1.set_group(self.group)
 			lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
+			self.nextbutton.set_style_bg_color(lv.palette_main(lv.PALETTE.GREEN), 0)
 		elif code == lv.EVENT.READY:
 			print("dropdown focused")
 			lv.gridnav_remove(self)
@@ -105,10 +103,8 @@ class SetupPage(GenericPage):
 		
 	def nameinputdone(self, e):
 		print(e)
-		print("done")
 		if self.keyboard == False:
-			if(self.keyboard == False):
-				self.keyboard = KEYBOARD_LETTERS_ONLY()
+			self.keyboard = KEYBOARD_LETTERS_ONLY()
 			self.keyboard.set_textarea(e.get_target())
 			e.get_target().scroll_to(0, 0, lv.ANIM.ON)
 
@@ -116,9 +112,14 @@ class SetupPage(GenericPage):
 			group.add_obj(self.keyboard)
 			indev1.set_group(group)
 		elif self.keyboard != False:
-			self.keyboard.delete()
-			self.keyboard = False
-			indev1.set_group(self.group)
+			if(len(e.get_target().get_text()) < 3):
+				print("name too short")
+				self.errLabel.clear_flag(self.errLabel.FLAG.HIDDEN)
+			else:
+				self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
+				self.keyboard.delete()
+				self.keyboard = False
+				indev1.set_group(self.group)
 
 	def nameinputfocused(self, e):
 		print(e)

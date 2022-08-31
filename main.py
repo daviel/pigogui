@@ -21,6 +21,7 @@ decoder.open_cb = open_png
 scr = lv.obj()
 lv.scr_load(scr)
 
+
 pagemanager = PageManager()
 
 

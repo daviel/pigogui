@@ -15,5 +15,4 @@ GENERIC_PAGE_STYLE.set_border_width(0)
 
 SETUP_PAGE_STYLE = lv.style_t()
 SETUP_PAGE_STYLE.set_size(320, 240)
-SETUP_PAGE_STYLE.set_flex_flow(lv.FLEX_FLOW.COLUMN)
 SETUP_PAGE_STYLE.set_pad_all(8)
