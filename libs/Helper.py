@@ -2,11 +2,11 @@ import lvgl as lv
 
 def loadImage(src):
 	try:
-		with open('./imgs/launchscreens/10.png','rb') as f:
+		with open(src,'rb') as f:
 			png_data = f.read()
+			return png_data
 	except:
 		print("Could not find img_launchscreen_argb.png")
-	return png_data
 
 
 KEYBOARD_LETTERS_ONLY_MAP = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "\n",
