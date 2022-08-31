@@ -5,6 +5,8 @@ from gui.pages.SetupPage import SetupPage
 
 
 class PageManager():
+	currentPage = ""
+
 	launchScreenPage = ""
 	setupPage = ""
 
@@ -12,4 +14,8 @@ class PageManager():
 		self.launchScreenPage = LaunchScreenPage()
 		self.setupPage = SetupPage()
 		
-		#self.setupPage.focusPage()
+		self.setCurrentPage(self.setupPage)
+
+	def setCurrentPage(self, page):
+		self.currentPage = page
+		page.focusPage()
