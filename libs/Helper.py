@@ -6,7 +6,7 @@ def loadImage(src):
 			png_data = f.read()
 			return png_data
 	except:
-		print("Could not find img_launchscreen_argb.png")
+		print("Could not find " + src)
 
 
 KEYBOARD_LETTERS_ONLY_MAP = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "\n",

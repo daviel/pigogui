@@ -6,6 +6,8 @@ from libs.Helper import loadImage
 
 
 class LaunchScreenPage(GenericPage):
+	keyPressed = False
+
 	def __init__(self):
 		super().__init__()
 
@@ -29,5 +31,6 @@ class LaunchScreenPage(GenericPage):
 	def click_handle(self, event):
 		code = event.get_code()
 		if code == lv.EVENT.KEY:
-			key = event.get_key()
-			self.moveOut()
+			if(self.keyPressed == False):
+				self.keyPressed = True
+				self.pageDoneCb(self)

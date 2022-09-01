@@ -11,12 +11,11 @@ class PageManager():
 	setupPage = ""
 
 	def __init__(self):
-
 		self.setupPage = SetupPage()
 		self.launchScreenPage = LaunchScreenPage()
 
-		#self.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
-		
+		self.setupPage.pageDoneCb = self.pageDone
+
 		#self.setupPage.add_flag(self.setupPage.FLAG.HIDDEN)
 		self.setCurrentPage(self.launchScreenPage)
 
@@ -24,3 +23,6 @@ class PageManager():
 		self.currentPage = page
 		page.clear_flag(page.FLAG.HIDDEN)
 		page.focusPage()
+
+	def pageDone(self, page):
+		pass

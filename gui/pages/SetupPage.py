@@ -62,18 +62,18 @@ class SetupPage(GenericPage):
 		self.set_style_pad_column(12, 0)
 		self.set_style_pad_row(12, 0)
 
-		self.noneAvatar = loadImage('./imgs/avatars/none.png')
-
+		noneAvatar = loadImage('./imgs/avatars/none.png')
+		
 		imageNoneAvatar = lv.img_dsc_t({
-		  'data_size': len(self.noneAvatar),
-		  'data': self.noneAvatar
+			'data_size': len(noneAvatar),
+			'data': noneAvatar
 		})
 
 		self.imgAvatar = lv.img(self)
 		self.imgAvatar.set_size(108, 108)
+		self.imgAvatar.set_src(imageNoneAvatar)
 		#self.imgAvatar.set_style_radius(lv.RADIUS_CIRCLE, 0)
 		#self.imgAvatar.set_style_clip_corner(lv.RADIUS_CIRCLE, 0)
-		self.imgAvatar.set_src(imageNoneAvatar)
 
 		self.nametextarea = lv.textarea(self)
 		self.nametextarea.set_one_line(True)
@@ -99,7 +99,7 @@ class SetupPage(GenericPage):
 		indev1.set_group(self.group)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
+		#lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
 
 		
 	def nameinputdone(self, e):

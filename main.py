@@ -9,12 +9,14 @@ import time
 
 from libs.data_manager import DataManager
 from libs.PageManager import PageManager
-from libs.imagetools2 import get_png_info, open_png
+#from libs.imagetools2 import get_png_info, open_png
 
 # Register PNG image decoder
-decoder = lv.img.decoder_create()
-decoder.info_cb = get_png_info
-decoder.open_cb = open_png
+#decoder = lv.img.decoder_create()
+#decoder.info_cb = get_png_info
+#decoder.open_cb = open_png
+
+#lv.png_init()
 
 
 scr = lv.obj()

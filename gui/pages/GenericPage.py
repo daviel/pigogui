@@ -11,7 +11,6 @@ class GenericPage(lv.obj):
 	animIn = ANIM_PAGE_SLIDE_IN_LEFT
 	group = ""
 
-	pageSwitchCb = ""
 	returnable = False
 
 	def __init__(self):
@@ -36,3 +35,6 @@ class GenericPage(lv.obj):
 	def moveOut(self):
 		if(self.animOut.is_running() == False):
 			self.animOut.start()
+
+	def pageDoneCb(self, page):
+		print("not implemented ", page)
