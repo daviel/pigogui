@@ -1,4 +1,3 @@
-#!/usr/bin/micropython -i
 import usys as sys
 import lvgl as lv
 lv.init()

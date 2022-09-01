@@ -23,3 +23,11 @@ class LaunchScreenPage(GenericPage):
 		label = lv.label(img1)
 		label.set_text("< Press Start >")
 		label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
+
+		self.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
+
+	def click_handle(self, event):
+		code = event.get_code()
+		if code == lv.EVENT.KEY:
+			key = event.get_key()
+			self.moveOut()

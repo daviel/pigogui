@@ -81,8 +81,8 @@ class SetupPage(GenericPage):
 		self.nametextarea.set_height(40)
 		self.nametextarea.set_width(260)
 		self.nametextarea.set_placeholder_text("Your nickname")
-		self.nametextarea.add_state(lv.STATE.FOCUSED)
-		self.nametextarea.add_state(lv.STATE.PRESSED)
+		#self.nametextarea.add_state(lv.STATE.FOCUSED)
+		#self.nametextarea.add_state(lv.STATE.PRESSED)
 		self.nametextarea.add_event_cb(self.nameinputdone, lv.EVENT.READY, None)
 
 		self.errLabel = lv.label(self)
@@ -99,6 +99,7 @@ class SetupPage(GenericPage):
 		indev1.set_group(self.group)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
+		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
 
 		
 	def nameinputdone(self, e):
