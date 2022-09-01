@@ -9,18 +9,11 @@ import time
 
 from libs.data_manager import DataManager
 from libs.PageManager import PageManager
-#from libs.imagetools2 import get_png_info, open_png
-
-# Register PNG image decoder
-#decoder = lv.img.decoder_create()
-#decoder.info_cb = get_png_info
-#decoder.open_cb = open_png
-
-#lv.png_init()
-
 
 scr = lv.obj()
 lv.scr_load(scr)
+scr.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
+scr.clear_flag(scr.FLAG.SCROLLABLE)
 
 
 pagemanager = PageManager()

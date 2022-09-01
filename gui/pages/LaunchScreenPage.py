@@ -7,9 +7,13 @@ from libs.Helper import loadImage
 
 class LaunchScreenPage(GenericPage):
 	keyPressed = False
+	labelVisible = True
+	label = ""
 
 	def __init__(self):
 		super().__init__()
+
+		self.set_pos(0, 0)
 
 		png_data = loadImage('./imgs/launchscreens/10.png')
 		
@@ -23,14 +27,24 @@ class LaunchScreenPage(GenericPage):
 		img1.set_size(320, 240)
 
 		label = lv.label(img1)
-		label.set_text("< Press Start >")
+		label.set_text("< Press any button >")
 		label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
+		self.label = label
 
-		self.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
+		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
+		self.timer = lv.timer_create(self.update_time, 1500, self)
 
-	def click_handle(self, event):
+	def page_done(self, event):
 		code = event.get_code()
 		if code == lv.EVENT.KEY:
 			if(self.keyPressed == False):
 				self.keyPressed = True
-				self.pageDoneCb(self)
+				self.pageNextCb(self)
+
+	def update_time(self, timer):
+		if self.labelVisible:
+			self.labelVisible = False
+			self.label.add_flag(self.FLAG.HIDDEN)
+		else:
+			self.labelVisible = True
+			self.label.clear_flag(self.FLAG.HIDDEN)

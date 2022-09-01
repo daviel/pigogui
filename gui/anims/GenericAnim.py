@@ -4,6 +4,8 @@ import lvgl as lv
 class GenericAnim(lv.anim_t):
 	target = ""
 	anim_cb = ""
+	anim_done_cb = None
+
 	running = False
 
 	def __init__(self):
@@ -19,7 +21,13 @@ class GenericAnim(lv.anim_t):
 		self.running = True
 
 	def set_is_not_running(self, anim):
+		if self.anim_done_cb:
+			self.anim_done_cb(self, anim)
 		self.running = False
 
 	def is_running(self):
 		return self.running
+
+	def start(self):
+		if super().end_value != self.target.get_x():
+			super().start()

@@ -51,7 +51,6 @@ class SetupPage(GenericPage):
 
 	def __init__(self):
 		super().__init__()
-		self.radioSecondaryColors = lv.PALETTE.__dict__
 
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.ON)
 		self.add_flag(self.FLAG.SCROLLABLE)
@@ -69,30 +68,36 @@ class SetupPage(GenericPage):
 			'data': noneAvatar
 		})
 
-		self.imgAvatar = lv.img(self)
-		self.imgAvatar.set_size(108, 108)
-		self.imgAvatar.set_src(imageNoneAvatar)
-		#self.imgAvatar.set_style_radius(lv.RADIUS_CIRCLE, 0)
-		#self.imgAvatar.set_style_clip_corner(lv.RADIUS_CIRCLE, 0)
+		imgAvatar = lv.img(self)
+		imgAvatar.set_size(108, 108)
+		imgAvatar.set_src(imageNoneAvatar)
+		#imgAvatar.set_style_radius(lv.RADIUS_CIRCLE, 0)
+		#imgAvatar.set_style_clip_corner(lv.RADIUS_CIRCLE, 0)
+		self.imgAvatar = imgAvatar
 
-		self.nametextarea = lv.textarea(self)
-		self.nametextarea.set_one_line(True)
-		self.nametextarea.set_max_length(16)
-		self.nametextarea.set_height(40)
-		self.nametextarea.set_width(260)
-		self.nametextarea.set_placeholder_text("Your nickname")
-		#self.nametextarea.add_state(lv.STATE.FOCUSED)
-		#self.nametextarea.add_state(lv.STATE.PRESSED)
-		self.nametextarea.add_event_cb(self.nameinputdone, lv.EVENT.READY, None)
+		nametextarea = lv.textarea(self)
+		nametextarea.set_one_line(True)
+		nametextarea.set_max_length(16)
+		nametextarea.set_height(40)
+		nametextarea.set_width(260)
+		nametextarea.set_placeholder_text("Your nickname")
+		#nametextarea.add_state(lv.STATE.FOCUSED)
+		#nametextarea.add_state(lv.STATE.PRESSED)
+		nametextarea.add_event_cb(self.nameinputdone, lv.EVENT.READY, None)
+		self.nametextarea = nametextarea
 
-		self.errLabel = lv.label(self)
-		self.errLabel.set_text("#ff0000 Should at least have 3 characters #")
-		self.errLabel.set_recolor(True)
-		self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
+		errLabel = lv.label(self)
+		errLabel.set_text("#ff0000 Should at least have 3 characters #")
+		errLabel.set_recolor(True)
+		errLabel.add_flag(errLabel.FLAG.HIDDEN)
+		self.errLabel = errLabel
 
-		self.nextbutton = Button(self, "Proceed")
-		self.nextbutton.set_size(260, 40)
-		self.nextbutton.label.center()
+		nextbutton = Button(self, "Proceed")
+		nextbutton.set_size(260, 40)
+		nextbutton.label.center()
+		nextbutton.add_state(lv.STATE.DISABLED)
+		nextbutton.add_event_cb(self.page_done, lv.EVENT.PRESSED, None)
+		self.nextbutton = nextbutton
 		
 		self.group = lv.group_create()
 		self.group.add_obj(self)
@@ -101,7 +106,21 @@ class SetupPage(GenericPage):
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
 		#lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
 
-		
+	def page_done(self, e):
+		code = e.get_code()
+		if(self.validateInput()):
+			self.pageNextCb(self)
+				
+	def validateInput(self):
+		if(len(self.nametextarea.get_text()) < 3):
+			self.errLabel.clear_flag(self.errLabel.FLAG.HIDDEN)
+			self.nextbutton.add_state(lv.STATE.DISABLED)
+			return False
+		else:
+			self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
+			self.nextbutton.clear_state(lv.STATE.DISABLED)
+			return True
+
 	def nameinputdone(self, e):
 		obj = e.get_target()
 
@@ -116,11 +135,7 @@ class SetupPage(GenericPage):
 			self.set_height(120)
 			self.scroll_to(0, obj.get_y(), lv.ANIM.ON)
 		elif self.keyboard != False:
-			if(len(obj.get_text()) < 3):
-				print("name too short")
-				self.errLabel.clear_flag(self.errLabel.FLAG.HIDDEN)
-			else:
-				self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
+			if(self.validateInput()):
 				self.keyboard.delete()
 				self.keyboard = False
 				indev1.set_group(self.group)
