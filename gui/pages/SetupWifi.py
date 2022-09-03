@@ -2,17 +2,18 @@ import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
 from gui.components.button import Button
-from libs.init_drv import indev1
-from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 from gui.styles.CustomTheme import CustomTheme
 from gui.styles.PageStyle import SETUP_PAGE_STYLE
-from libs.WifiShellParser import WifiShellParser
+from gui.components.Loader import Loader
 
+from libs.init_drv import indev1
+from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
+from libs.WifiShellParser import WifiShellParser
 
 class SetupWifi(GenericPage):
 	nextbutton = ""
 	wifiShellParser = WifiShellParser()
-	table = ""
+	wifiContainer = ""
 	loadAnim = ""
 
 	def __init__(self):
@@ -26,16 +27,41 @@ class SetupWifi(GenericPage):
 		
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
-		self.set_style_pad_column(12, 0)
-		self.set_style_pad_row(12, 0)
+		self.set_style_pad_column(0, 0)
+		self.set_style_pad_row(4, 0)
 		
-		table = lv.table(self)
-		table.set_cell_value(0, 0, "SSID")
-		table.set_cell_value(0, 1, "Signal")
-		self.table = table
+		label = lv.label(self)
+		label.set_text("WiFi-Setup")
+		label.set_width(300)
 
-		self.nextbutton = Button(self, "Proceed")
-		self.nextbutton.set_size(260, 40)
+		self.loaderContainer = lv.obj(self)
+		self.loaderContainer.set_size(310, 170)
+		self.loaderContainer.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		self.loaderContainer.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
+		self.loaderContainer.set_style_pad_column(0, 0)
+		self.loaderContainer.set_style_pad_row(8, 0)
+		self.loader = Loader(self.loaderContainer)
+
+		self.wifiContainer = lv.obj(self)
+		self.wifiContainer.set_size(310, 170)
+		self.wifiContainer.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		self.wifiContainer.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
+		self.wifiContainer.set_style_pad_column(0, 0)
+		self.wifiContainer.set_style_pad_row(8, 0)
+		self.wifiContainer.add_flag(self.FLAG.HIDDEN)
+
+		self.backbutton = Button(self, lv.SYMBOL.LEFT)
+		self.backbutton.set_size(50, 30)
+		self.backbutton.label.center()
+		self.backbutton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+
+		self.refreshbutton = Button(self, lv.SYMBOL.REFRESH)
+		self.refreshbutton.set_size(50, 30)
+		self.refreshbutton.label.center()
+		self.refreshbutton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+
+		self.nextbutton = Button(self, lv.SYMBOL.RIGHT)
+		self.nextbutton.set_size(50, 30)
 		self.nextbutton.label.center()
 		
 		self.group = lv.group_create()
@@ -45,14 +71,24 @@ class SetupWifi(GenericPage):
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
 
 	def scanResults(self, results):
-		table = self.table
+		self.wifiContainer.clean()
 
-		i = 1
 		for wifiEntry in results:
-			table.set_cell_value(i, 0, wifiEntry["ssid"])
-			table.set_cell_value(i, 1, wifiEntry["signal"])
-			i += 1
+			wifiConnectButton = Button(self.wifiContainer, lv.SYMBOL.WIFI + " " + wifiEntry["ssid"])
+			wifiConnectButton.set_width(280)
+			wifiConnectButton.data = wifiEntry
+			wifiConnectButton.pressCallback = self.connectWifi
 
-		table.set_height(120)
-		table.set_width(300)
-		table.center()
+		self.loaderContainer.add_flag(self.FLAG.HIDDEN)
+		self.wifiContainer.clear_flag(self.FLAG.HIDDEN)
+		self.group.add_obj(self.wifiContainer)
+
+		lv.gridnav_remove(self.wifiContainer)
+		lv.gridnav_add(self.wifiContainer, lv.GRIDNAV_CTRL.NONE)
+
+
+	def connectWifi(self, obj, e):
+		self.wifiShellParser.connect(obj.data["ssid"], "password")
+
+	def pageBack(self, e):
+		self.pagePrevCb(self)

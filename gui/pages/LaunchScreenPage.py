@@ -3,7 +3,6 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1
 from libs.Helper import loadImage
-from gui.components.Loader import Loader
 
 
 class LaunchScreenPage(GenericPage):
@@ -26,8 +25,6 @@ class LaunchScreenPage(GenericPage):
 		img1 = lv.img(self)
 		img1.set_src(img_launchscreen_argb)
 		img1.set_size(320, 240)
-
-		loader = Loader(self)
 
 		#labelVersion = lv.label(img1)
 		#labelVersion.align(lv.ALIGN.CENTER, 0, 0)

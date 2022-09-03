@@ -28,8 +28,9 @@ class PageManager():
 
 		page.animOut.anim_done_cb = self.animOutDone
 		page.animIn.anim_done_cb = self.animInDone
+
 		page.clear_flag(page.FLAG.HIDDEN)
-		#page.move_foreground()
+		page.move_foreground()
 		page.focusPage()
 		page.moveIn()
 
@@ -47,6 +48,12 @@ class PageManager():
 	def pagePrev(self, page):
 		print("PrevPage")
 		self.currentPage.moveOut()
+
+		self.history.pop()
+
+		self.pageIndex -= 1
+		self.setCurrentPage(self.pageOrder[self.pageIndex])
+
 
 	def animOutDone(self, obj, anim):
 		print("Anim Out done")

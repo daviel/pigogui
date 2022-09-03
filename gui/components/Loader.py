@@ -2,7 +2,7 @@ import lvgl as lv
 
 
 class Loader(lv.arc):
-	currentValue = 0
+	currentValue = 90
 
 	def __init__(self, container):
 		super().__init__(container)
@@ -10,12 +10,14 @@ class Loader(lv.arc):
 		self.set_bg_angles(0, 360)
 		self.set_angles(270, 270)
 		self.center()
+		#self.set_size(64, 64)
+		self.clear_flag(self.FLAG.CLICKABLE)
+		self.remove_style(None, lv.PART.KNOB)
 
-		timer = lv.timer_create(self.fill, 20, None)
+		self.timer = lv.timer_create(self.fill, 30, None)
 
 	def fill(self, timer):
-		self.currentValue += 5
-		if(self.currentValue >= 360):
-			self.currentValue = 0
-		self.set_angles(0, self.currentValue)
-		pass
+		self.currentValue += 15
+		if(self.currentValue >= 450):
+			self.currentValue = 90
+		self.set_angles(self.currentValue - 90, self.currentValue)

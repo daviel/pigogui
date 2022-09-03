@@ -19,6 +19,8 @@ scr.clear_flag(scr.FLAG.SCROLLABLE)
 pagemanager = PageManager()
 
 
+
+
 while(1):
     lv.timer_handler()
     time.sleep(1 / 200)

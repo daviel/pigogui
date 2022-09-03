@@ -8,20 +8,20 @@ perror = libc.func("v", "perror", "s")
 popen = libc.func("p", "popen", "ss")
 pclose = libc.func("i", "pclose", "s")
 fgets = libc.func("s", "fgets", "sis")
-
+fflush = libc.func("i", "fflush", "s")
 errno = libc.var("i", "errno")
 
-strbuffer = " " * 128
-
-
 def runShellCommand(cmd):
-    fp = popen(cmd, "r")
-    strbuffer = " " * 128
+    strbuffer = " " * 256
+    fp = popen(cmd, "re")
     output = ""
+
     while( fgets(strbuffer, len(strbuffer), fp) != None):
-        #print(strbuffer)
         line = str(strbuffer)
         output += (line.rstrip().replace("\x00", ""))
-    ret = pclose(fp)
+        strbuffer = " " * 256
 
-    return output
+    ret = pclose(fp)
+    if(ret != 0):
+        print("error closing pipe: ", ret)
+    return output.rstrip()

@@ -51,6 +51,7 @@ class SetupPage(GenericPage):
 
 	def __init__(self):
 		super().__init__()
+		self.returnable = True
 
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.ON)
 		self.add_flag(self.FLAG.SCROLLABLE)
@@ -92,8 +93,8 @@ class SetupPage(GenericPage):
 		errLabel.add_flag(errLabel.FLAG.HIDDEN)
 		self.errLabel = errLabel
 
-		nextbutton = Button(self, "Proceed")
-		nextbutton.set_size(260, 40)
+		nextbutton = Button(self, lv.SYMBOL.RIGHT)
+		nextbutton.set_size(50, 30)
 		nextbutton.label.center()
 		nextbutton.add_state(lv.STATE.DISABLED)
 		nextbutton.add_event_cb(self.page_done, lv.EVENT.PRESSED, None)
