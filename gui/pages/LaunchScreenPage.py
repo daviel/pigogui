@@ -3,6 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1
 from libs.Helper import loadImage
+from gui.components.Loader import Loader
 
 
 class LaunchScreenPage(GenericPage):
@@ -26,6 +27,14 @@ class LaunchScreenPage(GenericPage):
 		img1.set_src(img_launchscreen_argb)
 		img1.set_size(320, 240)
 
+		loader = Loader(self)
+
+		#labelVersion = lv.label(img1)
+		#labelVersion.align(lv.ALIGN.CENTER, 0, 0)
+		#labelVersion.set_text("#ffffff \uf960 PiGO v1.0 #")
+		#labelVersion.set_recolor(True)
+		#labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
+
 		label = lv.label(img1)
 		label.set_text("< Press any button >")
 		label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
@@ -39,6 +48,7 @@ class LaunchScreenPage(GenericPage):
 		if code == lv.EVENT.KEY:
 			if(self.keyPressed == False):
 				self.keyPressed = True
+				self.timer._del()
 				self.pageNextCb(self)
 
 	def update_time(self, timer):
