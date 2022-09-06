@@ -18,8 +18,8 @@ class SetupWifi(GenericPage):
 
 	def __init__(self):
 		super().__init__()
-		self.wifiShellParser.scanCallback = self.scanResults
-		self.wifiShellParser.scan()
+		#self.wifiShellParser.scanCallback = self.scanResults
+		#self.wifiShellParser.scan()
 
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.ON)
 		self.add_flag(self.FLAG.SCROLLABLE)

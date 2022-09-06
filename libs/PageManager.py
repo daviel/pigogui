@@ -12,58 +12,47 @@ class PageManager():
 	history = []
 	pageIndex = 0
 
+	pageAnimTime = 1500
+	timer = ""
+
 
 	def __init__(self):
 		self.pageOrder.append(LaunchScreenPage())
 		self.pageOrder.append(SetupPage())
 		self.pageOrder.append(SetupWifi())
 
-		lv.scr_load_anim(self.pageOrder[self.pageIndex], lv.SCR_LOAD_ANIM.OUT_RIGHT, 3, 1, False)
-		lv.scr_load_anim(self.pageOrder[1], lv.SCR_LOAD_ANIM.OUT_RIGHT, 3, 4, False)
+		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
+		self.setCurrentPage(self.pageOrder[self.pageIndex], True)
 
-		#lv.disp_load_scr(self.pageOrder[self.pageIndex])
-		
-		#self.setCurrentPage(self.pageOrder[self.pageIndex])
-
-	def setCurrentPage(self, page):
+	def setCurrentPage(self, page, movingIn):
 		self.currentPage = page
+		
+		if movingIn:
+			lv.scr_load_anim(page, page.animIn, self.pageAnimTime, 0, False)
+		else:
+			lv.scr_load_anim(page, page.animOut, self.pageAnimTime, 0, False)
+		self.timer.reset()
+		self.timer.resume()
 
 		page.pageNextCb = self.pageNext
 		page.pagePrevCb = self.pagePrev
-
-		page.animOut.anim_done_cb = self.animOutDone
-		page.animIn.anim_done_cb = self.animInDone
-
-		page.clear_flag(page.FLAG.HIDDEN)
-		page.move_foreground()
 		page.focusPage()
-		page.moveIn()
 
 	def pageNext(self, page):
 		print("NextPage")
-		self.currentPage.moveOut()
-		
 		if(self.currentPage.returnable == True):
 			self.history.append(self.currentPage)
 
 		self.pageIndex += 1
-		self.setCurrentPage(self.pageOrder[self.pageIndex])
-
+		self.setCurrentPage(self.pageOrder[self.pageIndex], True)
 
 	def pagePrev(self, page):
 		print("PrevPage")
-		self.currentPage.moveOut()
-
 		self.history.pop()
-
 		self.pageIndex -= 1
-		self.setCurrentPage(self.pageOrder[self.pageIndex])
+		self.setCurrentPage(self.pageOrder[self.pageIndex], False)
 
-
-	def animOutDone(self, obj, anim):
-		print("Anim Out done")
-		obj.target.add_flag(obj.target.FLAG.HIDDEN)
-		#obj.target.delete()
-
-	def animInDone(self, obj, anim):
-		print("Anim In done")
+	def animDone(self, timer):
+		print("Anim done")
+		timer.pause()
+		pass

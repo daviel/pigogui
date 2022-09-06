@@ -15,10 +15,7 @@ lv.scr_load(scr)
 scr.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 scr.clear_flag(scr.FLAG.SCROLLABLE)
 
-
 pagemanager = PageManager()
-
-
 
 
 while(1):

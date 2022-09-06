@@ -24,10 +24,11 @@ class WifiShellParser():
     connected = False
 
     def __init__(self):
-        self.getInterfaces()
-        self.setInterface()
-        self.getAllNetworks()
-        self.isConnected()
+        #self.getInterfaces()
+        #self.setInterface()
+        #self.getAllNetworks()
+        #self.isConnected()
+        pass
 
     def getInterfaces(self):
         ret = runShellCommand("wpa_cli interface")

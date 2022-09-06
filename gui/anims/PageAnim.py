@@ -3,7 +3,8 @@ from gui.anims.GenericAnim import GenericAnim
 
 
 def anim_func(obj, anim, val):
-	obj.target.set_pos(val, 0)
+	#obj.target.set_pos(val, 0)
+	pass
 
 
 def ANIM_PAGE_SLIDE_OUT_LEFT():

@@ -15,6 +15,9 @@ disp_drv.ver_res = 240
 disp_drv.screen_transp = 1
 disp_drv.register()
 
+lv.disp_get_default().set_bg_opa(50)
+
+
 # Regsiter SDL mouse driver
 
 #indev_drv = lv.indev_drv_t()
