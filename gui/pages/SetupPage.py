@@ -62,6 +62,8 @@ class SetupPage(GenericPage):
 		self.set_style_pad_column(12, 0)
 		self.set_style_pad_row(12, 0)
 
+		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
+
 		noneAvatar = loadImage('./imgs/avatars/none.png')
 		
 		imageNoneAvatar = lv.img_dsc_t({
@@ -103,9 +105,8 @@ class SetupPage(GenericPage):
 		self.group = lv.group_create()
 		self.group.add_obj(self)
 		indev1.set_group(self.group)
-
-		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
-		#lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
+		
+		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
 
 	def page_done(self, e):
 		code = e.get_code()

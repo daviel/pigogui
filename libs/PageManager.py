@@ -17,8 +17,13 @@ class PageManager():
 		self.pageOrder.append(LaunchScreenPage())
 		self.pageOrder.append(SetupPage())
 		self.pageOrder.append(SetupWifi())
+
+		lv.scr_load_anim(self.pageOrder[self.pageIndex], lv.SCR_LOAD_ANIM.OUT_RIGHT, 3, 1, False)
+		lv.scr_load_anim(self.pageOrder[1], lv.SCR_LOAD_ANIM.OUT_RIGHT, 3, 4, False)
+
+		#lv.disp_load_scr(self.pageOrder[self.pageIndex])
 		
-		self.setCurrentPage(self.pageOrder[self.pageIndex])
+		#self.setCurrentPage(self.pageOrder[self.pageIndex])
 
 	def setCurrentPage(self, page):
 		self.currentPage = page

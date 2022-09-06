@@ -21,7 +21,7 @@ class GenericPage(lv.obj):
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.add_style(GENERIC_PAGE_STYLE, 0)
-		self.set_pos(320, 0)
+		#self.set_pos(320, 0)
 		#self.add_flag(self.FLAG.HIDDEN)
 
 		self.animOut = ANIM_PAGE_SLIDE_OUT_LEFT()

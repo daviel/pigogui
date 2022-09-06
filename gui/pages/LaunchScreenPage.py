@@ -15,24 +15,17 @@ class LaunchScreenPage(GenericPage):
 
 		self.set_pos(0, 0)
 
-		png_data = loadImage('./imgs/launchscreens/10.png')
-		
-		img_launchscreen_argb = lv.img_dsc_t({
-			'data_size': len(png_data),
-			'data': png_data
-		})
+		container = lv.obj(self)
+		container.set_size(320, 240)
 
-		img1 = lv.img(self)
-		img1.set_src(img_launchscreen_argb)
-		img1.set_size(320, 240)
+		labelVersion = lv.label(container)
+		labelVersion.align(lv.ALIGN.CENTER, 0, 0)
+		labelVersion.set_text("#000000 \uf960 GO v1.0 #")
+		labelVersion.set_recolor(True)
+		labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
+		labelVersion.fade_in(1, 0)
 
-		#labelVersion = lv.label(img1)
-		#labelVersion.align(lv.ALIGN.CENTER, 0, 0)
-		#labelVersion.set_text("#ffffff \uf960 PiGO v1.0 #")
-		#labelVersion.set_recolor(True)
-		#labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
-
-		label = lv.label(img1)
+		label = lv.label(container)
 		label.set_text("< Press any button >")
 		label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
 		self.label = label
