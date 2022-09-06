@@ -84,8 +84,6 @@ class SetupPage(GenericPage):
 		nametextarea.set_height(40)
 		nametextarea.set_width(260)
 		nametextarea.set_placeholder_text("Your nickname")
-		#nametextarea.add_state(lv.STATE.FOCUSED)
-		#nametextarea.add_state(lv.STATE.PRESSED)
 		nametextarea.add_event_cb(self.nameinputdone, lv.EVENT.READY, None)
 		self.nametextarea = nametextarea
 

@@ -26,11 +26,8 @@ class BottomBar(lv.obj):
 			'color': lv.PALETTE.GREEN
 		}
 	]
-
 	buttons = []
-
 	button_style = ""
-
 
 	def __init__(self, container):
 		super().__init__(container)

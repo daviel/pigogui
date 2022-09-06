@@ -12,7 +12,7 @@ class PageManager():
 	history = []
 	pageIndex = 0
 
-	pageAnimTime = 1500
+	pageAnimTime = 1000
 	timer = ""
 
 

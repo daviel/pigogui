@@ -22,8 +22,8 @@ class LaunchScreenPage(GenericPage):
 
 		labelVersion = lv.label(container)
 		labelVersion.align(lv.ALIGN.CENTER, 0, 0)
-		labelVersion.set_text("#000000 \uf960 GO v1.0 #")
-		labelVersion.set_recolor(True)
+		labelVersion.set_text("\uf960 GO v1.0")
+		#labelVersion.set_recolor(True)
 		labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
 		#labelVersion.fade_in(3000, 500)
 
