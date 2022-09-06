@@ -15,6 +15,12 @@ lv.scr_load(scr)
 scr.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 scr.clear_flag(scr.FLAG.SCROLLABLE)
 
+lv.theme_default_init(lv.disp_get_default(), 
+                      lv.palette_main(lv.PALETTE.GREEN), 
+                      lv.palette_main(lv.PALETTE.RED), 
+                      True, 
+                      lv.font_montserrat_16)
+
 pagemanager = PageManager()
 
 
