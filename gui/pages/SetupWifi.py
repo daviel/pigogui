@@ -58,11 +58,12 @@ class SetupWifi(GenericPage):
 		self.refreshbutton = Button(self, lv.SYMBOL.REFRESH)
 		self.refreshbutton.set_size(50, 30)
 		self.refreshbutton.label.center()
-		self.refreshbutton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+		self.refreshbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
 
 		self.nextbutton = Button(self, lv.SYMBOL.RIGHT)
 		self.nextbutton.set_size(50, 30)
 		self.nextbutton.label.center()
+		self.nextbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
 		
 		self.group = lv.group_create()
 		self.group.add_obj(self)
@@ -92,3 +93,6 @@ class SetupWifi(GenericPage):
 
 	def pageBack(self, e):
 		self.pagePrevCb(self)
+
+	def pageNext(self, e):
+		self.pageNextCb(self)

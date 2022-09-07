@@ -12,6 +12,7 @@ class Games(lv.obj):
 	games = []
 	animZoomIn = ""
 	animZoomOut = ""
+	group = ""
 
 	def click_handle(self, event):
 		code = event.get_code()
@@ -30,6 +31,8 @@ class Games(lv.obj):
 		self.align(lv.ALIGN.CENTER, 0, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.set_style_border_width(0, 0)
+
+		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
 		for i in range(8):
 			game = Button(self, "Title " + str(i))
@@ -54,9 +57,7 @@ class Games(lv.obj):
 			
 		group = lv.group_create()
 		group.add_obj(self)
-		indev1.set_group(group)
-
-		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
+		self.group = group
 
 	def zoomToggle(self):
 		if self.isZoomedIn:

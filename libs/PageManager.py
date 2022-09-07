@@ -3,6 +3,7 @@ import lvgl as lv
 from gui.pages.LaunchScreenPage import LaunchScreenPage
 from gui.pages.SetupPage import SetupPage
 from gui.pages.SetupWifi import SetupWifi
+from gui.pages.GamesOverviewPage import GamesOverviewPage
 
 
 class PageManager():
@@ -17,9 +18,10 @@ class PageManager():
 
 
 	def __init__(self):
-		self.pageOrder.append(LaunchScreenPage())
-		self.pageOrder.append(SetupPage())
+		#self.pageOrder.append(LaunchScreenPage())
+		#self.pageOrder.append(SetupPage())
 		self.pageOrder.append(SetupWifi())
+		self.pageOrder.append(GamesOverviewPage())
 
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
 		self.setCurrentPage(self.pageOrder[self.pageIndex], True)
