@@ -1,5 +1,5 @@
 import lvgl as lv
-from gui.components.button import Button
+from gui.components.GameIcon import GameIcon
 from libs.data_manager import DATA_MANAGER
 from libs.init_drv import indev1
 
@@ -14,6 +14,45 @@ class Games(lv.obj):
 	animZoomOut = ""
 	group = ""
 
+	gameData = [
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+		{
+			'title': "Game 1",
+			'description': "This is an example game",
+			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'screenshots': ["imgs/"]
+		},
+	]
+
 	def click_handle(self, event):
 		code = event.get_code()
 
@@ -27,19 +66,20 @@ class Games(lv.obj):
 	def __init__(self, container):
 		super().__init__(container)
 
-		self.set_size(320, 240)
-		self.align(lv.ALIGN.CENTER, 0, 0)
+		self.set_size(320, 184)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.set_style_border_width(0, 0)
+		self.set_style_pad_column(12, 0)
+		self.set_style_pad_row(0, 0)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
-		for i in range(8):
-			game = Button(self, "Title " + str(i))
-			game.set_size(144, 144)
-			game.label.center()
+		for data in self.gameData:
+			game = GameIcon(self, data["title"], data["description"], data["titleScreenSrc"])
 			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
 			self.games.append(game)
+
+		self.scroll_to(0, 8, lv.ANIM.OFF)
 
 		self.animZoomOut = lv.anim_t()
 		self.animZoomOut.init()
@@ -54,7 +94,7 @@ class Games(lv.obj):
 		self.animZoomIn.set_time(1000)
 		self.animZoomIn.set_path_cb(lv.anim_t.path_ease_in)
 		self.animZoomIn.set_custom_exec_cb(self.anim_func)
-			
+		
 		group = lv.group_create()
 		group.add_obj(self)
 		self.group = group

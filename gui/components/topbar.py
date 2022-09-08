@@ -12,12 +12,11 @@ class TopBar(lv.obj):
 	def __init__(self, container):
 		super().__init__(container)
 
-		self.set_size(320, 24)
-		self.align(lv.ALIGN.CENTER, 0, 0)
+		self.set_size(320, 16)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
-		self.set_style_pad_all(1, 0)
+		self.set_style_pad_all(0, 0)
 
 		self.label_time = lv.label(self)
 		self.label_time.set_text('10:15')

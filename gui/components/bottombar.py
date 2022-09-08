@@ -33,12 +33,12 @@ class BottomBar(lv.obj):
 		super().__init__(container)
 		self.init_button_style()
 
-		self.set_size(320, 32)
-		self.align(lv.ALIGN.CENTER, 0, 0)
+		self.set_size(320, 36)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
-		self.set_style_pad_all(0, 1)
+		self.set_style_pad_column(4, 0)
+		self.set_style_pad_row(0, 0)
 
 		for button in self.buttons_desc:
 			button1 = Button(self, button['button_text'])

@@ -20,7 +20,7 @@ class PageManager():
 	def __init__(self):
 		#self.pageOrder.append(LaunchScreenPage())
 		#self.pageOrder.append(SetupPage())
-		self.pageOrder.append(SetupWifi())
+		#self.pageOrder.append(SetupWifi())
 		self.pageOrder.append(GamesOverviewPage())
 
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
