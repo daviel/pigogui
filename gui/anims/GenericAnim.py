@@ -29,5 +29,4 @@ class GenericAnim(lv.anim_t):
 		return self.running
 
 	def start(self):
-		if super().end_value != self.target.get_x():
-			super().start()
+		super().start()

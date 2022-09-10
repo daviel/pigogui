@@ -5,6 +5,7 @@ from gui.pages.SetupPage import SetupPage
 from gui.pages.SetupWifi import SetupWifi
 from gui.pages.GamesOverviewPage import GamesOverviewPage
 
+from libs.NotificationManager import notificationManager
 
 class PageManager():
 	currentPage = ""
@@ -18,9 +19,9 @@ class PageManager():
 
 
 	def __init__(self):
-		#self.pageOrder.append(LaunchScreenPage())
-		#self.pageOrder.append(SetupPage())
-		#self.pageOrder.append(SetupWifi())
+		self.pageOrder.append(LaunchScreenPage())
+		self.pageOrder.append(SetupPage())
+		self.pageOrder.append(SetupWifi())
 		self.pageOrder.append(GamesOverviewPage())
 
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
@@ -57,4 +58,7 @@ class PageManager():
 	def animDone(self, timer):
 		print("Anim done")
 		timer.pause()
-		pass
+
+		notificationManager.add(lv.SYMBOL.WARNING, "Text")
+		notificationManager.add(lv.SYMBOL.ENVELOPE, "Message received")
+		notificationManager.add(lv.SYMBOL.OK, "Third message")

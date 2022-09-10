@@ -8,11 +8,11 @@ from gui.components.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
-from libs.WifiShellParser import WifiShellParser
+#from libs.WifiShellParser import WifiShellParser
 
 class SetupWifi(GenericPage):
 	nextbutton = ""
-	wifiShellParser = WifiShellParser()
+	#wifiShellParser = WifiShellParser()
 	wifiContainer = ""
 	loadAnim = ""
 

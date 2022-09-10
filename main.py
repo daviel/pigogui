@@ -10,10 +10,6 @@ import time
 from libs.data_manager import DataManager
 from libs.PageManager import PageManager
 
-scr = lv.obj()
-lv.scr_load(scr)
-scr.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-scr.clear_flag(scr.FLAG.SCROLLABLE)
 
 lv.theme_default_init(lv.disp_get_default(), 
                       lv.palette_main(lv.PALETTE.GREEN), 

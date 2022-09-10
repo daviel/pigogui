@@ -15,17 +15,15 @@ class LaunchScreenPage(GenericPage):
 
 		self.animIn = lv.SCR_LOAD_ANIM.FADE_IN
 
-		#self.set_pos(0, 0)
-
 		container = lv.obj(self)
 		container.set_size(320, 240)
 
 		labelVersion = lv.label(container)
 		labelVersion.align(lv.ALIGN.CENTER, 0, 0)
-		labelVersion.set_text("\uf960 GO v1.0")
-		#labelVersion.set_recolor(True)
+		labelVersion.set_text("PiGO #aaaaaa v1.0 #")
+		labelVersion.set_recolor(True)
 		labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
-		#labelVersion.fade_in(3000, 500)
+		labelVersion.fade_in(3000, 1000)
 
 		#label = lv.label(container)
 		#label.set_text("< Press any button >")
@@ -34,6 +32,7 @@ class LaunchScreenPage(GenericPage):
 
 		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
+
 
 	def page_done(self, event):
 		code = event.get_code()
