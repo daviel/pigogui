@@ -2,7 +2,7 @@ import collections
 
 from gui.components.Notification import Notification
 
-
+# usage: notificationManager.add(lv.SYMBOL.OK, "message")
 
 class NotificationManager():
 	notifications = collections.deque((), 10)
@@ -26,6 +26,5 @@ class NotificationManager():
 			self.notifications.popleft().show()
 			self._notificationIsShown = True
 		
-
 
 notificationManager = NotificationManager()

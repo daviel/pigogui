@@ -23,7 +23,7 @@ class Notification(lv.obj):
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(0, 0)
-		self.set_style_bg_color(lv.palette_main(lv.PALETTE.NONE), 0)
+		#self.set_style_bg_color(lv.theme_get_color_secondary(0), 0)
 
 		self.set_style_border_width(1, 0)
 		self.set_style_border_color(lv.theme_get_color_primary(0), 0)
@@ -72,7 +72,6 @@ class Notification(lv.obj):
 		#print("done notification")
 		if self.doneCB:
 			self.doneCB(self)
-
 
 	def anim_func(self, obj, anim, val):
 		obj.target.set_width(val)

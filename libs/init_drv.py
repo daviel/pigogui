@@ -20,11 +20,11 @@ lv.disp_get_default().set_bg_opa(50)
 
 # Regsiter SDL mouse driver
 
-#indev_drv = lv.indev_drv_t()
-#indev_drv.init()
-#indev_drv.type = lv.INDEV_TYPE.POINTER
-#indev_drv.read_cb = SDL.mouse_read
-#indev = indev_drv.register()
+indev_drv = lv.indev_drv_t()
+indev_drv.init()
+indev_drv.type = lv.INDEV_TYPE.POINTER
+indev_drv.read_cb = SDL.mouse_read
+indev = indev_drv.register()
 
 
 def global_key_callback(drv, data):

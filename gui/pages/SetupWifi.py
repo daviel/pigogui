@@ -21,10 +21,7 @@ class SetupWifi(GenericPage):
 		#self.wifiShellParser.scanCallback = self.scanResults
 		#self.wifiShellParser.scan()
 
-		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.ON)
-		self.add_flag(self.FLAG.SCROLLABLE)
 		self.add_style(SETUP_PAGE_STYLE, 0)
-		
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		self.set_style_pad_column(0, 0)

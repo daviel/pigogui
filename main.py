@@ -7,13 +7,13 @@ SDL.init(w=320,h=240)
 
 import time
 
-from libs.data_manager import DataManager
+from libs.DataManager import DataManager
 from libs.PageManager import PageManager
 
 
 lv.theme_default_init(lv.disp_get_default(), 
                       lv.palette_main(lv.PALETTE.GREEN), 
-                      lv.palette_main(lv.PALETTE.RED), 
+                      lv.palette_main(lv.PALETTE.GREY), 
                       True, 
                       lv.font_montserrat_16)
 

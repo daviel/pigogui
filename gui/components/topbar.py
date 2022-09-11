@@ -16,20 +16,25 @@ class TopBar(lv.obj):
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
-		self.set_style_pad_all(0, 0)
+		self.set_style_pad_all(1, 0)
+		self.set_style_radius(0, 0)
+		#self.set_style_opa(lv.OPA._80, 0)
+		self.set_style_bg_color(lv.palette_darken(lv.PALETTE.GREEN, 3), 0)
 
 		self.label_time = lv.label(self)
 		self.label_time.set_text('10:15')
 
 		spacer = lv.obj(self)
 		spacer.set_flex_grow(1)
+
+		spacer.set_style_bg_color(lv.palette_darken(lv.PALETTE.GREEN, 3), 0)
 		spacer.set_style_border_width(0, 0)
 
 		self.label1 = lv.label(self)
-		self.label1.set_text('W')
+		self.label1.set_text(lv.SYMBOL.WIFI)
 
 		self.label1 = lv.label(self)
-		self.label1.set_text('B')
+		self.label1.set_text(lv.SYMBOL.BATTERY_FULL)
 
 		self.timer = lv.timer_create(self.update_time, 1000, self)
 

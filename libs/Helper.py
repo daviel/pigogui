@@ -22,12 +22,12 @@ KEYBOARD_LETTERS_ONLY_CTRL = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 							]
 
 def KEYBOARD_LETTERS_ONLY():
-	KEYBOARD = lv.keyboard(lv.scr_act())
+	KEYBOARD = lv.keyboard(lv.layer_top())
 	KEYBOARD.set_map(KEYBOARD.MODE.USER_2, KEYBOARD_LETTERS_ONLY_MAP, KEYBOARD_LETTERS_ONLY_CTRL)
 	KEYBOARD.set_mode(KEYBOARD.MODE.USER_2)
 	return KEYBOARD
 
 def KEYBOARD_ALL_SYMBOLS():
-	KEYBOARD = lv.keyboard(lv.scr_act())
+	KEYBOARD = lv.keyboard(lv.layer_top())
 	KEYBOARD.set_mode(KEYBOARD.MODE.USER_1)
 	return KEYBOARD

@@ -1,6 +1,5 @@
 import lvgl as lv
 from gui.components.GameIcon import GameIcon
-from libs.data_manager import DATA_MANAGER
 from libs.init_drv import indev1
 
 

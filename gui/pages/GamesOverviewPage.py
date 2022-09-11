@@ -16,8 +16,6 @@ class GamesOverviewPage(GenericPage):
 		self.set_size(320, 240)
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(0, 0)
-		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
 
 		tobpar1 = TopBar(self)
