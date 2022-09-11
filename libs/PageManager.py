@@ -4,6 +4,7 @@ from gui.pages.LaunchScreenPage import LaunchScreenPage
 from gui.pages.SetupPage import SetupPage
 from gui.pages.SetupWifi import SetupWifi
 from gui.pages.GamesOverviewPage import GamesOverviewPage
+from gui.pages.SettingsPage import SettingsPage
 
 class PageManager():
 	currentPage = ""
@@ -20,7 +21,8 @@ class PageManager():
 		#self.pageOrder.append(LaunchScreenPage())
 		#self.pageOrder.append(SetupPage())
 		#self.pageOrder.append(SetupWifi())
-		self.pageOrder.append(GamesOverviewPage())
+		#self.pageOrder.append(GamesOverviewPage())
+		self.pageOrder.append(SettingsPage())
 
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
 		self.setCurrentPage(self.pageOrder[self.pageIndex], True)

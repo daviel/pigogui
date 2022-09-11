@@ -22,7 +22,7 @@ class BottomBar(lv.obj):
 		},
 		{
 			'button_text': "Y",
-			'text': "Options",
+			'text': "Details",
 			'color': lv.PALETTE.GREEN
 		}
 	]
@@ -33,7 +33,7 @@ class BottomBar(lv.obj):
 		super().__init__(container)
 		self.init_button_style()
 
-		self.set_size(320, 36)
+		self.set_size(320, 38)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
@@ -54,8 +54,8 @@ class BottomBar(lv.obj):
 	def init_button_style(self):
 		button_style = lv.style_t()
 		button_style.init()
-		button_style.set_radius(32)
-		button_style.set_bg_opa(lv.OPA.COVER)
+		button_style.set_radius(lv.RADIUS_CIRCLE)
+		#button_style.set_bg_opa(lv.OPA.COVER)
 		button_style.set_text_color(lv.palette_main(lv.PALETTE.NONE))
 		button_style.set_shadow_width(0)
 		button_style.set_border_width(1)

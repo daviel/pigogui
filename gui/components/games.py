@@ -1,7 +1,7 @@
 import lvgl as lv
 from gui.components.GameIcon import GameIcon
 from libs.init_drv import indev1
-
+from libs.Helper import SDL_KEYS
 
 def anim_game_sizes(game, v):
 	game.set_size(v, v)
@@ -57,7 +57,7 @@ class Games(lv.obj):
 
 		if code == lv.EVENT.KEY:
 			key = event.get_key()
-			if key == 120:
+			if key == SDL_KEYS["SDLK_x"]:
 				self.zoomToggle()
 		if code == lv.EVENT.CLICKED:
 			print("clicked")

@@ -9,9 +9,6 @@ def loadImage(src):
 		print("Could not find " + src)
 
 
-
-
-
 KEYBOARD_LETTERS_ONLY_MAP = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "\n",
 	                        "A", "S", "D", "F", "G", "H", "J", "K", "L", "\n",
 	                        "Y", "X", "C", "V", "B", "N", "M", "\n",
