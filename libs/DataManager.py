@@ -21,5 +21,3 @@ class DataManager:
         content = file.write(json.dumps(content))
         file.close()
         pass
-
-DATA_MANAGER = DataManager()

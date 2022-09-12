@@ -7,29 +7,60 @@ from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
 
 class PageManager():
-	currentPage = ""
+	currentPage = None
+	currentPageName = None
 
-	pageOrder = []
+	index = {
+		'launchscreenpage': {
+			'page': LaunchScreenPage(),
+			'nextpage': "setuppage",
+			'prevpage': None,
+			'returnable': False,
+		},
+		'setuppage': {
+			'page': SetupPage(),
+			'nextpage': "setupwifi",
+			'prevpage': None,
+			'returnable': True,
+		},
+		'setupwifi': {
+			'page': SetupWifi(),
+			'nextpage': "gamesoverviewpage",
+			'prevpage': None,
+			'returnable': True,
+		},
+		'gamesoverviewpage': {
+			'page': GamesOverviewPage(),
+			'nextpage': None,
+			'prevpage': None,
+			'returnable': True,
+		},
+		'settingspage': {
+			'page': SettingsPage(),
+			'nextpage': None,
+			'prevpage': None,
+			'returnable': True,
+		},
+	}
 	history = []
-	pageIndex = 0
 
 	pageAnimTime = 1000
 	timer = ""
 
 
 	def __init__(self):
-		#self.pageOrder.append(LaunchScreenPage())
-		#self.pageOrder.append(SetupPage())
-		#self.pageOrder.append(SetupWifi())
-		#self.pageOrder.append(GamesOverviewPage())
-		self.pageOrder.append(SettingsPage())
-
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
-		self.setCurrentPage(self.pageOrder[self.pageIndex], True)
+		#self.setCurrentPage("launchscreenpage", True)
+		self.setCurrentPage("gamesoverviewpage", True)
 
-	def setCurrentPage(self, page, movingIn):
-		self.currentPage = page
-		
+	def setCurrentPage(self, pageName, movingIn):
+		if self.currentPage != None:
+			self.currentPage.pageClosed()
+
+		self.currentPageName = pageName
+		self.currentPage = self.getPageByName(pageName)
+		page = self.currentPage
+
 		if movingIn:
 			lv.scr_load_anim(page, page.animIn, self.pageAnimTime, 0, False)
 		else:
@@ -40,21 +71,41 @@ class PageManager():
 
 		page.pageNextCb = self.pageNext
 		page.pagePrevCb = self.pagePrev
+		page.pageOpened()
 		page.focusPage()
 
-	def pageNext(self, page):
+	def loadPageByName(self, pageName):
+		self.setCurrentPage(pageName, True)
+
+	def pageNext(self):
 		print("NextPage")
-		if(self.currentPage.returnable == True):
+		nextPageName = self.lookupNextPage()
+
+		if(self.isCurrentPageReturnable()):
 			self.history.append(self.currentPage)
 
-		self.pageIndex += 1
-		self.setCurrentPage(self.pageOrder[self.pageIndex], True)
+		self.setCurrentPage(nextPageName, True)
 
 	def pagePrev(self, page):
 		print("PrevPage")
 		self.history.pop()
-		self.pageIndex -= 1
-		self.setCurrentPage(self.pageOrder[self.pageIndex], False)
+		prevPageName = self.lookupPrevPage()
+		self.setCurrentPage(prevPageName, False)
+
+	def lookupNextPage(self):
+		return self.getCurrentPageInIndex()["nextpage"]
+
+	def lookupPrevPage(self):
+		return self.getCurrentPageInIndex()["prevpage"]
+
+	def isCurrentPageReturnable(self):
+		return self.getCurrentPageInIndex()["returnable"]
+
+	def getPageByName(self, pageName):
+		return self.index[pageName]["page"]
+
+	def getCurrentPageInIndex(self):
+		return self.index[self.currentPageName]
 
 	def animDone(self, timer):
 		print("Anim done")

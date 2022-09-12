@@ -25,6 +25,3 @@ class NotificationManager():
 		if len(self.notifications) > 0:
 			self.notifications.popleft().show()
 			self._notificationIsShown = True
-		
-
-notificationManager = NotificationManager()

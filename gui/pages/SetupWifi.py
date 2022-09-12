@@ -2,7 +2,6 @@ import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
 from gui.components.button import Button
-from gui.styles.CustomTheme import CustomTheme
 from gui.styles.PageStyle import SETUP_PAGE_STYLE
 from gui.components.Loader import Loader
 
@@ -89,7 +88,7 @@ class SetupWifi(GenericPage):
 		self.wifiShellParser.connect(obj.data["ssid"], "password")
 
 	def pageBack(self, e):
-		self.pagePrevCb(self)
+		self.pagePrevCb()
 
 	def pageNext(self, e):
-		self.pageNextCb(self)
+		self.pageNextCb()

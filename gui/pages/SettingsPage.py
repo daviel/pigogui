@@ -1,14 +1,16 @@
 import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
-from libs.init_drv import indev1
+from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
 from libs.Helper import loadImage
+import libs.Singletons as SINGLETONS
 
 
 class SettingsPage(GenericPage):
 	menu = None
 	darkTheme = False
 	primaryColor = lv.PALETTE.GREEN
+	hidden = False
 
 	def __init__(self):
 		super().__init__()
@@ -121,6 +123,19 @@ class SettingsPage(GenericPage):
 		lv.gridnav_add(VersionPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(AboutPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(PowerPage, lv.GRIDNAV_CTRL.NONE)
+
+	def pageOpened(self):
+		addGlobalKeyCallback(self.globalExitPage)
+		self.hidden = False
+
+	def pageClosed(self):
+		removeGlobalKeyCallback(self.globalExitPage)
+
+	def globalExitPage(self, indev, drv, data):
+		#print(indev.get_key())
+		if indev.get_key() == 27 and self.hidden == False:
+			self.hidden = True
+			SINGLETONS.PAGE_MANAGER.loadPageByName("gamesoverviewpage")
 
 	def addPressEvent(self, event):
 		print(event)

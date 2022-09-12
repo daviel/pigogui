@@ -28,7 +28,6 @@ class SetupPage(GenericPage):
 
 	def __init__(self):
 		super().__init__()
-		self.returnable = True
 
 		container = lv.obj(self)
 		container.set_size(320, 240)
@@ -85,7 +84,7 @@ class SetupPage(GenericPage):
 	def page_done(self, e):
 		code = e.get_code()
 		if(self.validateInput()):
-			self.pageNextCb(self)
+			self.pageNextCb()
 				
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):

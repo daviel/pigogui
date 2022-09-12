@@ -1,7 +1,9 @@
 import lvgl as lv
 from gui.components.GameIcon import GameIcon
+from gui.components.SettingsIcon import SettingsIcon
 from libs.init_drv import indev1
 from libs.Helper import SDL_KEYS
+
 
 def anim_game_sizes(game, v):
 	game.set_size(v, v)
@@ -77,6 +79,7 @@ class Games(lv.obj):
 			game = GameIcon(self, data["title"], data["description"], data["titleScreenSrc"])
 			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
 			self.games.append(game)
+		SettingsIcon(self)
 
 		self.scroll_to(0, 8, lv.ANIM.OFF)
 

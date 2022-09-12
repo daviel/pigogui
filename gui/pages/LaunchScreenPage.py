@@ -40,7 +40,7 @@ class LaunchScreenPage(GenericPage):
 			if(self.keyPressed == False):
 				self.keyPressed = True
 				#self.timer._del()
-				self.pageNextCb(self)
+				self.pageNextCb()
 
 	def update_time(self, timer):
 		if self.labelVisible:

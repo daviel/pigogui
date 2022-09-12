@@ -9,8 +9,6 @@ class GenericPage(lv.obj):
 	animIn = ""
 	group = ""
 
-	returnable = False
-
 	def __init__(self):
 		super().__init__()
 		self.group = lv.group_create()
@@ -26,8 +24,14 @@ class GenericPage(lv.obj):
 	def focusPage(self):
 		indev1.set_group(self.group)
 
-	def pageNextCb(self, page):
-		print("Next Page Callback not implemented ", page)
+	def pageNextCb(self):
+		print("Next Page Callback not implemented ", self)
 
-	def pagePrevCb(self, page):
-		print("Prev Page Callback not implemented ", page)
+	def pagePrevCb(self):
+		print("Prev Page Callback not implemented ", self)
+
+	def pageOpened(self):
+		print("page has been opened")
+
+	def pageClosed(self):
+		print("page has been closed")
