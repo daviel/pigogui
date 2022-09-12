@@ -46,6 +46,7 @@ class SettingsPage(GenericPage):
 		WifiPage = self.addWifiPage()
 		BluetoothPage = self.addBluetoothPage()
 		BatteryPage = self.addBatteryPage()
+		UserPage = self.addUserPage()
 		ThemePage = self.addThemePage()
 		HomescreenPage = self.addHomescreenPage()
 		StoragePage = self.addStoragePage()
@@ -63,6 +64,7 @@ class SettingsPage(GenericPage):
 		self.addMenuPage(lv.SYMBOL.BATTERY_FULL, "Battery", BatteryPage)
 		customizationLabel = lv.label(main_page)
 		customizationLabel.set_text("Customization")
+		self.addMenuPage(lv.SYMBOL.SETTINGS, "User", UserPage)
 		self.addMenuPage(lv.SYMBOL.TINT, "Theme", ThemePage)
 		self.addMenuPage(lv.SYMBOL.HOME, "Homescreen", HomescreenPage)
 		miscLabel = lv.label(main_page)
@@ -79,13 +81,15 @@ class SettingsPage(GenericPage):
 		menu.set_page(BluetoothPage)
 		menu.set_page(BatteryPage)
 		menu.set_page(ThemePage)
+		menu.set_page(UserPage)
 		menu.set_page(HomescreenPage)
 		menu.set_page(StoragePage)
 		menu.set_page(VersionPage)
 		menu.set_page(AboutPage)
 		menu.set_page(PowerPage)
-		menu.set_page(ThemePage)
 		menu.set_sidebar_page(main_page)
+
+		menu.set_page(PowerPage)
 
 		self.group = lv.group_create()
 		self.group.add_obj(main_page)
@@ -96,6 +100,7 @@ class SettingsPage(GenericPage):
 		self.group.add_obj(BluetoothPage)
 		self.group.add_obj(BatteryPage)
 		self.group.add_obj(ThemePage)
+		self.group.add_obj(UserPage)
 		self.group.add_obj(HomescreenPage)
 		self.group.add_obj(StoragePage)
 		self.group.add_obj(VersionPage)
@@ -110,6 +115,7 @@ class SettingsPage(GenericPage):
 		lv.gridnav_add(BluetoothPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(BatteryPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(ThemePage, lv.GRIDNAV_CTRL.NONE)
+		lv.gridnav_add(UserPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(HomescreenPage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(StoragePage, lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(VersionPage, lv.GRIDNAV_CTRL.NONE)
@@ -171,10 +177,9 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -257,10 +262,9 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -272,10 +276,9 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -287,10 +290,23 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
+
+		return subPage
+
+	def addUserPage(self):
+		# Create sub pages
+		subPage = lv.obj(self.menu)
+		subPage.set_width(240)
+		subPage.set_style_pad_column(8, 0)
+		subPage.set_style_pad_row(8, 0)
+		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		# content
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -339,10 +355,9 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -354,10 +369,9 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label = lv.label(subPage)
+		label.set_text("Not implemented yet")
+		label.set_width(160)
 
 		return subPage
 
@@ -369,10 +383,23 @@ class SettingsPage(GenericPage):
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
+		label = lv.label(subPage)
+		label.set_text("PiGO V1.0")
+		label.set_width(160)
+
+		label = lv.label(subPage)
+		label.set_text("Last time checked:")
+		label.set_width(160)
+
+		label = lv.label(subPage)
+		label.set_text("About an hour ago")
+		label.set_width(160)
+
 		btn = lv.btn(subPage)
 		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
+		btn.set_width(160)
 		label = lv.label(btn)
-		label.set_text("Hello, I am hiding here")
+		label.set_text("Check for Updates")
 
 		return subPage
 
@@ -393,24 +420,33 @@ Made and developed by David Krawiec \n\n
 Thank you for using PiGO. :)
 """)
 		label.set_long_mode(lv.label.LONG.WRAP)
-		label.set_width(200)
+		label.set_width(160)
 
 		return subPage
 
 	def addPowerPage(self):
 		# Create sub pages
-		subPage = lv.menu_page(self.menu, lv.SYMBOL.POWER + " Power")
+		subPage = lv.obj(self.menu)
+		subPage.set_width(224)
+		subPage.set_style_pad_column(8, 0)
+		subPage.set_style_pad_row(8, 0)
+		subPage.set_flex_flow(lv.FLEX_FLOW.COLUMN_WRAP)
+		subPage.set_flex_align(lv.FLEX_FLOW.COLUMN_REVERSE, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.CENTER)
+		subPage.set_style_pad_hor(8, 0)
+		subPage.set_style_pad_ver(8, 0)
 		# content
 		btn = lv.btn(subPage)
 		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
 		btn.set_width(128)
 		label = lv.label(btn)
 		label.set_text("Reboot")
+		label.center()
 
 		btn = lv.btn(subPage)
 		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
 		btn.set_width(128)
 		label = lv.label(btn)
 		label.set_text("Shutdown")
+		label.center()
 
 		return subPage
