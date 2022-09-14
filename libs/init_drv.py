@@ -5,6 +5,7 @@ import SDL
 globalKeyCallbacks = []
 
 def global_key_callback(drv, data):
+    #print(indev1.get_key(), data)
     for func in globalKeyCallbacks:
         func(indev1, drv, data)
 

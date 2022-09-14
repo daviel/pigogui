@@ -29,4 +29,4 @@ class GenericAnim(lv.anim_t):
 		return self.running
 
 	def start(self):
-		super().start()
+		return super().start()
