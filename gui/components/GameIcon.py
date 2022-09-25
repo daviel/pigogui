@@ -1,6 +1,7 @@
 import lvgl as lv
 
-from libs.Helper import loadImage
+from libs.Helper import loadImage, SDL_KEYS
+import libs.Singletons as SINGLETONS
 
 
 class GameIcon(lv.btn):
@@ -16,6 +17,10 @@ class GameIcon(lv.btn):
 
 	def __init__(self, container, title, description, titleScreenSrc=None, screenshots=[]):
 		super().__init__(container)
+		self.title = title
+		self.description = description
+		self.titleScreenSrc = titleScreenSrc
+		self.screenshots = screenshots
 
 		if titleScreenSrc == None:
 			self.label = lv.label(self)
@@ -39,8 +44,21 @@ class GameIcon(lv.btn):
 		self.set_size(100, 180)
 		self.set_style_radius(16, 0)
 		self.set_style_clip_corner(16, 0)
-		self.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
+		self.add_event_cb(self.showDetails, lv.EVENT.ALL, None)
+		self.add_event_cb(self.start, lv.EVENT.PRESSED, None)
 
-	def addPressEvent(self, e):
+	
+	def start(self, e):
+		print("Game started: ", self.title)
 		if(self.pressCallback):
 			self.pressCallback(self, e)
+
+	def showDetails(self, e):
+		code = e.get_code()
+
+		if code == lv.EVENT.KEY:
+			key = e.get_key()
+			if key == SDL_KEYS["SDLK_y"]:
+				print("loading detailspage")
+				SINGLETONS.PAGE_MANAGER.loadPageByName("gamedetailspage", self)
+		

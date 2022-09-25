@@ -20,36 +20,42 @@ class Games(lv.obj):
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 		{
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 		{
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 		{
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 		{
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 		{
 			'title': "Game 1",
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
+			'genre': "Strategy",
 			'screenshots': ["imgs/"]
 		},
 	]

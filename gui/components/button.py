@@ -10,6 +10,7 @@ class Button(lv.btn):
 		super().__init__(container)
 		self.label = lv.label(self)
 		self.label.set_text(text)
+		self.label.center()
 		self.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
 
 	def addPressEvent(self, e):

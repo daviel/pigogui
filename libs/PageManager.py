@@ -5,10 +5,15 @@ from gui.pages.SetupPage import SetupPage
 from gui.pages.SetupWifi import SetupWifi
 from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
+from gui.pages.GameDetailsPage import GameDetailsPage
 
 class PageManager():
 	currentPage = None
 	currentPageName = None
+
+	history = []
+	pageAnimTime = 1000
+	timer = ""
 
 	index = {
 		'launchscreenpage': {
@@ -41,25 +46,27 @@ class PageManager():
 			'prevpage': None,
 			'returnable': True,
 		},
+		'gamedetailspage': {
+			'page': GameDetailsPage(),
+			'nextpage': None,
+			'prevpage': None,
+			'returnable': True,
+		},
 	}
-	history = []
-
-	pageAnimTime = 1000
-	timer = ""
-
 
 	def __init__(self):
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
 		#self.setCurrentPage("launchscreenpage", True)
-		self.setCurrentPage("gamesoverviewpage", True)
+		self.setCurrentPage("gamedetailspage", True)
 
-	def setCurrentPage(self, pageName, movingIn):
+	def setCurrentPage(self, pageName, movingIn, pageData=None):
 		if self.currentPage != None:
 			self.currentPage.pageClosed()
 
 		self.currentPageName = pageName
 		self.currentPage = self.getPageByName(pageName)
 		page = self.currentPage
+		page.data = pageData
 
 		if movingIn:
 			lv.scr_load_anim(page, page.animIn, self.pageAnimTime, 0, False)
@@ -74,8 +81,8 @@ class PageManager():
 		page.pageOpened()
 		page.focusPage()
 
-	def loadPageByName(self, pageName):
-		self.setCurrentPage(pageName, True)
+	def loadPageByName(self, pageName, data=None):
+		self.setCurrentPage(pageName, True, data)
 
 	def pageNext(self):
 		print("NextPage")

@@ -8,6 +8,13 @@ def loadImage(src):
 	except:
 		print("Could not find " + src)
 
+def loadImageAndConvert(src):
+    img_data = loadImage(src)
+    return lv.img_dsc_t({
+        'data_size': len(img_data),
+        'data': img_data
+    })
+
 
 KEYBOARD_LETTERS_ONLY_MAP = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "\n",
 	                        "A", "S", "D", "F", "G", "H", "J", "K", "L", "\n",
