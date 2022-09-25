@@ -8,8 +8,10 @@ from gui.components.Loader import Loader
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 #from libs.WifiShellParser import WifiShellParser
+import libs.Singletons as SINGLETONS
 
-class SetupWifi(GenericPage):
+
+class SetupWifiPage(GenericPage):
 	nextbutton = ""
 	#wifiShellParser = WifiShellParser()
 	wifiContainer = ""
@@ -88,7 +90,7 @@ class SetupWifi(GenericPage):
 		self.wifiShellParser.connect(obj.data["ssid"], "password")
 
 	def pageBack(self, e):
-		self.pagePrevCb()
+		SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
-		self.pageNextCb()
+		SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)

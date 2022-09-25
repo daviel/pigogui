@@ -135,7 +135,7 @@ class SettingsPage(GenericPage):
 		#print(indev.get_key())
 		if indev.get_key() == 27 and self.hidden == False:
 			self.hidden = True
-			SINGLETONS.PAGE_MANAGER.loadPageByName("gamesoverviewpage")
+			SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
 
 	def addPressEvent(self, event):
 		print(event)

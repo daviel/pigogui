@@ -8,6 +8,8 @@ from gui.components.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImageAndConvert, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
+import libs.Singletons as SINGLETONS
+
 
 class GameDetailsPage(GenericPage):
 	animIn = lv.SCR_LOAD_ANIM.FADE_IN
@@ -102,11 +104,7 @@ class GameDetailsPage(GenericPage):
 		lv.gridnav_add(self.imageContainer, lv.GRIDNAV_CTRL.NONE)
 
 	def pageBack(self, e):
-		#self.pagePrevCb()
-		pass
-
-	def pageNext(self, e):
-		self.pageNextCb()
+		SINGLETONS.PAGE_MANAGER.pagePrev()
 
 	def pageOpened(self):
 		#print("data ", self.data.title)

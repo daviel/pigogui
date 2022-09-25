@@ -25,12 +25,6 @@ class GenericPage(lv.obj):
 	def focusPage(self):
 		indev1.set_group(self.group)
 
-	def pageNextCb(self):
-		print("Next Page Callback not implemented ", self)
-
-	def pagePrevCb(self):
-		print("Prev Page Callback not implemented ", self)
-
 	def pageOpened(self):
 		print("page has been opened")
 

@@ -11,4 +11,4 @@ class SettingsIcon(GameIcon):
 
 	def start(self, e):
 		print("show settingspage")
-		SINGLETONS.PAGE_MANAGER.loadPageByName("settingspage")
+		SINGLETONS.PAGE_MANAGER.setCurrentPage("settingspage", True)

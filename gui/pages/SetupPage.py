@@ -7,6 +7,7 @@ from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 from gui.styles.CustomTheme import CustomTheme
 
 from gui.styles.PageStyle import SETUP_PAGE_STYLE
+import libs.Singletons as SINGLETONS
 
 
 class SetupPage(GenericPage):
@@ -84,7 +85,7 @@ class SetupPage(GenericPage):
 	def page_done(self, e):
 		code = e.get_code()
 		if(self.validateInput()):
-			self.pageNextCb()
+			SINGLETONS.PAGE_MANAGER.setCurrentPage("setupwifipage", True, self)
 				
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):

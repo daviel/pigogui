@@ -60,5 +60,5 @@ class GameIcon(lv.btn):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
-				SINGLETONS.PAGE_MANAGER.loadPageByName("gamedetailspage", self)
+				SINGLETONS.PAGE_MANAGER.setCurrentPage("gamedetailspage", True, self)
 		

@@ -3,6 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1
 from libs.Helper import loadImage
+import libs.Singletons as SINGLETONS
 
 
 class LaunchScreenPage(GenericPage):
@@ -40,7 +41,7 @@ class LaunchScreenPage(GenericPage):
 			if(self.keyPressed == False):
 				self.keyPressed = True
 				#self.timer._del()
-				self.pageNextCb()
+				SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", True, self)
 
 	def update_time(self, timer):
 		if self.labelVisible:
