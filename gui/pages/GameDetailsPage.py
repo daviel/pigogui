@@ -83,16 +83,10 @@ class GameDetailsPage(GenericPage):
 		self.imageContainer.set_style_border_width(0, 0)
 		self.imageContainer.set_scrollbar_mode(lv.SCROLLBAR_MODE.AUTO)
 
-		self.createScreenshot("imgs/covers/cover1.png")
-		self.createScreenshot("imgs/covers/cover1.png")
-		self.createScreenshot("imgs/covers/cover1.png")
-
-		size = lv.label(self.rightContainer)
-		size.set_text(lv.SYMBOL.SD_CARD + " 103 MB")
-		self.size = size
+		sizeLabel = lv.label(self.rightContainer)
+		self.sizeLabel = sizeLabel
 
 		genre = lv.label(self.rightContainer)
-		genre.set_text("Strategy")
 		self.genre = genre
 		
 		self.group = lv.group_create()
@@ -107,8 +101,17 @@ class GameDetailsPage(GenericPage):
 		SINGLETONS.PAGE_MANAGER.pagePrev()
 
 	def pageOpened(self):
-		#print("data ", self.data.title)
-		pass
+		self.gameTitle.set_text(self.data['title'])
+		self.description.set_text(self.data['description'])
+		self.genre.set_text(self.data['genre'])
+		self.sizeLabel.set_text(lv.SYMBOL.SD_CARD + " " + self.data['size'] + "MB")
+
+		for imageSrc in self.data['screenshots']:
+			self.createScreenshot(imageSrc)
+
+	def pageClosed(self):
+		for i in range(self.imageContainer.get_child_cnt()):
+			self.imageContainer.get_child(i).del_delayed(1000)
 
 	def createScreenshot(self, src):
 		imgSize = 112

@@ -21,42 +21,30 @@ class Games(lv.obj):
 			'description': "This is an example game",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
 			'genre': "Strategy",
-			'screenshots': ["imgs/"]
+			'size': "104",
+			'screenshots': ["./imgs/covers/cover4.png", "./imgs/covers/cover5.png"]
 		},
 		{
-			'title': "Game 1",
-			'description': "This is an example game",
+			'title': "Game 2",
+			'description': "This is an example game with much text",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
 			'genre': "Strategy",
-			'screenshots': ["imgs/"]
+			'size': "1334",
+			'screenshots': ["./imgs/covers/cover3.png", "./imgs/covers/cover4.png"]
 		},
 		{
-			'title': "Game 1",
-			'description': "This is an example game",
+			'title': "Game 3",
+			'description': "This is an example game with even more text in the description",
 			'titleScreenSrc': "./imgs/covers/cover5.png",
 			'genre': "Strategy",
-			'screenshots': ["imgs/"]
-		},
-		{
-			'title': "Game 1",
-			'description': "This is an example game",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'screenshots': ["imgs/"]
-		},
-		{
-			'title': "Game 1",
-			'description': "This is an example game",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'screenshots': ["imgs/"]
-		},
-		{
-			'title': "Game 1",
-			'description': "This is an example game",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'screenshots': ["imgs/"]
+			'size': "12",
+			'screenshots': [
+				"./imgs/covers/cover1.png", 
+				"./imgs/covers/cover2.png",
+				"./imgs/covers/cover3.png",
+				"./imgs/covers/cover4.png",
+				"./imgs/covers/cover5.png",
+			]
 		},
 	]
 
@@ -82,7 +70,7 @@ class Games(lv.obj):
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
 		for data in self.gameData:
-			game = GameIcon(self, data["title"], data["description"], data["titleScreenSrc"])
+			game = GameIcon(self, data)
 			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
 			self.games.append(game)
 		SettingsIcon(self)
