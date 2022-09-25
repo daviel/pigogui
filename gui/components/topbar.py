@@ -1,7 +1,7 @@
 import lvgl as lv
 import time
 
-from gui.components.button import Button
+from gui.components.Generic.Button import Button
 
 
 class TopBar(lv.obj):

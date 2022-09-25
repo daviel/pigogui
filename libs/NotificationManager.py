@@ -1,6 +1,6 @@
 import collections
 
-from gui.components.Notification import Notification
+from gui.components.Generic.Notification import Notification
 
 # usage: notificationManager.add(lv.SYMBOL.OK, "message")
 

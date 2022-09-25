@@ -1,7 +1,7 @@
 import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
-from gui.components.button import Button
+from gui.components.Generic.Button import Button
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 from gui.styles.CustomTheme import CustomTheme

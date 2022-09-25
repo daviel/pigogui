@@ -1,9 +1,9 @@
 import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
-from gui.components.button import Button
+from gui.components.Generic.Button import Button
 from gui.styles.PageStyle import SETUP_PAGE_STYLE
-from gui.components.Loader import Loader
+from gui.components.Generic.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS

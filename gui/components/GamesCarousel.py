@@ -8,7 +8,7 @@ from libs.Helper import SDL_KEYS
 def anim_game_sizes(game, v):
 	game.set_size(v, v)
 
-class Games(lv.obj):
+class GamesCarousel(lv.obj):
 	isZoomedIn = True
 	games = []
 	animZoomIn = ""

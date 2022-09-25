@@ -1,5 +1,5 @@
 import lvgl as lv
-from gui.components.button import Button
+from gui.components.Generic.Button import Button
 
 
 class BottomBar(lv.obj):
