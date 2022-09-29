@@ -6,13 +6,18 @@ import SDL
 SDL.init(w=320,h=240)
 
 import time
-from libs.Singletons import PAGE_MANAGER, DATA_MANAGER, NOTIFICATION_MANAGER
+
 
 lv.theme_default_init(lv.disp_get_default(), 
                       lv.palette_main(lv.PALETTE.GREEN), 
                       lv.palette_main(lv.PALETTE.GREY), 
                       True, 
                       lv.font_montserrat_16)
+
+from libs.Singletons import PAGE_MANAGER, DATA_MANAGER, NOTIFICATION_MANAGER
+
+lv.scr_act().set_style_bg_opa(100, 0)
+lv.disp_get_default().set_bg_opa(50)
 
 
 while(1):

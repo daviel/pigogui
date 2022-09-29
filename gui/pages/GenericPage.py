@@ -19,9 +19,6 @@ class GenericPage(lv.obj):
 		self.clear_flag(self.FLAG.SCROLLABLE)
 		self.add_style(GENERIC_PAGE_STYLE, 0)
 
-		#self.animOut = lv.SCR_LOAD_ANIM.MOVE_RIGHT
-		#self.animIn = lv.SCR_LOAD_ANIM.MOVE_LEFT
-
 	def focusPage(self):
 		indev1.set_group(self.group)
 

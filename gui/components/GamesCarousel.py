@@ -61,11 +61,13 @@ class GamesCarousel(lv.obj):
 	def __init__(self, container):
 		super().__init__(container)
 
-		self.set_size(320, 184)
+		self.set_size(320, 200)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
 		self.set_style_border_width(0, 0)
 		self.set_style_pad_column(12, 0)
 		self.set_style_pad_row(0, 0)
+		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.AUTO)
+		self.set_style_bg_opa(lv.OPA.TRANSP, 0)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
@@ -75,7 +77,7 @@ class GamesCarousel(lv.obj):
 			self.games.append(game)
 		SettingsIcon(self)
 
-		self.scroll_to(0, 8, lv.ANIM.OFF)
+		#self.scroll_to(0, 16, lv.ANIM.OFF)
 
 		self.animZoomOut = lv.anim_t()
 		self.animZoomOut.init()

@@ -28,7 +28,7 @@ disp_drv.draw_buf = draw_buf
 disp_drv.flush_cb = SDL.monitor_flush
 disp_drv.hor_res = 320
 disp_drv.ver_res = 240
-disp_drv.screen_transp = 1
+disp_drv.screen_transp = True
 disp_drv.register()
 
 lv.disp_get_default().set_bg_opa(50)

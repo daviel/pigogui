@@ -33,9 +33,9 @@ class BottomBar(lv.obj):
 		super().__init__(container)
 		self.init_button_style()
 
-		self.set_size(320, 38)
+		self.set_size(320, 30)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
-		self.clear_flag(self.FLAG.SCROLLABLE)
+		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 		self.set_style_border_width(0, 0)
 		self.set_style_pad_column(4, 0)
 		self.set_style_pad_row(0, 0)
@@ -50,6 +50,8 @@ class BottomBar(lv.obj):
 
 			label = lv.label(self)
 			label.set_text(button['text'])
+
+		self.scroll_to(0, 14, lv.ANIM.OFF)
 
 	def init_button_style(self):
 		button_style = lv.style_t()
