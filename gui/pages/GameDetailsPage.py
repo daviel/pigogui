@@ -22,6 +22,9 @@ class GameDetailsPage(GenericPage):
 	def __init__(self):
 		super().__init__()
 
+		self.animIn = lv.SCR_LOAD_ANIM.FADE_IN
+		self.animOut = lv.SCR_LOAD_ANIM.FADE_OUT
+
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
