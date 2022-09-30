@@ -14,7 +14,7 @@ lv.theme_default_init(lv.disp_get_default(),
                       True, 
                       lv.font_montserrat_16)
 
-from libs.Singletons import PAGE_MANAGER, DATA_MANAGER, NOTIFICATION_MANAGER
+import libs.Singletons as SINGLETONS
 
 lv.scr_act().set_style_bg_opa(100, 0)
 lv.disp_get_default().set_bg_opa(50)

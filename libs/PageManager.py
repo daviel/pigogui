@@ -6,6 +6,7 @@ from gui.pages.SetupWifiPage import SetupWifiPage
 from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
 from gui.pages.GameDetailsPage import GameDetailsPage
+from gui.pages.EmptyPage import EmptyPage
 
 
 class PageManager():
@@ -23,6 +24,7 @@ class PageManager():
 		'gamesoverviewpage': GamesOverviewPage(),
 		'settingspage': SettingsPage(),
 		'gamedetailspage': GameDetailsPage(),
+		'emptypage': EmptyPage(),
 	}
 
 	def __init__(self):
@@ -67,3 +69,9 @@ class PageManager():
 	def animDone(self, timer):
 		print("Anim done")
 		timer.pause()
+
+	def hideCurrentPage(self):
+		self.currentPage.fade_out(1000, 0)
+
+	def showCurrentPage(self):
+		self.currentPage.fade_in(1000, 0)

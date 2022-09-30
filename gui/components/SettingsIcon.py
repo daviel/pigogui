@@ -10,9 +10,11 @@ class SettingsIcon(GameIcon):
 		super().__init__(container, {
 			'title': "Settings",
 			'description': "Settings",
-			'titleScreenSrc': "./imgs/icons/wrench.png",
-			'genre': "",
+			'main_image': "/media/wrench.png",
+			'dirname': "settings",
+			'tags': [],
 			'size': "",
+			'deletable': False,
 			'screenshots': []
 		})
 

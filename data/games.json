@@ -2,12 +2,23 @@
     {
         "title": "TinyRTS",
         "description": "An medieval fantasy RTS",
-        "image": "banner.png",
-        "exec": "tinyrts",
+        "main_image": "/media/cover.png",
+        "small_image": "/media/cover.png",
+        "dirname": "tinyrts",
+        "executable": "start.sh",
         "requirements": ["godot-3.4.4"],
         "last_start": null,
+        "playtime": 0,
         "is_installed": false,
         "rating": null,
-        "tags": ["RTS", "strategy", "godot"]
+        "size": "104",
+        "tags": ["Strategy", "godot"],
+        "deletable": true,
+        "keymap": "UP=KEY_UP LEFT=KEY_LEFT RIGHT=KEY_RIGHT DOWN=KEY_DOWN A=KEY_SPACE SELECT=KEY_ESC START=KEY_ENTER Y=KEY_X",
+        "screenshots": 
+        [
+            "/media/screenshots/1.png",
+            "/media/screenshots/2.png"
+        ]
     }
 ]

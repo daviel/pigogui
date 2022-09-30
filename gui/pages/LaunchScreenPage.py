@@ -34,7 +34,6 @@ class LaunchScreenPage(GenericPage):
 		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
 
-
 	def page_done(self, event):
 		code = event.get_code()
 		if code == lv.EVENT.KEY:

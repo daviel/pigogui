@@ -3,6 +3,7 @@ from gui.components.GameIcon import GameIcon
 from gui.components.SettingsIcon import SettingsIcon
 from libs.init_drv import indev1
 from libs.Helper import SDL_KEYS
+import libs.Singletons as SINGLETONS
 
 
 def anim_game_sizes(game, v):
@@ -15,38 +16,7 @@ class GamesCarousel(lv.obj):
 	animZoomOut = ""
 	group = ""
 
-	gameData = [
-		{
-			'title': "Game 1",
-			'description': "This is an example game",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'size': "104",
-			'screenshots': ["./imgs/covers/cover4.png", "./imgs/covers/cover5.png"]
-		},
-		{
-			'title': "Game 2",
-			'description': "This is an example game with much text",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'size': "1334",
-			'screenshots': ["./imgs/covers/cover3.png", "./imgs/covers/cover4.png"]
-		},
-		{
-			'title': "Game 3",
-			'description': "This is an example game with even more text in the description",
-			'titleScreenSrc': "./imgs/covers/cover5.png",
-			'genre': "Strategy",
-			'size': "12",
-			'screenshots': [
-				"./imgs/covers/cover1.png", 
-				"./imgs/covers/cover2.png",
-				"./imgs/covers/cover3.png",
-				"./imgs/covers/cover4.png",
-				"./imgs/covers/cover5.png",
-			]
-		},
-	]
+	gameData = []
 
 	def click_handle(self, event):
 		code = event.get_code()
@@ -67,15 +37,9 @@ class GamesCarousel(lv.obj):
 		self.set_style_pad_column(12, 0)
 		self.set_style_pad_row(0, 0)
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.AUTO)
-		self.set_style_bg_opa(lv.OPA.TRANSP, 0)
+		self.set_style_bg_opa(lv.OPA._50, 0)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
-
-		for data in self.gameData:
-			game = GameIcon(self, data)
-			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
-			self.games.append(game)
-		SettingsIcon(self)
 
 		#self.scroll_to(0, 16, lv.ANIM.OFF)
 
@@ -118,3 +82,15 @@ class GamesCarousel(lv.obj):
 	def anim_func(self, anim, val):
 		for game in self.games:
 			game.set_size(val, val)
+
+	def load(self):
+		self.gameData = SINGLETONS.DATA_MANAGER.get("games")
+		for data in self.gameData:
+			game = GameIcon(self, data)
+			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
+			self.games.append(game)
+		SettingsIcon(self)
+
+	def unload(self):
+		for i in range(self.get_child_cnt()):
+			self.get_child(i).del_delayed(1000)

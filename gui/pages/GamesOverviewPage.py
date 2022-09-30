@@ -18,9 +18,16 @@ class GamesOverviewPage(GenericPage):
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(0, 0)
 		self.set_style_border_width(0, 0)
+		self.set_style_bg_opa(lv.OPA._50, 0)
 
 		self.tobpar1 = TopBar(self)
 		self.games1 = GamesCarousel(self)
 		self.bottombar1 = BottomBar(self)
-		
+
 		self.group = self.games1.group
+
+	def pageOpened(self):
+		self.games1.load()
+
+	def pageClosed(self):
+		self.games1.unload()

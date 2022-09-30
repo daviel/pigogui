@@ -6,8 +6,9 @@ class DataManager:
     data = {}
 
     def __init__(self):
+        self.load("./data/configuration.json", "configuration")
         self.load("./data/games.json", "games")
-        self.save("./data/games1.json", self.data['games'])
+        #self.save("./data/games1.json", self.data['games'])
         pass
 
     def load(self, filename, key):
@@ -21,3 +22,6 @@ class DataManager:
         content = file.write(json.dumps(content))
         file.close()
         pass
+
+    def get(self, key):
+        return self.data[key]

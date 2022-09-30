@@ -15,11 +15,14 @@ class GameIcon(lv.btn):
 		super().__init__(container)
 		self.data = data
 
-		if data['titleScreenSrc'] == None:
+		if data['main_image'] == None:
 			self.label = lv.label(self)
 			self.label.set_text(data['title'])
 		else:
-			gameImage = loadImageAndConvert(data['titleScreenSrc'])
+			config = SINGLETONS.DATA_MANAGER.get("configuration")
+			gameImage = loadImageAndConvert(
+				config["gamesdir"] + data["dirname"] + "/" + data["main_image"]
+			)
 			titleScreen = lv.img(self)
 			titleScreen.set_size(92, 164)
 			titleScreen.set_src(gameImage)
@@ -39,10 +42,12 @@ class GameIcon(lv.btn):
 		print("Game started: ", self.data["title"])
 		code = e.get_code()
 		if code == lv.EVENT.PRESSED:
-
 			print("pressed")
-			key = e.get_key()
-			print(key)
+			config = SINGLETONS.DATA_MANAGER.get("configuration")
+			SINGLETONS.APPLICATION_MANAGER.startApp(
+				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
+				self.data["keymap"]
+			)
 		
 		if(self.pressCallback):
 			self.pressCallback(self, e)

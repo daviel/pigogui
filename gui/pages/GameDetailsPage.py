@@ -106,7 +106,7 @@ class GameDetailsPage(GenericPage):
 	def pageOpened(self):
 		self.gameTitle.set_text(self.data['title'])
 		self.description.set_text(self.data['description'])
-		self.genre.set_text(self.data['genre'])
+		self.genre.set_text(' '.join(self.data['tags']))
 		self.sizeLabel.set_text(lv.SYMBOL.SD_CARD + " " + self.data['size'] + "MB")
 
 		for imageSrc in self.data['screenshots']:
