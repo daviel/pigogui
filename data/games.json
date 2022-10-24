@@ -14,7 +14,7 @@
         "size": "104",
         "tags": ["Strategy", "godot"],
         "deletable": true,
-        "keymap": "UP=KEY_UP LEFT=KEY_LEFT RIGHT=KEY_RIGHT DOWN=KEY_DOWN A=KEY_SPACE SELECT=KEY_ESC START=KEY_ENTER Y=KEY_X",
+        "keymap": "UP=KEY_UP LEFT=KEY_LEFT RIGHT=KEY_RIGHT DOWN=KEY_DOWN A=KEY_A SELECT=KEY_ESC START=KEY_ENTER Y=KEY_X",
         "screenshots": 
         [
             "/media/screenshots/1.png",

@@ -34,7 +34,7 @@ class GameIcon(lv.btn):
 		self.set_size(100, 172)
 		#self.set_style_radius(16, 0)
 		#self.set_style_clip_corner(16, 0)
-		self.add_event_cb(self.showDetails, lv.EVENT.ALL, None)
+		self.add_event_cb(self.showDetails, lv.EVENT.KEY, None)
 		self.add_event_cb(self.start, lv.EVENT.PRESSED, None)
 
 	

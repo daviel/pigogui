@@ -44,7 +44,11 @@ if libc:
     fgets = libc.func("s", "fgets", "sis")
     fflush = libc.func("i", "fflush", "s")
     errno = libc.var("i", "errno")
-    kill = libc.func("v", "kill", "ii")
+    kill = libc.func("i", "kill", "ii")
+    waitpid = libc.func("i", "waitpid", "iii")
+    fork = libc.func("i", "fork", "")
+    execv = libc.func("i", "execv", "ss")
+    setenv = libc.func("i", "setenv", "ssi")
 
 
     def runShellCommand(cmd):

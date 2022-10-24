@@ -1,6 +1,6 @@
 {
     "gamesdir": "/opt/pigo/games/",
-    "pigoguidir": "/opt/pigogui/",
+    "pigoguidir": "/opt/pigogui",
     "keymapperpath": "/opt/keymapper/main.py",
     "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME",
     "mandatoryKeyMap": "HOME=KEY_DELETE"

@@ -5,9 +5,10 @@ import SDL
 globalKeyCallbacks = []
 
 def global_key_callback(drv, data):
-    #print(indev1.get_key(), data)
-    for func in globalKeyCallbacks:
-        func(indev1, drv, data)
+    if data == lv.EVENT.PRESSED or data == lv.EVENT.RELEASED or data == lv.EVENT.KEY:
+        print(indev1.get_key(), data)
+        for func in globalKeyCallbacks:
+            func(indev1, drv, data)
 
 def addGlobalKeyCallback(cb):
     globalKeyCallbacks.append(cb)

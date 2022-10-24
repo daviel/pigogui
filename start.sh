@@ -1,2 +1,2 @@
 #!/bin/bash
-micropython -X heapsize=4M -i ./main.py
+SDL_RPI_VIDEO_LAYER=999999 micropython -X heapsize=4M -i ./main.py

@@ -7,11 +7,13 @@ from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
 from gui.pages.GameDetailsPage import GameDetailsPage
 from gui.pages.EmptyPage import EmptyPage
+from libs.init_drv import indev1
 
 
 class PageManager():
 	currentPage = None
 	currentPageName = None
+	currentPageGroup = None
 
 	history = []
 	pageAnimTime = 1000
@@ -39,6 +41,7 @@ class PageManager():
 		self.currentPageName = pageName
 		self.currentPage = self.getPageByName(pageName)
 		page = self.currentPage
+		self.currentPageGroup = page.group
 		page.data = pageData
 		self.history.append(pageName)
 
@@ -72,6 +75,10 @@ class PageManager():
 
 	def hideCurrentPage(self):
 		self.currentPage.fade_out(1000, 0)
+		group = lv.group_create()
+		group.add_obj(lv.btn())
+		indev1.set_group(group)
 
 	def showCurrentPage(self):
 		self.currentPage.fade_in(1000, 0)
+		indev1.set_group(self.currentPageGroup)
