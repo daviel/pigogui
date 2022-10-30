@@ -21,7 +21,7 @@ class GameIcon(lv.btn):
 		else:
 			config = SINGLETONS.DATA_MANAGER.get("configuration")
 			gameImage = loadImageAndConvert(
-				config["gamesdir"] + data["dirname"] + "/" + data["main_image"]
+				data["main_image"]
 			)
 			titleScreen = lv.img(self)
 			titleScreen.set_size(92, 164)
