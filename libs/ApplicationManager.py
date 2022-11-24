@@ -83,12 +83,10 @@ class ApplicationManager:
             args = array.array("L")
             args.append(uctypes.addressof(b'python'))
             args.append(uctypes.addressof(bytearray(config["keymapperpath"])))
-            
             for key in keymap.split(" "):
                 args.append(uctypes.addressof(bytearray(key)))
-
+            
             ret = execv("/usr/bin/python", args)
-            print(ret)
         else:
             print(self.keymap_pid)
         
