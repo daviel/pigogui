@@ -35,22 +35,25 @@ class DataManager:
         gamesdir = self.get("configuration")["gamesdir"]
 
         for dir in os.ilistdir(dir):
-            dirname = dir[0]
-            gameDir = gamesdir + "/" + dirname
-            gameJson = gameDir + "/game.json"
-            if(os.stat(gameJson)):
-                print("game.json found")
-                file = io.open(gameJson, 'r')
-                content = file.readlines()
-                
-                game = json.loads(' '.join(map(str, content)))
-                game["dirname"] = dirname
-                game["main_image"] = gameDir + "/" + game["main_image"]
-                game["small_image"] = gameDir + "/" + game["small_image"]
+            type = dir[1]
+            if type == 0x4000: # check if dir
+                dirname = dir[0]
+                print(dirname)
+                gameDir = gamesdir + "/" + dirname
+                gameJson = gameDir + "/game.json"
+                if(os.stat(gameJson)):
+                    print("game.json found")
+                    file = io.open(gameJson, 'r')
+                    content = file.readlines()
+                    
+                    game = json.loads(' '.join(map(str, content)))
+                    game["dirname"] = dirname
+                    game["main_image"] = gameDir + "/" + game["main_image"]
+                    game["small_image"] = gameDir + "/" + game["small_image"]
 
-                for i in range(len(game["screenshots"])):
-                    game["screenshots"][i] = gameDir + "/" + game["screenshots"][i]
+                    for i in range(len(game["screenshots"])):
+                        game["screenshots"][i] = gameDir + "/" + game["screenshots"][i]
 
-                self.data["games"].append(game)
-                file.close()
+                    self.data["games"].append(game)
+                    file.close()
         print(self.data["games"])
