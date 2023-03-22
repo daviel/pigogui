@@ -38,93 +38,60 @@ class SettingsPage(GenericPage):
 		main_page.set_flex_flow(lv.FLEX_FLOW.COLUMN)
 		main_page.set_flex_align(lv.FLEX_FLOW.ROW, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		main_page.set_height(240)
-		#main_page.set_width(60)
+		main_page.set_width(88)
 		main_page.set_style_pad_column(0, 0)
 		main_page.set_style_pad_row(6, 0)
 		main_page.set_style_border_width(0, 0)
 		main_page.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 
-		QuickSettingsPage = self.addQuickSettingsPage()
-		DisplayPage = self.addDisplayPage()
-		SoundPage = self.addSoundPage()
-		WifiPage = self.addWifiPage()
-		BluetoothPage = self.addBluetoothPage()
-		BatteryPage = self.addBatteryPage()
-		UserPage = self.addUserPage()
-		ThemePage = self.addThemePage()
-		HomescreenPage = self.addHomescreenPage()
-		StoragePage = self.addStoragePage()
-		VersionPage = self.addVersionPage()
-		AboutPage = self.addAboutPage()
-		PowerPage = self.addPowerPage()
-
-		hardwareLabel = lv.label(main_page)
-		hardwareLabel.set_text("Hardware")
-		self.addMenuPage(lv.SYMBOL.SETTINGS, "Quicksettings", QuickSettingsPage)
-		self.addMenuPage(lv.SYMBOL.IMAGE, "Display", DisplayPage)
-		self.addMenuPage(lv.SYMBOL.AUDIO, "Sound", SoundPage)
-		self.addMenuPage(lv.SYMBOL.WIFI, "WiFi", WifiPage)
-		self.addMenuPage(lv.SYMBOL.BLUETOOTH, "Bluetooth", BluetoothPage)
-		self.addMenuPage(lv.SYMBOL.BATTERY_FULL, "Battery", BatteryPage)
-		customizationLabel = lv.label(main_page)
-		customizationLabel.set_text("Customization")
-		self.addMenuPage(lv.SYMBOL.SETTINGS, "User", UserPage)
-		self.addMenuPage(lv.SYMBOL.TINT, "Theme", ThemePage)
-		self.addMenuPage(lv.SYMBOL.HOME, "Homescreen", HomescreenPage)
-		miscLabel = lv.label(main_page)
-		miscLabel.set_text("Misc")
-		self.addMenuPage(lv.SYMBOL.SD_CARD, "Storage", StoragePage)
-		self.addMenuPage(lv.SYMBOL.REFRESH, "Version", VersionPage)
-		self.addMenuPage(lv.SYMBOL.LIST, "About", AboutPage)
-		self.addMenuPage(lv.SYMBOL.POWER, "Power", PowerPage)
-
-		menu.set_page(QuickSettingsPage)
-		menu.set_page(DisplayPage)
-		menu.set_page(SoundPage)
-		menu.set_page(WifiPage)
-		menu.set_page(BluetoothPage)
-		menu.set_page(BatteryPage)
-		menu.set_page(ThemePage)
-		menu.set_page(UserPage)
-		menu.set_page(HomescreenPage)
-		menu.set_page(StoragePage)
-		menu.set_page(VersionPage)
-		menu.set_page(AboutPage)
-		menu.set_page(PowerPage)
-		menu.set_sidebar_page(main_page)
-
-		menu.set_page(PowerPage)
-
+		pages = [
+			{
+				"page": self.addDisplayPage(),
+				"symbol": lv.SYMBOL.IMAGE,
+				"name": "Display"
+			},
+			{
+				"page": self.addSoundPage(),
+				"symbol": lv.SYMBOL.AUDIO,
+				"name": "Sound"
+			},
+			{
+				"page": self.addWifiPage(),
+				"symbol": lv.SYMBOL.WIFI,
+				"name": "Wifi"
+			},
+			{
+				"page": self.addBluetoothPage(),
+				"symbol": lv.SYMBOL.BLUETOOTH,
+				"name": "Bluetooth"
+			},
+			{
+				"page": self.addUserPage(),
+				"symbol": lv.SYMBOL.HOME,
+				"name": "User"
+			},
+			{
+				"page": self.addStoragePage(),
+				"symbol": lv.SYMBOL.SD_CARD,
+				"name": "Storage"
+			},
+			{
+				"page": self.addAboutPage(),
+				"symbol": lv.SYMBOL.LIST,
+				"name": "About"
+			}
+		]
 		self.group = lv.group_create()
 		self.group.add_obj(main_page)
-		self.group.add_obj(QuickSettingsPage)
-		self.group.add_obj(DisplayPage)
-		self.group.add_obj(SoundPage)
-		self.group.add_obj(WifiPage)
-		self.group.add_obj(BluetoothPage)
-		self.group.add_obj(BatteryPage)
-		self.group.add_obj(ThemePage)
-		self.group.add_obj(UserPage)
-		self.group.add_obj(HomescreenPage)
-		self.group.add_obj(StoragePage)
-		self.group.add_obj(VersionPage)
-		self.group.add_obj(AboutPage)
-		self.group.add_obj(PowerPage)
-
+		for page in pages:
+			self.addMenuPage(page["symbol"], page["name"], page["page"])
+			menu.set_page(page["page"])
+			self.group.add_obj(page["page"])
+			lv.gridnav_add(page["page"], lv.GRIDNAV_CTRL.NONE)
 		lv.gridnav_add(main_page, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(QuickSettingsPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(DisplayPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(SoundPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(WifiPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(BluetoothPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(BatteryPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(ThemePage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(UserPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(HomescreenPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(StoragePage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(VersionPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(AboutPage, lv.GRIDNAV_CTRL.NONE)
-		lv.gridnav_add(PowerPage, lv.GRIDNAV_CTRL.NONE)
+		menu.set_sidebar_page(main_page)
+		menu.set_page(pages[0]["page"])
+		menu.set_page(pages[0]["page"])
 
 	def pageOpened(self):
 		addGlobalKeyCallback(self.globalExitPage)
@@ -188,20 +155,6 @@ class SettingsPage(GenericPage):
 		self.menu.set_load_page_event(btn, page)
 		return btn
 
-	def addQuickSettingsPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
 	def addDisplayPage(self):
 		# Create sub pages
 		subPage = lv.obj(self.menu)
@@ -217,6 +170,7 @@ class SettingsPage(GenericPage):
 		slider = ActiveSlider(subPage)
 		slider.center()
 		slider.set_width(160)
+		slider.set_range(0, 10)
 
 		label = lv.label(subPage)
 		label.set_text("Minutes to wait to turn off display")
@@ -270,6 +224,15 @@ class SettingsPage(GenericPage):
 		slider = ActiveSlider(subPage)
 		slider.center()
 		slider.set_width(160)
+		slider.set_range(0, 10)
+
+		label = lv.label(subPage)
+		label.set_text("Menu Sounds")
+
+		slider = ActiveSlider(subPage)
+		slider.center()
+		slider.set_width(160)
+		slider.set_range(0, 10)
 
 		return subPage
 
@@ -301,35 +264,7 @@ class SettingsPage(GenericPage):
 
 		return subPage
 
-	def addBatteryPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
 	def addUserPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
-	def addThemePage(self):
 		# Create sub pages
 		subPage = lv.obj(self.menu)
 		subPage.set_width(240)
@@ -366,20 +301,6 @@ class SettingsPage(GenericPage):
 
 		return subPage
 
-	def addHomescreenPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
 	def addStoragePage(self):
 		# Create sub pages
 		subPage = lv.obj(self.menu)
@@ -394,13 +315,15 @@ class SettingsPage(GenericPage):
 
 		return subPage
 
-	def addVersionPage(self):
+	def addAboutPage(self):
 		# Create sub pages
 		subPage = lv.obj(self.menu)
 		subPage.set_width(240)
 		subPage.set_style_pad_column(8, 0)
 		subPage.set_style_pad_row(8, 0)
 		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		subPage.set_style_pad_hor(8, 0)
+		subPage.set_style_pad_ver(8, 0)
 		# content
 		label = lv.label(subPage)
 		label.set_text("PiGO V1.0")
@@ -420,52 +343,13 @@ class SettingsPage(GenericPage):
 		label = lv.label(btn)
 		label.set_text("Check for Updates")
 
-		return subPage
-
-	def addAboutPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		subPage.set_style_pad_hor(8, 0)
-		subPage.set_style_pad_ver(8, 0)
-		# content
 		label = lv.label(subPage)
 		label.set_text(
-"""PiGO V1.0\n\n
+"""
 Made and developed by David Krawiec \n\n
 Thank you for using PiGO. :)
 """)
 		label.set_long_mode(lv.label.LONG.WRAP)
 		label.set_width(160)
-
-		return subPage
-
-	def addPowerPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(224)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.COLUMN_WRAP)
-		subPage.set_flex_align(lv.FLEX_FLOW.COLUMN_REVERSE, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.CENTER)
-		subPage.set_style_pad_hor(8, 0)
-		subPage.set_style_pad_ver(8, 0)
-		# content
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		btn.set_width(128)
-		label = lv.label(btn)
-		label.set_text("Reboot")
-		label.center()
-
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		btn.set_width(128)
-		label = lv.label(btn)
-		label.set_text("Shutdown")
-		label.center()
 
 		return subPage

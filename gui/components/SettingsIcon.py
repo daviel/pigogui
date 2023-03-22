@@ -12,7 +12,7 @@ class SettingsIcon(GameIcon):
 		super().__init__(container, {
 			'title': "Settings",
 			'description': "Settings",
-			'main_image': config["imgdir"] + "/icons/wrench.png",
+			'main_image': config["imgdir"] + "/wrench.png",
 			'dirname': "settings",
 			'tags': [],
 			'size': "",
