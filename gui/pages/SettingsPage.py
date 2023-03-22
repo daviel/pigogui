@@ -4,6 +4,8 @@ from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
 from libs.Helper import loadImage
 import libs.Singletons as SINGLETONS
+from gui.components.Generic.ActiveSlider import ActiveSlider
+from gui.components.Generic.ActiveRoller import ActiveRoller
 
 
 class SettingsPage(GenericPage):
@@ -133,7 +135,7 @@ class SettingsPage(GenericPage):
 
 	def globalExitPage(self, indev, drv, data):
 		#print(indev.get_key())
-		if indev.get_key() == 27 and self.hidden == False:
+		if indev.get_key() == 27 and self.hidden == False and indev.group == self.group:
 			self.hidden = True
 			SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
 
@@ -143,25 +145,27 @@ class SettingsPage(GenericPage):
 	def changeThemeHandler(self, e):
 		code = e.get_code()
 		obj = e.get_target()
-		if code == lv.EVENT.VALUE_CHANGED:
-			option = " " * 20
-			obj.get_selected_str(option, len(option))
-			selection = option.strip()[:-1]
+		if code == lv.EVENT.KEY:
+			key = e.get_key()
+			if key == lv.KEY.UP or key == lv.KEY.DOWN:
+				option = " " * 20
+				obj.get_selected_str(option, len(option))
+				selection = option.strip()[:-1]
 
-			if selection == "Light":
-				self.darkTheme = False
-			elif selection == "Dark":
-				self.darkTheme = True
-			else:
-				colors = lv.PALETTE.__dict__
-				primary_color = colors[selection]
-				self.primaryColor = primary_color
+				if selection == "Light":
+					self.darkTheme = False
+				elif selection == "Dark":
+					self.darkTheme = True
+				else:
+					colors = lv.PALETTE.__dict__
+					primary_color = colors[selection]
+					self.primaryColor = primary_color
 
-			lv.theme_default_init(lv.disp_get_default(), 
-					lv.palette_main(self.primaryColor), 
-					lv.palette_main(lv.PALETTE.GREY), 
-					self.darkTheme, 
-					lv.font_montserrat_16)
+				lv.theme_default_init(lv.disp_get_default(), 
+						lv.palette_main(self.primaryColor), 
+						lv.palette_main(lv.PALETTE.GREY), 
+						self.darkTheme, 
+						lv.font_montserrat_16)
 
 
 	def addMenuPage(self, symbol, title, page):
@@ -210,7 +214,7 @@ class SettingsPage(GenericPage):
 		label = lv.label(subPage)
 		label.set_text("Brightness")
 
-		slider = lv.slider(subPage)
+		slider = ActiveSlider(subPage)
 		slider.center()
 		slider.set_width(160)
 
@@ -218,7 +222,7 @@ class SettingsPage(GenericPage):
 		label.set_text("Minutes to wait to turn off display")
 		label.set_width(80)
 
-		roller1 = lv.roller(subPage)
+		roller1 = ActiveRoller(subPage)
 		roller1.set_options("\n".join([
 			"1",
 			"2",
@@ -236,8 +240,8 @@ class SettingsPage(GenericPage):
 		label.set_text("Minutes to wait to turn darken display")
 		label.set_width(80)
 
-		roller1 = lv.roller(subPage)
-		roller1.set_options("\n".join([
+		roller2 = ActiveRoller(subPage)
+		roller2.set_options("\n".join([
 			"1",
 			"2",
 			"3",
@@ -247,8 +251,8 @@ class SettingsPage(GenericPage):
 			"Never",
 			]),lv.roller.MODE.INFINITE)
 
-		roller1.set_visible_row_count(3)
-		roller1.set_width(60)
+		roller2.set_visible_row_count(3)
+		roller2.set_width(60)
 
 		return subPage
 
@@ -263,7 +267,7 @@ class SettingsPage(GenericPage):
 		label = lv.label(subPage)
 		label.set_text("Volume")
 
-		slider = lv.slider(subPage)
+		slider = ActiveSlider(subPage)
 		slider.center()
 		slider.set_width(160)
 
@@ -337,7 +341,7 @@ class SettingsPage(GenericPage):
 		label.set_text("Theme mode")
 		label.set_width(80)
 
-		roller1 = lv.roller(subPage)
+		roller1 = ActiveRoller(subPage)
 		roller1.set_options("\n".join([
 			"Light",
 			"Dark",
@@ -354,7 +358,7 @@ class SettingsPage(GenericPage):
 		for color in lv.PALETTE.__dict__:
 			colors.append(color)
 
-		roller1 = lv.roller(subPage)
+		roller1 = ActiveRoller(subPage)
 		roller1.set_options("\n".join(colors), lv.roller.MODE.INFINITE)
 		roller1.set_visible_row_count(3)
 		roller1.set_width(120)
