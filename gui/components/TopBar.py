@@ -18,16 +18,12 @@ class TopBar(lv.obj):
 		self.set_style_border_width(0, 0)
 		self.set_style_pad_all(1, 0)
 		self.set_style_radius(0, 0)
-		#self.set_style_opa(lv.OPA._80, 0)
-		self.set_style_bg_color(lv.theme_get_color_primary(0), 0)
 
 		self.label_time = lv.label(self)
 		self.label_time.set_text('10:15')
 
 		spacer = lv.obj(self)
 		spacer.set_flex_grow(1)
-
-		spacer.set_style_bg_color(lv.theme_get_color_primary(0), 0)
 		spacer.set_style_border_width(0, 0)
 
 		self.label1 = lv.label(self)
