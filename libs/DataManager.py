@@ -10,7 +10,13 @@ class DataManager:
     fileJSONMap = {}
 
     def __init__(self):
-        self.load("./data/configuration.json", "configuration")
+        try:
+            self.load("./data/configuration.json", "configuration")
+        except:
+            print("error loading config. Restoring defauls")
+            self.load("./data/configurationDefault.json", "configuration")
+            self.fileJSONMap["configuration"] = "./data/configuration.json"
+
         self.load("./data/store.json", "store")
         #self.save("./data/games1.json", self.data['games'])
         self.findGames(self.get("configuration")["gamesdir"])
@@ -25,7 +31,7 @@ class DataManager:
 
     def save(self, filename, content):
         file = io.open(filename, 'rw')
-        content = file.write(json.dumps(content))
+        content = file.write(self.makeReadable(json.dumps(content)))
         file.close()
         pass
 
@@ -37,6 +43,9 @@ class DataManager:
 
     def get(self, key):
         return self.data[key]
+    
+    def makeReadable(self, content):
+        return content.replace(",", ",\n").replace("{", "{\n").replace("}", "}\n")
 
     def findGames(self, dir):
         self.data["games"] = []
