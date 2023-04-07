@@ -31,8 +31,8 @@ class PageManager():
 
 	def __init__(self):
 		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
-		#self.setCurrentPage("launchscreenpage", True)
-		self.setCurrentPage("gamesoverviewpage", True)
+		self.setCurrentPage("launchscreenpage", True)
+		#self.setCurrentPage("gamesoverviewpage", True)
 
 	def setCurrentPage(self, pageName, movingIn, pageData=None):
 		if self.currentPage != None:

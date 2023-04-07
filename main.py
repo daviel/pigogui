@@ -6,12 +6,8 @@ import SDL
 SDL.init(w=320,h=240)
 
 import time
-
-
 import libs.Singletons as SINGLETONS
 
-
-				
 config = SINGLETONS.DATA_MANAGER.get("configuration")
 primary_color = config["user"]["theme"]["primaryColor"]
 darkTheme = config["user"]["theme"]["darkTheme"]

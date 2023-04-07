@@ -1,4 +1,17 @@
 import lvgl as lv
+import fs_driver
+
+
+fs_drv = lv.fs_drv_t()
+fs_driver.fs_register(fs_drv, 'S')
+font_ubuntu_14 = lv.font_load("S:fonts/ubuntu_14.font")
+font_ubuntu_16 = lv.font_load("S:fonts/ubuntu_16.font")
+font_ubuntu_20 = lv.font_load("S:fonts/ubuntu_20.font")
+font_baloo_chettan_14 = lv.font_load("S:fonts/baloo_chettan_14.font")
+font_baloo_chettan_16 = lv.font_load("S:fonts/baloo_chettan_16.font")
+font_baloo_chettan_20 = lv.font_load("S:fonts/baloo_chettan_20.font")
+font_baloo_chettan_24 = lv.font_load("S:fonts/baloo_chettan_24.font")
+
 
 def loadImage(src):
 	try:
