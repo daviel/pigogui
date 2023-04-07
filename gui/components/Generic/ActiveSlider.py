@@ -17,6 +17,7 @@ class ActiveSlider(lv.slider):
 
 		self.group = lv.group_create()
 		self.group.add_obj(self)
+		self.clear_state(lv.STATE.ANY)
 
 	def addPressEvent(self, e):
 		if indev1.group != self.group:
