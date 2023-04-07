@@ -7,6 +7,7 @@ import libs.Singletons as SINGLETONS
 
 class DataManager:
     data = {}
+    fileJSONMap = {}
 
     def __init__(self):
         self.load("./data/configuration.json", "configuration")
@@ -20,12 +21,19 @@ class DataManager:
         content = file.readlines()
         self.data[key] = json.loads(' '.join(map(str, content)))
         file.close()
+        self.fileJSONMap[key] = filename
 
     def save(self, filename, content):
         file = io.open(filename, 'rw')
         content = file.write(json.dumps(content))
         file.close()
         pass
+
+    def saveAll(self):
+        for key in self.fileJSONMap:
+            content = self.get(key)
+            filename = self.fileJSONMap[key]
+            self.save(filename, content)
 
     def get(self, key):
         return self.data[key]
