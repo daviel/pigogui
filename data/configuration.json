@@ -1,1 +1,22 @@
-{"pigoguidir": "/Users/david/Documents/lvgl/pigogui", "mandatoryKeyMap": "HOME=KEY_DELETE", "imgdir": "/Users/david/Documents/lvgl/pigogui/imgs/", "user": {"theme": {"primaryColor": "TEAL", "darkTheme": true}, "sound": {"menu": 3, "volume": 7}, "display": {"brightness": 100, "turnOffTime": 2, "darkenTime": 5}}, "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME", "keymapperpath": "/Users/david/Documents/lvgl/uinput-pigo-mapper/main.py", "gamesdir": "/Users/david/Documents/lvgl/games/"}
+{
+"pigoguidir": "/Users/david/Documents/lvgl/pigogui",
+ "mandatoryKeyMap": "HOME=KEY_DELETE",
+ "imgdir": "/Users/david/Documents/lvgl/pigogui/imgs/",
+ "user": {
+"theme": {
+"primaryColor": "INDIGO",
+ "darkTheme": true}
+,
+ "sound": {
+"menu": 5,
+ "volume": 10}
+,
+ "display": {
+"brightness": 100,
+ "turnOffTime": 2,
+ "darkenTime": 5}
+}
+,
+ "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME",
+ "keymapperpath": "/Users/david/Documents/lvgl/uinput-pigo-mapper/main.py",
+ "gamesdir": "/Users/david/Documents/lvgl/games/"}

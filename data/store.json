@@ -1,1 +1,21 @@
-[{"id": "com.pigo.tinyrts", "tags": ["Strategy", "godot"], "last_start": null, "executable": "start.sh", "is_installed": false, "keymap": "UP=KEY_UP LEFT=KEY_LEFT RIGHT=KEY_RIGHT DOWN=KEY_DOWN A=KEY_A SELECT=KEY_ESC START=KEY_ENTER Y=KEY_X", "title": "TinyRTS", "small_image": "/media/cover.png", "rating": null, "screenshots": ["/media/screenshots/1.png", "/media/screenshots/2.png"], "dirname": "tinyrts", "deletable": true, "size": "104", "main_image": "/media/cover.png", "requirements": ["godot-3.4.4"], "playtime": 0, "description": "An medieval fantasy RTS"}]
+[{
+"id": "com.pigo.tinyrts",
+ "tags": ["Strategy",
+ "godot"],
+ "last_start": null,
+ "executable": "start.sh",
+ "is_installed": false,
+ "keymap": "UP=KEY_UP LEFT=KEY_LEFT RIGHT=KEY_RIGHT DOWN=KEY_DOWN A=KEY_A SELECT=KEY_ESC START=KEY_ENTER Y=KEY_X",
+ "title": "TinyRTS",
+ "dirname": "tinyrts",
+ "small_image": "/media/cover.png",
+ "screenshots": ["/media/screenshots/1.png",
+ "/media/screenshots/2.png"],
+ "deletable": true,
+ "rating": null,
+ "size": "104",
+ "playtime": 0,
+ "main_image": "/media/cover.png",
+ "requirements": ["godot-3.4.4"],
+ "description": "An medieval fantasy RTS"}
+]

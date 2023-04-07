@@ -26,11 +26,6 @@ class LaunchScreenPage(GenericPage):
 		labelVersion.set_style_text_font(lv.font_montserrat_16, 0)
 		labelVersion.fade_in(3000, 1000)
 
-		#label = lv.label(container)
-		#label.set_text("< Press any button >")
-		#label.align(lv.ALIGN.BOTTOM_MID, 0, -4)
-		#self.label = label
-
 		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
 

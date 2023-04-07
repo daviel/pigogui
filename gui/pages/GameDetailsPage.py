@@ -40,7 +40,7 @@ class GameDetailsPage(GenericPage):
 		self.leftContainer.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 
 		imageButton = lv.img(self.leftContainer)
-		gameIconImage = loadImageAndConvert("./imgs/covers/cover1.png")
+		gameIconImage = loadImageAndConvert("./imgs/cover1.png")
 		imageButton.set_size(72, 72)
 		imageButton.set_src(gameIconImage)
 		imageButton.align(lv.ALIGN.CENTER, 0, 0)
