@@ -1,12 +1,22 @@
 import lvgl as lv
+
+from gui.components.Generic.SubPage import SubPage
+
 from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
+import libs.Singletons as SINGLETONS
 
-class UserSubPage(lv.obj):
+
+class UserSubPage(SubPage):
 	label = ""
 	data = ""
-	pressCallback = False
+	colors = []
+	primaryColor = ""
+	darkTheme = False
+
+	primaryColorRoller = ""
+	darkThemeRoller = ""
 
 	def __init__(self, container):
 		super().__init__(container)
@@ -18,31 +28,42 @@ class UserSubPage(lv.obj):
 		# content
 		label = lv.label(self)
 		label.set_text("Theme mode")
-		label.set_width(80)
+		label.set_width(70)
 
-		roller1 = ActiveRoller(self)
-		roller1.set_options("\n".join([
+		self.darkThemeRoller = ActiveRoller(self)
+		self.darkThemeRoller.set_options("\n".join([
 			"Light",
 			"Dark",
 			]),lv.roller.MODE.NORMAL)
-		roller1.set_visible_row_count(2)
-		roller1.set_width(120)
-		roller1.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
+		self.darkThemeRoller.set_visible_row_count(2)
+		self.darkThemeRoller.set_width(120)
+		self.darkThemeRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
 
 		label = lv.label(self)
 		label.set_text("Theme color")
-		label.set_width(80)
+		label.set_width(70)
 
-		colors = []
 		for color in lv.PALETTE.__dict__:
-			colors.append(color)
+			self.colors.append(color)
 
-		roller1 = ActiveRoller(self)
-		roller1.set_options("\n".join(colors), lv.roller.MODE.INFINITE)
-		roller1.set_visible_row_count(3)
-		roller1.set_width(120)
-		roller1.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
+		self.primaryColorRoller = ActiveRoller(self)
+		self.primaryColorRoller.set_options("\n".join(self.colors), lv.roller.MODE.INFINITE)
+		self.primaryColorRoller.set_visible_row_count(3)
+		self.primaryColorRoller.set_width(120)
+		self.primaryColorRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
 		
+	def loadSubPage(self, event):
+		config = SINGLETONS.DATA_MANAGER.get("configuration")
+		self.primaryColor = config["user"]["theme"]["primaryColor"]
+		self.darkTheme = config["user"]["theme"]["darkTheme"]
+
+		self.primaryColorRoller.set_selected(self.colors.index(self.primaryColor), True)
+		if self.darkTheme == True:
+			self.darkThemeRoller.set_selected(1, True)
+		else:
+			self.darkThemeRoller.set_selected(0, True)
+		pass
+
 	def changeThemeHandler(self, e):
 		code = e.get_code()
 		obj = e.get_target()
@@ -53,17 +74,23 @@ class UserSubPage(lv.obj):
 				obj.get_selected_str(option, len(option))
 				selection = option.strip()[:-1]
 
+				colors = lv.PALETTE.__dict__
+				primary_color = colors[self.primaryColor]
+				config = SINGLETONS.DATA_MANAGER.get("configuration")
+
 				if selection == "Light":
 					self.darkTheme = False
 				elif selection == "Dark":
 					self.darkTheme = True
 				else:
-					colors = lv.PALETTE.__dict__
 					primary_color = colors[selection]
-					self.primaryColor = primary_color
+					self.primaryColor = selection
+					config["user"]["theme"]["primaryColor"] = selection
 
 				lv.theme_default_init(lv.disp_get_default(), 
-						lv.palette_main(self.primaryColor), 
+						lv.palette_main(primary_color), 
 						lv.palette_main(lv.PALETTE.GREY), 
 						self.darkTheme, 
 						lv.font_montserrat_16)
+				
+				config["user"]["theme"]["darkTheme"] = self.darkTheme

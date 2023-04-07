@@ -4,8 +4,6 @@ from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
 from libs.Helper import loadImage
 import libs.Singletons as SINGLETONS
-from gui.components.Generic.ActiveSlider import ActiveSlider
-from gui.components.Generic.ActiveRoller import ActiveRoller
 
 from gui.pages.SettingsSubPages.DisplaySubPage import DisplaySubPage
 from gui.pages.SettingsSubPages.SoundSubPage import SoundSubPage
@@ -18,8 +16,6 @@ from gui.pages.SettingsSubPages.AboutSubPage import AboutSubPage
 
 class SettingsPage(GenericPage):
 	menu = None
-	darkTheme = False
-	primaryColor = lv.PALETTE.GREEN
 	hidden = False
 
 	def __init__(self):
@@ -33,7 +29,7 @@ class SettingsPage(GenericPage):
 		# Create a menu object
 		menu = lv.menu(container)
 		self.menu = menu
-		menu.align(lv.ALIGN.TOP_LEFT, -24, -16)
+		menu.align(lv.ALIGN.CENTER, 0, 0)
 		menu.set_style_pad_column(0, 0)
 		menu.set_style_pad_row(0, 0)
 		menu.set_style_border_width(0, 0)
@@ -99,13 +95,13 @@ class SettingsPage(GenericPage):
 		lv.gridnav_add(main_page, lv.GRIDNAV_CTRL.NONE)
 		menu.set_sidebar_page(main_page)
 		menu.set_page(pages[0]["page"])
-		menu.set_page(pages[0]["page"])
 
 	def pageOpened(self):
 		addGlobalKeyCallback(self.globalExitPage)
 		self.hidden = False
 
 	def pageClosed(self):
+		SINGLETONS.DATA_MANAGER.saveAll()
 		removeGlobalKeyCallback(self.globalExitPage)
 
 	def globalExitPage(self, indev, drv, data):
@@ -120,7 +116,8 @@ class SettingsPage(GenericPage):
 		btn.set_style_pad_hor(4, 0)
 		btn.set_style_pad_ver(4, 0)
 		btn.set_flex_flow(lv.FLEX_FLOW.ROW)
-
+		btn.add_event_cb(page.loadSubPage, lv.EVENT.PRESSED, None)
+		
 		symbolLabel = lv.label(btn)
 		symbolLabel.set_text(symbol)
 		symbolLabel.set_width(18)
