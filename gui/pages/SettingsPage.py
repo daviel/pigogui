@@ -7,6 +7,14 @@ import libs.Singletons as SINGLETONS
 from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
+from gui.pages.SettingsSubPages.DisplaySubPage import DisplaySubPage
+from gui.pages.SettingsSubPages.SoundSubPage import SoundSubPage
+from gui.pages.SettingsSubPages.WifiSubPage import WifiSubPage
+from gui.pages.SettingsSubPages.BluetoothSubPage import BluetoothSubPage
+from gui.pages.SettingsSubPages.StorageSubPage import StorageSubPage
+from gui.pages.SettingsSubPages.UserSubPage import UserSubPage
+from gui.pages.SettingsSubPages.AboutSubPage import AboutSubPage
+
 
 class SettingsPage(GenericPage):
 	menu = None
@@ -46,37 +54,37 @@ class SettingsPage(GenericPage):
 
 		pages = [
 			{
-				"page": self.addDisplayPage(),
+				"page": DisplaySubPage(menu),
 				"symbol": lv.SYMBOL.IMAGE,
 				"name": "Display"
 			},
 			{
-				"page": self.addSoundPage(),
+				"page": SoundSubPage(menu),
 				"symbol": lv.SYMBOL.AUDIO,
 				"name": "Sound"
 			},
 			{
-				"page": self.addWifiPage(),
+				"page": WifiSubPage(menu),
 				"symbol": lv.SYMBOL.WIFI,
 				"name": "Wifi"
 			},
 			{
-				"page": self.addBluetoothPage(),
+				"page": BluetoothSubPage(menu),
 				"symbol": lv.SYMBOL.BLUETOOTH,
 				"name": "Bluetooth"
 			},
 			{
-				"page": self.addUserPage(),
+				"page": UserSubPage(menu),
 				"symbol": lv.SYMBOL.HOME,
 				"name": "User"
 			},
 			{
-				"page": self.addStoragePage(),
+				"page": StorageSubPage(menu),
 				"symbol": lv.SYMBOL.SD_CARD,
 				"name": "Storage"
 			},
 			{
-				"page": self.addAboutPage(),
+				"page": AboutSubPage(menu),
 				"symbol": lv.SYMBOL.LIST,
 				"name": "About"
 			}
@@ -106,35 +114,6 @@ class SettingsPage(GenericPage):
 			self.hidden = True
 			SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
 
-	def addPressEvent(self, event):
-		print(event)
-
-	def changeThemeHandler(self, e):
-		code = e.get_code()
-		obj = e.get_target()
-		if code == lv.EVENT.KEY:
-			key = e.get_key()
-			if key == lv.KEY.UP or key == lv.KEY.DOWN:
-				option = " " * 20
-				obj.get_selected_str(option, len(option))
-				selection = option.strip()[:-1]
-
-				if selection == "Light":
-					self.darkTheme = False
-				elif selection == "Dark":
-					self.darkTheme = True
-				else:
-					colors = lv.PALETTE.__dict__
-					primary_color = colors[selection]
-					self.primaryColor = primary_color
-
-				lv.theme_default_init(lv.disp_get_default(), 
-						lv.palette_main(self.primaryColor), 
-						lv.palette_main(lv.PALETTE.GREY), 
-						self.darkTheme, 
-						lv.font_montserrat_16)
-
-
 	def addMenuPage(self, symbol, title, page):
 		btn = lv.btn(self.main_page)
 		btn.set_size(72, 24)
@@ -153,203 +132,5 @@ class SettingsPage(GenericPage):
 		label.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
 		
 		self.menu.set_load_page_event(btn, page)
+		page.set_width(240)
 		return btn
-
-	def addDisplayPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(230)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-
-		# content
-		label = lv.label(subPage)
-		label.set_text("Brightness")
-
-		slider = ActiveSlider(subPage)
-		slider.center()
-		slider.set_width(160)
-		slider.set_range(0, 10)
-
-		label = lv.label(subPage)
-		label.set_text("Minutes to wait to turn off display")
-		label.set_width(80)
-
-		roller1 = ActiveRoller(subPage)
-		roller1.set_options("\n".join([
-			"1",
-			"2",
-			"3",
-			"5",
-			"10",
-			"15",
-			"Never",
-			]),lv.roller.MODE.INFINITE)
-
-		roller1.set_visible_row_count(3)
-		roller1.set_width(60)
-
-		label = lv.label(subPage)
-		label.set_text("Minutes to wait to turn darken display")
-		label.set_width(80)
-
-		roller2 = ActiveRoller(subPage)
-		roller2.set_options("\n".join([
-			"1",
-			"2",
-			"3",
-			"5",
-			"10",
-			"15",
-			"Never",
-			]),lv.roller.MODE.INFINITE)
-
-		roller2.set_visible_row_count(3)
-		roller2.set_width(60)
-
-		return subPage
-
-	def addSoundPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Volume")
-
-		slider = ActiveSlider(subPage)
-		slider.center()
-		slider.set_width(160)
-		slider.set_range(0, 10)
-
-		label = lv.label(subPage)
-		label.set_text("Menu Sounds")
-
-		slider = ActiveSlider(subPage)
-		slider.center()
-		slider.set_width(160)
-		slider.set_range(0, 10)
-
-		return subPage
-
-	def addWifiPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
-	def addBluetoothPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
-	def addUserPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Theme mode")
-		label.set_width(80)
-
-		roller1 = ActiveRoller(subPage)
-		roller1.set_options("\n".join([
-			"Light",
-			"Dark",
-			]),lv.roller.MODE.NORMAL)
-		roller1.set_visible_row_count(2)
-		roller1.set_width(120)
-		roller1.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
-
-		label = lv.label(subPage)
-		label.set_text("Theme color")
-		label.set_width(80)
-
-		colors = []
-		for color in lv.PALETTE.__dict__:
-			colors.append(color)
-
-		roller1 = ActiveRoller(subPage)
-		roller1.set_options("\n".join(colors), lv.roller.MODE.INFINITE)
-		roller1.set_visible_row_count(3)
-		roller1.set_width(120)
-		roller1.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
-
-		return subPage
-
-	def addStoragePage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		# content
-		label = lv.label(subPage)
-		label.set_text("Not implemented yet")
-		label.set_width(160)
-
-		return subPage
-
-	def addAboutPage(self):
-		# Create sub pages
-		subPage = lv.obj(self.menu)
-		subPage.set_width(240)
-		subPage.set_style_pad_column(8, 0)
-		subPage.set_style_pad_row(8, 0)
-		subPage.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
-		subPage.set_style_pad_hor(8, 0)
-		subPage.set_style_pad_ver(8, 0)
-		# content
-		label = lv.label(subPage)
-		label.set_text("PiGO V1.0")
-		label.set_width(160)
-
-		label = lv.label(subPage)
-		label.set_text("Last time checked:")
-		label.set_width(160)
-
-		label = lv.label(subPage)
-		label.set_text("About an hour ago")
-		label.set_width(160)
-
-		btn = lv.btn(subPage)
-		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		btn.set_width(160)
-		label = lv.label(btn)
-		label.set_text("Check for Updates")
-
-		label = lv.label(subPage)
-		label.set_text(
-"""
-Made and developed by David Krawiec \n\n
-Thank you for using PiGO. :)
-""")
-		label.set_long_mode(lv.label.LONG.WRAP)
-		label.set_width(160)
-
-		return subPage
