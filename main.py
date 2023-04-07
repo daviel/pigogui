@@ -8,13 +8,22 @@ SDL.init(w=320,h=240)
 import time
 
 
-lv.theme_default_init(lv.disp_get_default(), 
-                      lv.palette_main(lv.PALETTE.GREEN), 
-                      lv.palette_main(lv.PALETTE.GREY), 
-                      True, 
-                      lv.font_montserrat_16)
-
 import libs.Singletons as SINGLETONS
+
+
+				
+config = SINGLETONS.DATA_MANAGER.get("configuration")
+primary_color = config["user"]["theme"]["primaryColor"]
+darkTheme = config["user"]["theme"]["darkTheme"]
+
+colors = lv.PALETTE.__dict__
+primary_color = colors[primary_color]
+
+lv.theme_default_init(lv.disp_get_default(), 
+						lv.palette_main(primary_color), 
+						lv.palette_main(lv.PALETTE.GREY), 
+						darkTheme, 
+						lv.font_montserrat_16)
 
 lv.scr_act().set_style_bg_opa(100, 0)
 lv.disp_get_default().set_bg_opa(50)
