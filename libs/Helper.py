@@ -1,5 +1,6 @@
 import lvgl as lv
 import fs_driver
+import ustruct
 
 
 fs_drv = lv.fs_drv_t()
@@ -28,6 +29,8 @@ def loadImageAndConvert(src):
         'data': img_data
     })
 
+def longByteToInteger(long):
+	return ustruct.unpack("<L", long)[0]
 
 KEYBOARD_LETTERS_ONLY_MAP = ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "\n",
 	                        "A", "S", "D", "F", "G", "H", "J", "K", "L", "\n",
