@@ -3,9 +3,12 @@ from libs.NotificationManager import NotificationManager
 from libs.DataManager import DataManager
 from libs.SoundDisplayBarManager import SoundDisplayBarManager
 from libs.ApplicationManager import ApplicationManager
+from libs.DownloadManager import DownloadManager
+
 
 DATA_MANAGER = DataManager()
 APPLICATION_MANAGER = ApplicationManager()
 PAGE_MANAGER = PageManager()
 NOTIFICATION_MANAGER = NotificationManager()
 SOUNDDISPLAYBAR_MANAGER = SoundDisplayBarManager()
+DOWNLOAD_MANAGER = DownloadManager()

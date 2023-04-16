@@ -27,4 +27,5 @@ lv.disp_get_default().set_bg_opa(50)
 
 while(1):
     lv.timer_handler()
+    SINGLETONS.DownloadManager.update()
     time.sleep(1 / 200)
