@@ -35,7 +35,7 @@ class LaunchScreenPage(GenericPage):
 		versionLabel.set_style_text_font(font_baloo_chettan_14, 0)
 		versionLabel.fade_in(1000, 3000)
 
-		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
+		self.add_event(self.page_done, lv.EVENT.ALL, None)
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
 
 	def pageOpened(self):

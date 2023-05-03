@@ -12,8 +12,8 @@ class ActiveSlider(lv.slider):
 
 	def __init__(self, container):
 		super().__init__(container)
-		self.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
-		self.add_event_cb(self.cancelEvent, lv.EVENT.CANCEL, None)
+		self.add_event(self.addPressEvent, lv.EVENT.PRESSED, None)
+		self.add_event(self.cancelEvent, lv.EVENT.CANCEL, None)
 
 		self.group = lv.group_create()
 		self.group.add_obj(self)

@@ -32,7 +32,7 @@ class SoundSubPage(SubPage):
 		self.volumeSlider.center()
 		self.volumeSlider.set_width(160)
 		self.volumeSlider.set_range(0, 10)
-		self.volumeSlider.add_event_cb(self.setVolume, lv.EVENT.ALL, None)
+		self.volumeSlider.add_event(self.setVolume, lv.EVENT.ALL, None)
 
 		label = lv.label(self)
 		label.set_text("Menu Sounds")
@@ -41,7 +41,7 @@ class SoundSubPage(SubPage):
 		self.menuSlider.center()
 		self.menuSlider.set_width(160)
 		self.menuSlider.set_range(0, 10)
-		self.menuSlider.add_event_cb(self.setMenuVolume, lv.EVENT.ALL, None)
+		self.menuSlider.add_event(self.setMenuVolume, lv.EVENT.ALL, None)
 
 	def loadSubPage(self, event):
 		config = SINGLETONS.DATA_MANAGER.get("configuration")

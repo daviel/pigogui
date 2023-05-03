@@ -7,20 +7,20 @@ from gui.components.Generic.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
-#from libs.WifiShellParser import WifiShellParser
+from libs.WifiShellParser import WifiShellParser
 import libs.Singletons as SINGLETONS
 
 
 class SetupWifiPage(GenericPage):
 	nextbutton = ""
-	#wifiShellParser = WifiShellParser()
+	wifiShellParser = WifiShellParser()
 	wifiContainer = ""
 	loadAnim = ""
 
 	def __init__(self):
 		super().__init__()
-		#self.wifiShellParser.scanCallback = self.scanResults
-		#self.wifiShellParser.scan()
+		self.wifiShellParser.scanCallback = self.scanResults
+		self.wifiShellParser.scan()
 
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
@@ -51,17 +51,17 @@ class SetupWifiPage(GenericPage):
 		self.backbutton = Button(self, lv.SYMBOL.LEFT)
 		self.backbutton.set_size(50, 30)
 		self.backbutton.label.center()
-		self.backbutton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+		self.backbutton.add_event(self.pageBack, lv.EVENT.PRESSED, None)
 
 		self.refreshbutton = Button(self, lv.SYMBOL.REFRESH)
 		self.refreshbutton.set_size(50, 30)
 		self.refreshbutton.label.center()
-		self.refreshbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
+		self.refreshbutton.add_event(self.pageNext, lv.EVENT.PRESSED, None)
 
 		self.nextbutton = Button(self, lv.SYMBOL.RIGHT)
 		self.nextbutton.set_size(50, 30)
 		self.nextbutton.label.center()
-		self.nextbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
+		self.nextbutton.add_event(self.pageNext, lv.EVENT.PRESSED, None)
 		
 		self.group = lv.group_create()
 		self.group.add_obj(self)

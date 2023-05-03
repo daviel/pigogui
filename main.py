@@ -2,8 +2,12 @@ import usys as sys
 import lvgl as lv
 lv.init()
 
-import SDL
-SDL.init(w=320,h=240)
+
+WIDTH = 320
+HEIGHT = 240
+disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
+
+
 
 import time
 import libs.Singletons as SINGLETONS
@@ -22,10 +26,9 @@ lv.theme_default_init(lv.disp_get_default(),
 						lv.font_montserrat_16)
 
 lv.scr_act().set_style_bg_opa(100, 0)
-lv.disp_get_default().set_bg_opa(50)
-
+#lv.disp_get_default().set_bg_opa(50)
 
 while(1):
     lv.timer_handler()
-    SINGLETONS.DownloadManager.update()
+    SINGLETONS.DOWNLOAD_MANAGER.update()
     time.sleep(1 / 200)

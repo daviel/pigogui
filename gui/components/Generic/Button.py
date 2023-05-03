@@ -11,7 +11,7 @@ class Button(lv.btn):
 		self.label = lv.label(self)
 		self.label.set_text(text)
 		self.label.center()
-		self.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
+		self.add_event(self.addPressEvent, lv.EVENT.PRESSED, None)
 
 	def addPressEvent(self, e):
 		if(self.pressCallback):

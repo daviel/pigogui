@@ -60,7 +60,7 @@ class SetupPage(GenericPage):
 		nametextarea.set_height(40)
 		nametextarea.set_width(260)
 		nametextarea.set_placeholder_text("Your nickname")
-		nametextarea.add_event_cb(self.nameInput, lv.EVENT.READY, None)
+		nametextarea.add_event(self.nameInput, lv.EVENT.READY, None)
 		self.nametextarea = nametextarea
 
 		errLabel = lv.label(container)
@@ -73,7 +73,7 @@ class SetupPage(GenericPage):
 		nextbutton.set_size(260, 30)
 		nextbutton.label.center()
 		nextbutton.add_state(lv.STATE.DISABLED)
-		nextbutton.add_event_cb(self.page_done, lv.EVENT.PRESSED, None)
+		nextbutton.add_event(self.page_done, lv.EVENT.PRESSED, None)
 		self.nextbutton = nextbutton
 		
 		self.group = lv.group_create()
@@ -98,7 +98,7 @@ class SetupPage(GenericPage):
 			return True
 
 	def nameInput(self, e):
-		obj = e.get_target()
+		obj = self.nametextarea
 
 		if self.keyboard == False:
 			self.keyboard = KEYBOARD_LETTERS_ONLY()

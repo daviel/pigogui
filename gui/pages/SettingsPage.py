@@ -116,7 +116,7 @@ class SettingsPage(GenericPage):
 		btn.set_style_pad_hor(4, 0)
 		btn.set_style_pad_ver(4, 0)
 		btn.set_flex_flow(lv.FLEX_FLOW.ROW)
-		btn.add_event_cb(page.loadSubPage, lv.EVENT.PRESSED, None)
+		btn.add_event(page.loadSubPage, lv.EVENT.PRESSED, None)
 		
 		symbolLabel = lv.label(btn)
 		symbolLabel.set_text(symbol)

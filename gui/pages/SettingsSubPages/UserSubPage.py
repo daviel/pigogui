@@ -37,7 +37,7 @@ class UserSubPage(SubPage):
 			]),lv.roller.MODE.NORMAL)
 		self.darkThemeRoller.set_visible_row_count(2)
 		self.darkThemeRoller.set_width(120)
-		self.darkThemeRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
+		self.darkThemeRoller.add_event(self.changeThemeHandler, lv.EVENT.ALL, None)
 
 		label = lv.label(self)
 		label.set_text("Theme color")
@@ -50,7 +50,7 @@ class UserSubPage(SubPage):
 		self.primaryColorRoller.set_options("\n".join(self.colors), lv.roller.MODE.INFINITE)
 		self.primaryColorRoller.set_visible_row_count(3)
 		self.primaryColorRoller.set_width(120)
-		self.primaryColorRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
+		self.primaryColorRoller.add_event(self.changeThemeHandler, lv.EVENT.ALL, None)
 		
 	def loadSubPage(self, event):
 		config = SINGLETONS.DATA_MANAGER.get("configuration")

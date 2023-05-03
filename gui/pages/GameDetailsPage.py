@@ -56,7 +56,7 @@ class GameDetailsPage(GenericPage):
 		deleteButton.set_size(90, 24)
 		backButton = IconButton(self.leftContainer, lv.SYMBOL.LEFT, "Back")
 		backButton.set_size(90, 24)
-		backButton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+		backButton.add_event(self.pageBack, lv.EVENT.PRESSED, None)
 
 		self.rightContainer = lv.obj(self)
 		self.rightContainer.set_size(210, 236)

@@ -87,7 +87,7 @@ class GamesCarousel(lv.obj):
 		self.gameData = SINGLETONS.DATA_MANAGER.get("games")
 		for data in self.gameData:
 			game = GameIcon(self, data)
-			game.add_event_cb(self.click_handle, lv.EVENT.ALL, None)
+			game.add_event(self.click_handle, lv.EVENT.ALL, None)
 			self.games.append(game)
 		SettingsIcon(self)
 
