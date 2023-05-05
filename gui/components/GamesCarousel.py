@@ -37,7 +37,9 @@ class GamesCarousel(lv.obj):
 		self.set_style_pad_column(12, 0)
 		self.set_style_pad_row(0, 0)
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.AUTO)
-		self.set_style_bg_opa(lv.OPA._50, 0)
+		bg_color = lv.color_hex(0x555555)
+		bg_color.alpha = 200
+		self.set_style_bg_color(bg_color, 0)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 

@@ -119,7 +119,6 @@ class GameDetailsPage(GenericPage):
 	def createScreenshot(self, src):
 		imgSize = 112
 		screenshotButton = lv.btn(self.imageContainer)
-		screenshotButton.set_style_bg_opa(lv.OPA.TRANSP, 0)
 		screenshotButton.set_size(imgSize, imgSize)
 		gameImage = loadImageAndConvert(src)
 		screenshotImg = lv.img(screenshotButton)

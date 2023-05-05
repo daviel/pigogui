@@ -25,7 +25,7 @@ lv.theme_default_init(lv.disp_get_default(),
 						darkTheme, 
 						lv.font_montserrat_16)
 
-lv.scr_act().set_style_bg_opa(100, 0)
+lv.scr_act().set_style_bg_opa(0, 0)
 #lv.disp_get_default().set_bg_opa(50)
 
 while(1):

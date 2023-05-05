@@ -12,11 +12,12 @@ class LaunchScreenPage(GenericPage):
 	labelVisible = True
 	label = ""
 	pigoLabel = ""
+	animDuration = 1000
 
 	def __init__(self):
 		super().__init__()
 
-		self.animIn = lv.SCR_LOAD_ANIM.FADE_IN
+		self.animIn = lv.SCR_LOAD_ANIM.NONE
 
 		container = lv.obj(self)
 		container.set_size(320, 240)
@@ -26,7 +27,7 @@ class LaunchScreenPage(GenericPage):
 		pigoLabel.set_text("PiGO")
 		pigoLabel.set_style_text_font(font_baloo_chettan_24, 0)
 		
-		pigoLabel.fade_in(3000, 1000)
+		pigoLabel.fade_in(3000, 0)
 		self.pigoLabel = pigoLabel
 
 		versionLabel = lv.label(container)

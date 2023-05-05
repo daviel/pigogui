@@ -16,7 +16,6 @@ class PageManager():
 	currentPageGroup = None
 
 	history = []
-	pageAnimTime = 1000
 	timer = ""
 
 	index = {
@@ -30,9 +29,9 @@ class PageManager():
 	}
 
 	def __init__(self):
-		self.timer = lv.timer_create(self.animDone, self.pageAnimTime, None)
-		self.setCurrentPage("launchscreenpage", True)
-		#self.setCurrentPage("gamesoverviewpage", True)
+		self.timer = lv.timer_create(self.animDone, 1000, None)
+		#self.setCurrentPage("launchscreenpage", True)
+		self.setCurrentPage("gamesoverviewpage", True)
 
 	def setCurrentPage(self, pageName, movingIn, pageData=None):
 		if self.currentPage != None:
@@ -46,10 +45,11 @@ class PageManager():
 		self.history.append(pageName)
 
 		if movingIn:
-			lv.scr_load_anim(page, page.animIn, self.pageAnimTime, 0, False)
+			lv.scr_load_anim(page, page.animIn, page.animDuration, 0, False)
 		else:
-			lv.scr_load_anim(page, page.animOut, self.pageAnimTime, 0, False)
+			lv.scr_load_anim(page, page.animOut, page.animDuration, 0, False)
 		
+		self.timer.set_period(page.animDuration)
 		self.timer.reset()
 		self.timer.resume()
 
