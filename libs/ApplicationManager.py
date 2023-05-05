@@ -20,38 +20,40 @@ class ApplicationManager:
         self.setKeyMap()
 
     def startApp(self, app, keymap=""):
-        print("nohup " + app + " &")
-        self.stopMainApp()
-        self.app_call = app
+        if app != self.app_call:
+            print("nohup " + app + " &")
+            self.stopMainApp()
+            self.app_call = app
+            self.main_app_pid = fork()
+            if(self.main_app_pid == 0):
+                ret = setenv("SDL_RPI_VIDEO_LAYER", "10", 1)
+                print(ret)
+                execv(app, None)
+            print("PID: " + str(self.main_app_pid))
+
         self.setKeyMap(keymap)
         self.app_keymap = keymap
-        self.main_app_pid = fork()
-        if(self.main_app_pid == 0):
-            ret = setenv("SDL_RPI_VIDEO_LAYER", "10", 1)
-            print(ret)
-            execv(app, None)
-        print("PID: " + str(self.main_app_pid))
         SINGLETONS.PAGE_MANAGER.hideCurrentPage()
 
     def stopMainApp(self):
         if self.main_app_pid != -1:
+            print("killing pid: ", self.main_app_pid)
             ret = kill(self.main_app_pid, SIGKILL)
-            print(ret)
             waitpid(self.main_app_pid, None, 0)
             self.app_call = ""
             self.main_app_pid = -1
             self.setKeyMap()
 
     def pauseMainApp(self):
+        print("pausing pid: ", self.main_app_pid)
         self.is_paused = True
         ret = kill(self.main_app_pid, SIGSTOP)
-        print(ret)
         self.setKeyMap()
         
     def resumeMainApp(self):
+        print("resuming pid: ", self.main_app_pid)
         self.is_paused = False
         ret = kill(self.main_app_pid, SIGCONT)
-        print(ret)
         self.setKeyMap(self.app_keymap)
 
     def triggerQuickMenu(self, indev, drv, data):

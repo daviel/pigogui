@@ -8,7 +8,7 @@ class GenericPage(lv.obj):
 	animOut = lv.SCR_LOAD_ANIM.MOVE_RIGHT
 	animIn = lv.SCR_LOAD_ANIM.MOVE_LEFT
 	animDuration = 1000
-	group = ""
+	group = None
 	data = {}
 
 	def __init__(self):

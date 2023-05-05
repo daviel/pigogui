@@ -9,6 +9,7 @@ from gui.pages.GameDetailsPage import GameDetailsPage
 from gui.pages.EmptyPage import EmptyPage
 from libs.init_drv import indev1
 
+from libs.Helper import SDL_KEYS
 
 class PageManager():
 	currentPage = None
@@ -74,11 +75,7 @@ class PageManager():
 		timer.pause()
 
 	def hideCurrentPage(self):
-		self.currentPage.fade_out(1000, 0)
-		group = lv.group_create()
-		group.add_obj(lv.btn())
-		indev1.set_group(group)
+		self.setCurrentPage("emptypage", True, self)
 
 	def showCurrentPage(self):
-		self.currentPage.fade_in(1000, 0)
-		indev1.set_group(self.currentPageGroup)
+		self.pagePrev()

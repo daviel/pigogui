@@ -37,12 +37,10 @@ class GameIcon(lv.btn):
 		self.add_event(self.showDetails, lv.EVENT.KEY, None)
 		self.add_event(self.start, lv.EVENT.PRESSED, None)
 
-	
 	def start(self, e):
-		print("Game started: ", self.data["title"])
 		code = e.get_code()
 		if code == lv.EVENT.PRESSED:
-			print("pressed")
+			print("Game started: ", self.data["title"])
 			config = SINGLETONS.DATA_MANAGER.get("configuration")
 			SINGLETONS.APPLICATION_MANAGER.startApp(
 				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
@@ -60,4 +58,7 @@ class GameIcon(lv.btn):
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
 				SINGLETONS.PAGE_MANAGER.setCurrentPage("gamedetailspage", True, self.data)
+			elif key == SDL_KEYS["SDLK_DELETE"]:
+				SINGLETONS.APPLICATION_MANAGER.resumeMainApp()
+				SINGLETONS.PAGE_MANAGER.hideCurrentPage()
 		

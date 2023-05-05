@@ -18,16 +18,6 @@ class GamesCarousel(lv.obj):
 
 	gameData = []
 
-	def click_handle(self, event):
-		code = event.get_code()
-
-		if code == lv.EVENT.KEY:
-			key = event.get_key()
-			if key == SDL_KEYS["SDLK_x"]:
-				self.zoomToggle()
-		if code == lv.EVENT.CLICKED:
-			print("clicked")
-
 	def __init__(self, container):
 		super().__init__(container)
 
@@ -89,9 +79,17 @@ class GamesCarousel(lv.obj):
 		self.gameData = SINGLETONS.DATA_MANAGER.get("games")
 		for data in self.gameData:
 			game = GameIcon(self, data)
-			game.add_event(self.click_handle, lv.EVENT.ALL, None)
+			game.add_event(self.key_pressed, lv.EVENT.KEY, None)
 			self.games.append(game)
 		SettingsIcon(self)
+
+	def key_pressed(self, event):
+		code = event.get_code()
+
+		if code == lv.EVENT.KEY:
+			key = event.get_key()
+			if key == SDL_KEYS["SDLK_x"]:
+				self.zoomToggle()
 
 	def unload(self):
 		for i in range(self.get_child_cnt()):
