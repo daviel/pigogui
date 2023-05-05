@@ -2,7 +2,7 @@ import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
-from libs.Helper import loadImage
+from libs.Helper import SDL_KEYS, loadImage
 import libs.Singletons as SINGLETONS
 
 from gui.pages.SettingsSubPages.DisplaySubPage import DisplaySubPage
@@ -116,7 +116,9 @@ class SettingsPage(GenericPage):
 		btn.set_style_pad_hor(4, 0)
 		btn.set_style_pad_ver(4, 0)
 		btn.set_flex_flow(lv.FLEX_FLOW.ROW)
+		btn.add_flag(btn.FLAG.EVENT_BUBBLE)
 		btn.add_event(page.loadSubPage, lv.EVENT.PRESSED, None)
+		btn.add_event(self.handleReturn, lv.EVENT.KEY, None)
 		
 		symbolLabel = lv.label(btn)
 		symbolLabel.set_text(symbol)
@@ -131,3 +133,11 @@ class SettingsPage(GenericPage):
 		self.menu.set_load_page_event(btn, page)
 		page.set_width(240)
 		return btn
+	
+	def handleReturn(self, e):
+		code = e.get_code()
+		if code == lv.EVENT.KEY:
+			key = e.get_key()
+			if key == SDL_KEYS["SDLK_ESCAPE"] and self.hidden == False and indev1.get_group() == self.group:
+				self.hidden = True
+				SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)

@@ -54,7 +54,7 @@ class SoundSubPage(SubPage):
 
 	def setVolume(self, e):
 		code = e.get_code()
-		obj = e.get_target()
+		obj = e.get_target_obj()
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
@@ -65,7 +65,7 @@ class SoundSubPage(SubPage):
 
 	def setMenuVolume(self, e):
 		code = e.get_code()
-		obj = e.get_target()
+		obj = e.get_target_obj()
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:

@@ -20,8 +20,8 @@ class ActiveSlider(lv.slider):
 		self.clear_state(lv.STATE.ANY)
 
 	def addPressEvent(self, e):
-		if indev1.group != self.group:
-			self.lastGroup = indev1.group
+		if indev1.get_group() != self.group:
+			self.lastGroup = indev1.get_group()
 			indev1.set_group(self.group)
 		else:
 			indev1.set_group(self.lastGroup)

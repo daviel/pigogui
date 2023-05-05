@@ -66,7 +66,7 @@ class UserSubPage(SubPage):
 
 	def changeThemeHandler(self, e):
 		code = e.get_code()
-		obj = e.get_target()
+		obj = e.get_target_obj()
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.UP or key == lv.KEY.DOWN:
