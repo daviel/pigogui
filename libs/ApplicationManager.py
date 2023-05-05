@@ -1,4 +1,4 @@
-from libs.ffishell import runShellCommand, kill, waitpid, fork, execv, SIGSTOP, SIGCONT, setenv, SIGKILL
+from libs.ffishell import *
 from libs.init_drv import addGlobalKeyCallback
 import libs.Singletons as SINGLETONS
 from libs.Helper import SDL_KEYS
@@ -80,7 +80,7 @@ class ApplicationManager:
         
         self.keymap_pid = fork()
         if(self.keymap_pid == 0):
-            print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
+            #print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
             
             args = array.array("L")
             args.append(uctypes.addressof(b'python'))
