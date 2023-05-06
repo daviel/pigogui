@@ -30,6 +30,8 @@ class ApplicationManager:
                 print(ret)
                 execv(app, None)
             print("PID: " + str(self.main_app_pid))
+        else:
+            self.resumeMainApp()
 
         self.setKeyMap(keymap)
         self.app_keymap = keymap
