@@ -55,11 +55,10 @@ class DataManager:
             type = dir[1]
             if type == 0x4000: # check if dir
                 dirname = dir[0]
-                print(dirname)
                 gameDir = gamesdir + "/" + dirname
                 gameJson = gameDir + "/game.json"
                 if(os.stat(gameJson)):
-                    print("game.json found")
+                    print("game.json found ", gameDir)
                     file = io.open(gameJson, 'r')
                     content = file.readlines()
                     
@@ -73,4 +72,3 @@ class DataManager:
 
                     self.data["games"].append(game)
                     file.close()
-        print(self.data["games"])

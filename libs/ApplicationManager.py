@@ -91,6 +91,6 @@ class ApplicationManager:
                 args.append(uctypes.addressof(bytearray(key)))
             
             ret = execv("/usr/bin/python", args)
-        else:
-            print(self.keymap_pid)
+        #else:
+        #    print(self.keymap_pid)
         
