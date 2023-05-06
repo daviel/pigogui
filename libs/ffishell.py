@@ -37,6 +37,14 @@ SIGVTALRM = 26
 SIGXCPU = 24
 SIGXFSZ = 25
 
+
+O_RDONLY = 0
+O_WRONLY = 1
+O_RDWR = 2
+
+I2C_SLAVE = 1795
+
+
 if libc:
     perror = libc.func("v", "perror", "s")
     popen = libc.func("p", "popen", "ss")
@@ -52,6 +60,13 @@ if libc:
     fork = libc.func("i", "fork", "")
     execv = libc.func("i", "execv", "ss")
     setenv = libc.func("i", "setenv", "ssi")
+
+    open = libc.func("p", "open", "si")
+    ioctl = libc.func("p", "ioctl", "iii")
+    write = libc.func("p", "write", "isi")
+    read = libc.func("p", "read", "isi")
+
+    
 
 
     def runShellCommand(cmd):

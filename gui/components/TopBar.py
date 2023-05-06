@@ -2,7 +2,7 @@ import lvgl as lv
 import time
 
 from gui.components.Generic.Button import Button
-
+from gui.components.BatteryIndicator import BatteryIndicator
 
 class TopBar(lv.obj):
 	label_time = ""
@@ -29,8 +29,7 @@ class TopBar(lv.obj):
 		self.label1 = lv.label(self)
 		self.label1.set_text(lv.SYMBOL.WIFI)
 
-		self.label1 = lv.label(self)
-		self.label1.set_text(lv.SYMBOL.BATTERY_FULL)
+		BatteryIndicator(self)
 
 		self.timer = lv.timer_create(self.update_time, 1000, self)
 
