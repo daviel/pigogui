@@ -12,16 +12,19 @@ class BatteryIndicator(lv.label):
         self.timer = lv.timer_create(self.update_state, 5000, self)
 
     def update_state(obj, timer):
-        SINGLETONS.BATTERY_MANAGER.measure()
         soc = SINGLETONS.BATTERY_MANAGER.get_soc()
+        voltage = SINGLETONS.BATTERY_MANAGER.get_voltage()
 
-        if(soc <= 0.1):
+        print("soc: ", soc)
+        print("voltage: ", voltage)
+
+        if(soc <= 15):
             obj.set_text(lv.SYMBOL.BATTERY_EMPTY)
-        elif(soc <= 0.3):
-            obj.set_text(lv.SYMBOL.BATTERY_3)
-        elif(soc <= 0.6):
-            obj.set_text(lv.SYMBOL.BATTERY_2)
-        elif(soc <= 0.8):
+        elif(soc <= 40):
             obj.set_text(lv.SYMBOL.BATTERY_1)
+        elif(soc <= 60):
+            obj.set_text(lv.SYMBOL.BATTERY_2)
+        elif(soc <= 80):
+            obj.set_text(lv.SYMBOL.BATTERY_3)
         else:
             obj.set_text(lv.SYMBOL.BATTERY_FULL)
