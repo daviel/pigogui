@@ -2,6 +2,7 @@ import usys as sys
 import lvgl as lv
 lv.init()
 
+from libs.libsdl import SDL_ShowCursor 
 
 WIDTH = 320
 HEIGHT = 240
@@ -27,6 +28,7 @@ lv.theme_default_init(lv.disp_get_default(),
 
 lv.scr_act().set_style_bg_opa(0, 0)
 #lv.disp_get_default().set_bg_opa(50)
+SDL_ShowCursor(0)
 
 while(1):
     lv.timer_handler()
