@@ -20,14 +20,14 @@ darkTheme = config["user"]["theme"]["darkTheme"]
 colors = lv.PALETTE.__dict__
 primary_color = colors[primary_color]
 
-lv.theme_default_init(lv.disp_get_default(), 
+lv.theme_default_init(lv.display_get_default(), 
 						lv.palette_main(primary_color), 
 						lv.palette_main(lv.PALETTE.GREY), 
 						darkTheme, 
 						lv.font_montserrat_16)
 
-lv.scr_act().set_style_bg_opa(0, 0)
-#lv.disp_get_default().set_bg_opa(50)
+lv.screen_active().set_style_bg_opa(0, 0)
+#lv.display_get_default().set_bg_opa(50)
 SDL_ShowCursor(0)
 
 while(1):

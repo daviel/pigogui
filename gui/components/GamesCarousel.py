@@ -28,7 +28,7 @@ class GamesCarousel(lv.obj):
 		self.set_style_pad_row(0, 0)
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.AUTO)
 		bg_color = lv.color_hex(0x555555)
-		bg_color.alpha = 200
+		#bg_color.alpha = 200
 		self.set_style_bg_color(bg_color, 0)
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
@@ -79,7 +79,7 @@ class GamesCarousel(lv.obj):
 		self.gameData = SINGLETONS.DATA_MANAGER.get("games")
 		for data in self.gameData:
 			game = GameIcon(self, data)
-			game.add_event(self.key_pressed, lv.EVENT.KEY, None)
+			game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)
 			self.games.append(game)
 		SettingsIcon(self)
 
@@ -92,5 +92,5 @@ class GamesCarousel(lv.obj):
 				self.zoomToggle()
 
 	def unload(self):
-		for i in range(self.get_child_cnt()):
-			self.get_child(i).del_delayed(1000)
+		for i in range(self.get_child_count()):
+			self.get_child(i).delete_delayed(1000)

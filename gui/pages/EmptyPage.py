@@ -12,11 +12,11 @@ class EmptyPage(GenericPage):
 	
 	def __init__(self):
 		super().__init__()
-		self.set_style_bg_color(lv.color32_t(), 0)
+		self.set_style_bg_color(lv.color_t(), 0)
 
 		self.group = lv.group_create()
-		button = lv.btn()
-		button.add_event(self.homeButtonPressed, lv.EVENT.KEY, None)
+		button = lv.button()
+		button.add_event_cb(self.homeButtonPressed, lv.EVENT.KEY, None)
 		self.group.add_obj(button)
 		indev1.set_group(self.group)
 

@@ -17,7 +17,7 @@ class GenericPage(lv.obj):
 		self.group.add_obj(self)
 
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.clear_flag(self.FLAG.SCROLLABLE)
+		self.remove_flag(self.FLAG.SCROLLABLE)
 		self.add_style(GENERIC_PAGE_STYLE, 0)
 
 	def focusPage(self):

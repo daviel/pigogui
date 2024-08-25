@@ -23,7 +23,7 @@ class SoundBar(lv.obj):
 		self.fade_out(0, 0)
 		self.align(lv.ALIGN.LEFT_MID, 8, 0)
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.clear_flag(self.FLAG.SCROLLABLE)
+		self.remove_flag(self.FLAG.SCROLLABLE)
 		self.set_style_opa(lv.OPA._90, 0)
 
 		self.set_flex_flow(lv.FLEX_FLOW.COLUMN)

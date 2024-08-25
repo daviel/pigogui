@@ -39,7 +39,7 @@ class GameDetailsPage(GenericPage):
 		self.leftContainer.set_style_pad_row(6, 0)
 		self.leftContainer.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
 
-		imageButton = lv.img(self.leftContainer)
+		imageButton = lv.image(self.leftContainer)
 		gameIconImage = loadImageAndConvert("./imgs/cover1.png")
 		imageButton.set_size(72, 72)
 		imageButton.set_src(gameIconImage)
@@ -56,7 +56,7 @@ class GameDetailsPage(GenericPage):
 		deleteButton.set_size(90, 24)
 		backButton = IconButton(self.leftContainer, lv.SYMBOL.LEFT, "Back")
 		backButton.set_size(90, 24)
-		backButton.add_event(self.pageBack, lv.EVENT.PRESSED, None)
+		backButton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
 
 		self.rightContainer = lv.obj(self)
 		self.rightContainer.set_size(210, 236)
@@ -113,15 +113,15 @@ class GameDetailsPage(GenericPage):
 			self.createScreenshot(imageSrc)
 
 	def pageClosed(self):
-		for i in range(self.imageContainer.get_child_cnt()):
-			self.imageContainer.get_child(i).del_delayed(1000)
+		for i in range(self.imageContainer.get_child_count()):
+			self.imageContainer.get_child(i).delete_delayed(1000)
 
 	def createScreenshot(self, src):
 		imgSize = 112
-		screenshotButton = lv.btn(self.imageContainer)
+		screenshotButton = lv.button(self.imageContainer)
 		screenshotButton.set_size(imgSize, imgSize)
 		gameImage = loadImageAndConvert(src)
-		screenshotImg = lv.img(screenshotButton)
+		screenshotImg = lv.image(screenshotButton)
 		screenshotImg.set_size(imgSize - 8, imgSize - 8)
 		screenshotImg.set_src(gameImage)
 		screenshotImg.set_style_radius(4, 0)

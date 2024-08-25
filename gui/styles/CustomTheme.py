@@ -26,5 +26,5 @@ class CustomTheme(lv.theme_t):
         self.style_dd.set_border_color(lv.palette_darken(primary_color, 3))
         self.style_dd.set_border_width(3)
 
-        th_act = lv.theme_get_from_obj(lv.scr_act())
+        th_act = lv.theme_get_from_obj(lv.screen_active())
         self.set_parent(th_act)

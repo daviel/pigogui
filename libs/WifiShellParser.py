@@ -20,18 +20,18 @@ class WifiShellParser():
 
     networks = []
     interfaces = []
-    currentInterface = "wlan0"
+    currentInterface = "wlp7s0"
     connected = False
 
     def __init__(self):
         self.getInterfaces()
-        self.setInterface()
+        #self.setInterface()
         self.getAllNetworks()
         self.isConnected()
         pass
 
     def getInterfaces(self):
-        ret = runShellCommand("wpa_cli interface")
+        ret = runShellCommand("nmcli dev")
         lines = ret.split("\n")
         for i in range(2, len(lines)):
             self.interfaces.append(lines[i])
@@ -42,19 +42,19 @@ class WifiShellParser():
 
     def scan(self):
         if self.scanStarted == False:
-            ret = runShellCommand("wpa_cli -i " + self.currentInterface + " scan")
+            ret = runShellCommand("nmcli device wifi rescan")
             self.scanTimer = lv.timer_create(self.scanTimer, self.scanResultCheckInterval, None)
             self.scanStarted = True
             self.scanTries = 0
 
     def stopScan(self):
-        self.scanTimer._del()
+        self.scanTimer.delete()
         self.scanStarted = False
 
     def scanTimer(self, timer):
         self.scanTries += 1
         if self.scanTries < self.scanMaximumTries:
-            scanResultsUnparsed = runShellCommand("wpa_cli -i " + self.currentInterface + " scan_results")
+            scanResultsUnparsed = runShellCommand("nmcli " + self.currentInterface + " scan_results")
             self.parseScanResults(scanResultsUnparsed)
         else:
             self.stopScan()
@@ -79,11 +79,11 @@ class WifiShellParser():
             self.scanCallback(parsed)
 
     def getAllNetworks(self):
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " list_networks")
+        ret = runShellCommand("nmcli " + self.currentInterface + " list_networks")
 
 
     def isNetworkConfigured(self, networkId):
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " get_network " + str(networkId) + " ssid")
+        ret = runShellCommand("nmcli " + self.currentInterface + " get_network " + str(networkId) + " ssid")
         ret = getLastLine(ret)
         if(ret == "FAIL"):
             print("network not configured")
@@ -93,12 +93,12 @@ class WifiShellParser():
             return ret
 
     def addNetwork(self):
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " add_network")
+        ret = runShellCommand("nmcli " + self.currentInterface + " add_network")
         ret = getLastLine(ret)
         return ret
 
     def removeNetwork(self, networkId):
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " remove_network " + str(networkId))
+        ret = runShellCommand("nmcli " + self.currentInterface + " remove_network " + str(networkId))
         ret = getLastLine(ret)
         if(ret == "OK"):
             return True
@@ -111,28 +111,28 @@ class WifiShellParser():
 
     def configNetwork(self, networkId, ssid, psk):
         print(networkId, ssid, psk)
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " set_network " + networkId + \
+        ret = runShellCommand("nmcli " + self.currentInterface + " set_network " + networkId + \
                               " ssid '\"" + ssid + "\"'")
         ret = getLastLine(ret)
         if(ret != "OK"):
             print("Error: set ssid " + ret)
             return False
 
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " set_network " + networkId + \
+        ret = runShellCommand("nmcli " + self.currentInterface + " set_network " + networkId + \
                               " psk '\"" + psk + "\"'")
         ret = getLastLine(ret)
         if(ret != "OK"):
             print("Error: set psk " + ret)
             return False
 
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " enable_network " + networkId)
+        ret = runShellCommand("nmcli " + self.currentInterface + " enable_network " + networkId)
         ret = getLastLine(ret)
 
         if(ret != "OK"):
             print("Error: enable network " + ret)
             return False
 
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " save_conf")
+        ret = runShellCommand("nmcli " + self.currentInterface + " save_conf")
         ret = getLastLine(ret)
 
         if(ret != "OK"):
@@ -140,7 +140,7 @@ class WifiShellParser():
             return False
 
     def isConnected(self):
-        ret = runShellCommand("wpa_cli -i " + self.currentInterface + " status")
+        ret = runShellCommand("nmcli " + self.currentInterface + " status")
 
         if(ret.find("wpa_state=COMPLETED") == 0):
             self.connected = True

@@ -17,7 +17,7 @@ class Notification(lv.obj):
 		self.set_size(0, 40)
 		self.align(lv.ALIGN.TOP_MID, 0, 8)
 		self.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		self.clear_flag(self.FLAG.SCROLLABLE)
+		self.remove_flag(self.FLAG.SCROLLABLE)
 		self.set_style_opa(lv.OPA._80, 0)
 
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)

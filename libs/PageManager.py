@@ -46,9 +46,9 @@ class PageManager():
 		self.history.append(pageName)
 
 		if movingIn:
-			lv.scr_load_anim(page, page.animIn, page.animDuration, 0, False)
+			lv.screen_load_anim(page, page.animIn, page.animDuration, 0, False)
 		else:
-			lv.scr_load_anim(page, page.animOut, page.animDuration, 0, False)
+			lv.screen_load_anim(page, page.animOut, page.animDuration, 0, False)
 		
 		self.timer.set_period(page.animDuration)
 		self.timer.reset()

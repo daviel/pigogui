@@ -33,8 +33,8 @@ class AboutSubPage(SubPage):
 		label.set_text("About an hour ago")
 		label.set_width(160)
 
-		btn = lv.btn(self)
-		btn.add_event(self.addPressEvent, lv.EVENT.PRESSED, None)
+		btn = lv.button(self)
+		btn.add_event_cb(self.addPressEvent, lv.EVENT.PRESSED, None)
 		btn.set_width(160)
 		label = lv.label(btn)
 		label.set_text("Check for Updates")

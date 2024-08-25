@@ -5,13 +5,13 @@ import ustruct
 
 fs_drv = lv.fs_drv_t()
 fs_driver.fs_register(fs_drv, 'S')
-font_ubuntu_14 = lv.font_load("S:fonts/ubuntu_14.font")
-font_ubuntu_16 = lv.font_load("S:fonts/ubuntu_16.font")
-font_ubuntu_20 = lv.font_load("S:fonts/ubuntu_20.font")
-font_baloo_chettan_14 = lv.font_load("S:fonts/baloo_chettan_14.font")
-font_baloo_chettan_16 = lv.font_load("S:fonts/baloo_chettan_16.font")
-font_baloo_chettan_20 = lv.font_load("S:fonts/baloo_chettan_20.font")
-font_baloo_chettan_24 = lv.font_load("S:fonts/baloo_chettan_24.font")
+font_ubuntu_14 = lv.binfont_create("S:fonts/ubuntu_14.font")
+font_ubuntu_16 = lv.binfont_create("S:fonts/ubuntu_16.font")
+font_ubuntu_20 = lv.binfont_create("S:fonts/ubuntu_20.font")
+font_baloo_chettan_14 = lv.binfont_create("S:fonts/baloo_chettan_14.font")
+font_baloo_chettan_16 = lv.binfont_create("S:fonts/baloo_chettan_16.font")
+font_baloo_chettan_20 = lv.binfont_create("S:fonts/baloo_chettan_20.font")
+font_baloo_chettan_24 = lv.binfont_create("S:fonts/baloo_chettan_24.font")
 
 
 def loadImage(src):
@@ -24,7 +24,7 @@ def loadImage(src):
 
 def loadImageAndConvert(src):
     img_data = loadImage(src)
-    return lv.img_dsc_t({
+    return lv.image_dsc_t({
         'data_size': len(img_data),
         'data': img_data
     })

@@ -11,7 +11,7 @@ class GenericAnim(lv.anim_t):
 	def __init__(self):
 		super().__init__()
 		self.set_start_cb(self.set_is_running)
-		self.set_ready_cb(self.set_is_not_running)
+		self.set_completed_cb(self.set_is_not_running)
 		self.set_custom_exec_cb(self.anim_func)
 
 	def anim_func(self, anim, val):

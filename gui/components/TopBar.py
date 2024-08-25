@@ -14,7 +14,7 @@ class TopBar(lv.obj):
 
 		self.set_size(320, 16)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
-		self.clear_flag(self.FLAG.SCROLLABLE)
+		self.remove_flag(self.FLAG.SCROLLABLE)
 		self.set_style_border_width(0, 0)
 		self.set_style_pad_all(1, 0)
 		self.set_style_radius(0, 0)

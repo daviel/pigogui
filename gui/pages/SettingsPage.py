@@ -24,7 +24,7 @@ class SettingsPage(GenericPage):
 		container = lv.obj(self)
 		container.set_size(320, 240)
 		container.set_scrollbar_mode(lv.SCROLLBAR_MODE.OFF)
-		container.clear_flag(container.FLAG.SCROLLABLE)
+		container.remove_flag(container.FLAG.SCROLLABLE)
 
 		# Create a menu object
 		menu = lv.menu(container)
@@ -111,14 +111,14 @@ class SettingsPage(GenericPage):
 			SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
 
 	def addMenuPage(self, symbol, title, page):
-		btn = lv.btn(self.main_page)
+		btn = lv.button(self.main_page)
 		btn.set_size(72, 24)
 		btn.set_style_pad_hor(4, 0)
 		btn.set_style_pad_ver(4, 0)
 		btn.set_flex_flow(lv.FLEX_FLOW.ROW)
-		btn.add_flag(btn.FLAG.EVENT_BUBBLE)
-		btn.add_event(page.loadSubPage, lv.EVENT.PRESSED, None)
-		btn.add_event(self.handleReturn, lv.EVENT.KEY, None)
+		#btn.add_flag(btn.FLAG.EVENT_BUBBLE)
+		btn.add_event_cb(page.loadSubPage, lv.EVENT.PRESSED, None)
+		btn.add_event_cb(self.handleReturn, lv.EVENT.KEY, None)
 		
 		symbolLabel = lv.label(btn)
 		symbolLabel.set_text(symbol)

@@ -1,8 +1,8 @@
 {
-    "pigoguidir": "/opt/pigo/pigogui",
-    "gamesdir": "/opt/pigo/games/",
+    "pigoguidir": "/home/david/Dokumente/lvgl/pigogui",
+    "gamesdir": "/home/david/Dokumente/lvgl/games/",
     "keymapperpath": "/opt/pigo/keymapper/main.py",
-    "imgdir": "/opt/pigo/pigogui/imgs/",
+    "imgdir": "/home/david/Dokumente/lvgl/pigogui/imgs",
     
     "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME",
     "mandatoryKeyMap": "HOME=KEY_DELETE",

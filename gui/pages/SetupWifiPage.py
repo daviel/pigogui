@@ -51,17 +51,17 @@ class SetupWifiPage(GenericPage):
 		self.backbutton = Button(self, lv.SYMBOL.LEFT)
 		self.backbutton.set_size(50, 30)
 		self.backbutton.label.center()
-		self.backbutton.add_event(self.pageBack, lv.EVENT.PRESSED, None)
+		self.backbutton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
 
 		self.refreshbutton = Button(self, lv.SYMBOL.REFRESH)
 		self.refreshbutton.set_size(50, 30)
 		self.refreshbutton.label.center()
-		self.refreshbutton.add_event(self.pageNext, lv.EVENT.PRESSED, None)
+		self.refreshbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
 
 		self.nextbutton = Button(self, lv.SYMBOL.RIGHT)
 		self.nextbutton.set_size(50, 30)
 		self.nextbutton.label.center()
-		self.nextbutton.add_event(self.pageNext, lv.EVENT.PRESSED, None)
+		self.nextbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
 		
 		self.group = lv.group_create()
 		self.group.add_obj(self)
@@ -79,7 +79,7 @@ class SetupWifiPage(GenericPage):
 			wifiConnectButton.pressCallback = self.connectWifi
 
 		self.loaderContainer.add_flag(self.FLAG.HIDDEN)
-		self.wifiContainer.clear_flag(self.FLAG.HIDDEN)
+		self.wifiContainer.remove_flag(self.FLAG.HIDDEN)
 		self.group.add_obj(self.wifiContainer)
 
 		lv.gridnav_remove(self.wifiContainer)

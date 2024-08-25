@@ -36,7 +36,7 @@ class LaunchScreenPage(GenericPage):
 		versionLabel.set_style_text_font(font_baloo_chettan_14, 0)
 		versionLabel.fade_in(1000, 3000)
 
-		self.add_event(self.page_done, lv.EVENT.ALL, None)
+		self.add_event_cb(self.page_done, lv.EVENT.ALL, None)
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
 
 	def pageOpened(self):
@@ -53,7 +53,7 @@ class LaunchScreenPage(GenericPage):
 		if code == lv.EVENT.KEY:
 			if(self.keyPressed == False):
 				self.keyPressed = True
-				#self.timer._del()
+				#self.timer.delete()
 				SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", True, self)
 
 	def update_time(self, timer):
@@ -62,4 +62,4 @@ class LaunchScreenPage(GenericPage):
 			self.label.add_flag(self.FLAG.HIDDEN)
 		else:
 			self.labelVisible = True
-			self.label.clear_flag(self.FLAG.HIDDEN)
+			self.label.remove_flag(self.FLAG.HIDDEN)

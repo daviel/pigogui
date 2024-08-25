@@ -1,7 +1,7 @@
 import lvgl as lv
 
 
-class IconButton(lv.btn):
+class IconButton(lv.button):
 	label = ""
 	data = ""
 	pressCallback = False

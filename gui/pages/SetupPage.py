@@ -44,12 +44,12 @@ class SetupPage(GenericPage):
 
 		noneAvatar = loadImage('./imgs/avatars/none.png')
 		
-		imageNoneAvatar = lv.img_dsc_t({
+		imageNoneAvatar = lv.image_dsc_t({
 			'data_size': len(noneAvatar),
 			'data': noneAvatar
 		})
 
-		imgAvatar = lv.img(container)
+		imgAvatar = lv.image(container)
 		imgAvatar.set_size(108, 108)
 		imgAvatar.set_src(imageNoneAvatar)
 		self.imgAvatar = imgAvatar
@@ -60,12 +60,12 @@ class SetupPage(GenericPage):
 		nametextarea.set_height(40)
 		nametextarea.set_width(260)
 		nametextarea.set_placeholder_text("Your nickname")
-		nametextarea.add_event(self.nameInput, lv.EVENT.READY, None)
+		nametextarea.add_event_cb(self.nameInput, lv.EVENT.READY, None)
 		self.nametextarea = nametextarea
 
 		errLabel = lv.label(container)
 		errLabel.set_text("#ff0000 Should at least have 3 characters #")
-		errLabel.set_recolor(True)
+		#errLabel.set_recolor(True)
 		errLabel.add_flag(errLabel.FLAG.HIDDEN)
 		self.errLabel = errLabel
 
@@ -73,7 +73,7 @@ class SetupPage(GenericPage):
 		nextbutton.set_size(260, 30)
 		nextbutton.label.center()
 		nextbutton.add_state(lv.STATE.DISABLED)
-		nextbutton.add_event(self.page_done, lv.EVENT.PRESSED, None)
+		nextbutton.add_event_cb(self.page_done, lv.EVENT.PRESSED, None)
 		self.nextbutton = nextbutton
 		
 		self.group = lv.group_create()
@@ -89,12 +89,12 @@ class SetupPage(GenericPage):
 				
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):
-			self.errLabel.clear_flag(self.errLabel.FLAG.HIDDEN)
+			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
 			self.nextbutton.add_state(lv.STATE.DISABLED)
 			return False
 		else:
 			self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
-			self.nextbutton.clear_state(lv.STATE.DISABLED)
+			self.nextbutton.remove_state(lv.STATE.DISABLED)
 			return True
 
 	def nameInput(self, e):
@@ -128,7 +128,7 @@ class SetupPage(GenericPage):
 		imgSrc = self.avatarPath + self.avatars[val]
 		imgdata = loadImage(imgSrc)
 
-		imageAvatar = lv.img_dsc_t({
+		imageAvatar = lv.image_dsc_t({
 		  'data_size': len(imgdata),
 		  'data': imgdata
 		})

@@ -4,7 +4,7 @@ from libs.Helper import SDL_KEYS, loadImageAndConvert
 import libs.Singletons as SINGLETONS
 
 
-class GameIcon(lv.btn):
+class GameIcon(lv.button):
 	label = ""
 	titleScreen = ""
 	data = {}
@@ -23,7 +23,7 @@ class GameIcon(lv.btn):
 			gameImage = loadImageAndConvert(
 				data["main_image"]
 			)
-			titleScreen = lv.img(self)
+			titleScreen = lv.image(self)
 			titleScreen.set_size(92, 164)
 			titleScreen.set_src(gameImage)
 			#titleScreen.set_style_radius(16, 0)
@@ -34,8 +34,8 @@ class GameIcon(lv.btn):
 		self.set_size(100, 172)
 		#self.set_style_radius(16, 0)
 		#self.set_style_clip_corner(16, 0)
-		self.add_event(self.showDetails, lv.EVENT.KEY, None)
-		self.add_event(self.start, lv.EVENT.PRESSED, None)
+		self.add_event_cb(self.showDetails, lv.EVENT.KEY, None)
+		self.add_event_cb(self.start, lv.EVENT.PRESSED, None)
 
 	def start(self, e):
 		code = e.get_code()

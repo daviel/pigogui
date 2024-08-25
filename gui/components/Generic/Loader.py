@@ -11,7 +11,7 @@ class Loader(lv.arc):
 		self.set_angles(270, 270)
 		self.center()
 		#self.set_size(64, 64)
-		self.clear_flag(self.FLAG.CLICKABLE)
+		self.remove_flag(self.FLAG.CLICKABLE)
 		self.remove_style(None, lv.PART.KNOB)
 
 		self.timer = lv.timer_create(self.fill, 30, None)

@@ -20,7 +20,7 @@ class GamesOverviewPage(GenericPage):
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(0, 0)
 		self.set_style_border_width(0, 0)
-		self.set_style_bg_color(lv.color32_t(), 0)
+		self.set_style_bg_color(lv.color_t(), 0)
 
 		self.tobpar1 = TopBar(self)
 		self.games1 = GamesCarousel(self)
