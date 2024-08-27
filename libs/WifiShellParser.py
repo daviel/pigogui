@@ -27,10 +27,11 @@ class WifiShellParser():
             self.interfaces.append(lines[i])
 
     def getNetworks(self):
+        self.readNetworks()
         return self.networks
 
     def scan(self):
-        ret = runShellCommand("nmcli device wifi rescan")
+        ret = runShellCommand("nmcli device wifi rescan&")
 
     def readNetworks(self):
         scanResultsUnparsed = runShellCommand("nmcli dev wifi list --rescan no")

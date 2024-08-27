@@ -61,6 +61,7 @@ class SetupPage(GenericPage):
 		nametextarea.set_width(260)
 		nametextarea.set_placeholder_text("Your nickname")
 		nametextarea.add_event_cb(self.nameInput, lv.EVENT.READY, None)
+		nametextarea.add_event_cb(self.cancelInput, lv.EVENT.CANCEL, None)
 		self.nametextarea = nametextarea
 
 		errLabel = lv.label(container)
@@ -97,6 +98,9 @@ class SetupPage(GenericPage):
 			self.nextbutton.remove_state(lv.STATE.DISABLED)
 			return True
 
+	def cancelInput(self, e):
+		self.hideKeyboard()
+
 	def nameInput(self, e):
 		obj = self.nametextarea
 
@@ -112,13 +116,15 @@ class SetupPage(GenericPage):
 			self.container.scroll_to(0, obj.get_y() + obj.get_height(), lv.ANIM.ON)
 		elif self.keyboard != False:
 			if(self.validateInput()):
-				self.keyboard.delete()
-				self.keyboard = False
-				indev1.set_group(self.group)
-				self.container.set_height(320)
-				self.container.scroll_to(0, 0, lv.ANIM.ON)
-
+				self.hideKeyboard()
 				self.randomizeAvatar(obj.get_text())
+
+	def hideKeyboard(self):
+		self.keyboard.delete()
+		self.keyboard = False
+		indev1.set_group(self.group)
+		self.container.set_height(320)
+		self.container.scroll_to(0, 0, lv.ANIM.ON)
 
 	def randomizeAvatar(self, name):
 		sum = 0

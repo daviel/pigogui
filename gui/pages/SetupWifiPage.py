@@ -19,6 +19,7 @@ class SetupWifiPage(GenericPage):
 	nametextarea = ""
 	keyboard = False
 	currentWiFiData = ""
+	refreshTimer = ""
 
 	def __init__(self):
 		super().__init__()
@@ -28,29 +29,29 @@ class SetupWifiPage(GenericPage):
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(4, 0)
+		self.timer = lv.timer_create(self.delayedRefresh, 5000, self)
+		self.timer.pause()
 		
 		label = lv.label(self)
 		label.set_text("WiFi-Setup")
 		label.set_width(300)
 
 		self.loaderContainer = lv.obj(self)
-		self.loaderContainer.set_size(310, 170)
+		self.loaderContainer.set_size(310, 180)
 		self.loaderContainer.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.loaderContainer.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		self.loaderContainer.set_style_pad_column(0, 0)
 		self.loaderContainer.set_style_pad_row(8, 0)
+		self.loaderContainer.add_flag(self.FLAG.HIDDEN)
 		self.loader = Loader(self.loaderContainer)
 
 		self.wifiContainer = lv.obj(self)
-		self.wifiContainer.set_size(310, 170)
+		self.wifiContainer.set_size(310, 180)
 		self.wifiContainer.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.wifiContainer.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		self.wifiContainer.set_style_pad_column(0, 0)
 		self.wifiContainer.set_style_pad_row(8, 0)
-		self.wifiContainer.add_flag(self.FLAG.HIDDEN)
-
-		# get the networks and render them
-		self.renderWifiNetworks(self.wifiShellParser.getNetworks())
+		#self.wifiContainer.add_flag(self.FLAG.HIDDEN)
 
 		self.backbutton = Button(self, lv.SYMBOL.LEFT)
 		self.backbutton.set_size(50, 30)
@@ -74,7 +75,8 @@ class SetupWifiPage(GenericPage):
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.NONE)
 
 	def renderWifiNetworks(self, networks):
-		lv.gridnav_remove(self.wifiContainer)
+		self.loaderContainer.add_flag(self.FLAG.HIDDEN)
+		self.wifiContainer.remove_flag(self.FLAG.HIDDEN)
 		self.wifiContainer.clean()
 
 		for wifiEntry in networks:
@@ -82,24 +84,23 @@ class SetupWifiPage(GenericPage):
 				wifiConnectButton = Button(self.wifiContainer, wifiEntry["ssid"] + " (Connected)")
 			else:
 				wifiConnectButton = Button(self.wifiContainer, wifiEntry["ssid"] + " (" + wifiEntry["security"] + ")")
-			wifiConnectButton.label.align(lv.ALIGN.LEFT_MID, 8, 0)
+			wifiConnectButton.label.align(lv.ALIGN.LEFT_MID, 0, 0)
+			wifiConnectButton.label.set_size(280, 20)
+			wifiConnectButton.label.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
 			wifiConnectButton.set_width(280)
 			wifiConnectButton.set_height(20)
 			wifiConnectButton.data = wifiEntry
 			#wifiConnectButton.pressCallback = self.connectWifi
 			wifiConnectButton.pressCallback = self.showDialog
 
-		self.loaderContainer.add_flag(self.FLAG.HIDDEN)
-		self.wifiContainer.remove_flag(self.FLAG.HIDDEN)
 		self.group.add_obj(self.wifiContainer)
-
 		lv.gridnav_add(self.wifiContainer, lv.GRIDNAV_CTRL.NONE)
 
 	def showDialog(self, object, event):
 		wifiData = object.data
 		self.currentWiFiData = wifiData
 		passwordDialog = lv.msgbox(self.get_parent())
-		passwordDialog.align(lv.ALIGN.TOP_MID, 8, 8)
+		passwordDialog.align(lv.ALIGN.TOP_MID, 0, 4)
 		passwordDialog.add_text("SSID: " + wifiData["ssid"])
 		passwordDialogContent = passwordDialog.get_content()
 		self.passwordDialog = passwordDialog
@@ -123,10 +124,21 @@ class SetupWifiPage(GenericPage):
 		nametextarea.set_width(240)
 		nametextarea.set_placeholder_text("WiFi Password")
 		nametextarea.add_event_cb(self.connectWifi, lv.EVENT.READY, None)
+		nametextarea.add_event_cb(self.cancelInput, lv.EVENT.CANCEL, None)
 		self.nametextarea = nametextarea
 
 		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
 		self.connectWifi(event)
+
+	def cancelInput(self, e):
+		self.hideKeyboard()
+
+	def hideKeyboard(self):
+		indev1.set_group(self.group)
+		self.wifiContainer.scroll_to(0, 0, lv.ANIM.ON)
+		self.keyboard.delete()
+		self.passwordDialog.close()
+		self.keyboard = False
 
 	def connectWifi(self, event):
 		if self.keyboard == False:
@@ -138,12 +150,7 @@ class SetupWifiPage(GenericPage):
 			indev1.set_group(group)
 		elif self.keyboard != False:
 			if(self.connectAttempt(event.get_target_obj().get_text())):
-				indev1.set_group(self.group)
-				self.wifiContainer.scroll_to(0, 0, lv.ANIM.ON)
-				
-				self.keyboard.delete()
-				self.passwordDialog.close()
-				self.keyboard = False
+				self.hideKeyboard()
 
 	def pageBack(self, e):
 		SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", False)
@@ -151,8 +158,21 @@ class SetupWifiPage(GenericPage):
 	def pageNext(self, e):
 		SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
 	
+	def pageOpened(self):
+		self.refreshWifiNetworks(None)
+
 	def refreshWifiNetworks(self, e):
+		self.wifiContainer.add_flag(self.FLAG.HIDDEN)
+		self.loaderContainer.remove_flag(self.FLAG.HIDDEN)
+		self.wifiShellParser.scan()
+		self.refreshbutton.add_state(lv.STATE.DISABLED)
+		self.timer.reset()
+		self.timer.resume()
+
+	def delayedRefresh(self, e):
+		self.timer.pause()
 		self.renderWifiNetworks(self.wifiShellParser.getNetworks())
+		self.refreshbutton.remove_state(lv.STATE.DISABLED)
 
 	def connectAttempt(self, password):
 		if(len(self.nametextarea.get_text()) < 8):
