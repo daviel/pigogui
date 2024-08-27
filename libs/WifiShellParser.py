@@ -10,24 +10,14 @@ def getLastLine(text):
 
 
 class WifiShellParser():
-    scanResults = []
-    scanTimer = ""
-    scanStarted = False
-    scanResultCheckInterval = 3 * 1000
-    scanMaximumTries = 3
-    scanTries = 0
-    scanCallback = None
-
     networks = []
     interfaces = []
     currentInterface = "wlp7s0"
     connected = False
+    connectedAP = ""
 
     def __init__(self):
-        self.getInterfaces()
-        #self.setInterface()
-        self.getAllNetworks()
-        self.isConnected()
+        self.readNetworks()
         pass
 
     def getInterfaces(self):
@@ -36,114 +26,75 @@ class WifiShellParser():
         for i in range(2, len(lines)):
             self.interfaces.append(lines[i])
 
-    def setInterface(self):
-        self.currentInterface = self.interfaces[len(self.interfaces) - 1]
-        print("interface set to: " + self.currentInterface)
+    def getNetworks(self):
+        return self.networks
 
     def scan(self):
-        if self.scanStarted == False:
-            ret = runShellCommand("nmcli device wifi rescan")
-            self.scanTimer = lv.timer_create(self.scanTimer, self.scanResultCheckInterval, None)
-            self.scanStarted = True
-            self.scanTries = 0
+        ret = runShellCommand("nmcli device wifi rescan")
 
-    def stopScan(self):
-        self.scanTimer.delete()
-        self.scanStarted = False
-
-    def scanTimer(self, timer):
-        self.scanTries += 1
-        if self.scanTries < self.scanMaximumTries:
-            scanResultsUnparsed = runShellCommand("nmcli " + self.currentInterface + " scan_results")
-            self.parseScanResults(scanResultsUnparsed)
-        else:
-            self.stopScan()
+    def readNetworks(self):
+        scanResultsUnparsed = runShellCommand("nmcli dev wifi list --rescan no")
+        self.parseScanResults(scanResultsUnparsed)
 
     def parseScanResults(self, unparsedResults):
         lines = unparsedResults.split("\n")
-        parsed = []
-        for i in range(2, len(lines) - 1):
-            wifiEntry = lines[i].split("\t")
-            if len(wifiEntry) == 5:
+        self.networks = []
+
+        for i in range(1, len(lines)):
+            wifiEntry = lines[i].strip().split("  ")
+            wifiEntry = list(filter(None, wifiEntry))
+
+            if(len(wifiEntry) == 9):
                 wifiEntry = {
-                    "bssid": wifiEntry[0],
-                    "frequency": wifiEntry[1],
-                    "signal": wifiEntry[2],
-                    "flags": wifiEntry[3],
-                    "ssid": wifiEntry[4],
+                    "in-use": True,
+                    "bssid": wifiEntry[1],
+                    "ssid": wifiEntry[2],
+                    "mode": wifiEntry[3],
+                    "chan": wifiEntry[4],
+                    "rate": wifiEntry[5],
+                    "signal": wifiEntry[6],
+                    "bars": wifiEntry[7],
+                    "security": wifiEntry[8],
                 }
-                parsed.append(wifiEntry)
+            elif(len(wifiEntry) == 8):
+                wifiEntry = {
+                    "in-use": False,
+                    "bssid": wifiEntry[0],
+                    "ssid": wifiEntry[1],
+                    "mode": wifiEntry[2],
+                    "chan": wifiEntry[3],
+                    "rate": wifiEntry[4],
+                    "signal": wifiEntry[5],
+                    "bars": wifiEntry[6],
+                    "security": wifiEntry[7],
+                }
+            self.networks.append(wifiEntry)
+        self.isConnected()
 
-        self.scanResults = parsed
-        if self.scanCallback:
-            self.scanCallback(parsed)
-
-    def getAllNetworks(self):
-        ret = runShellCommand("nmcli " + self.currentInterface + " list_networks")
-
-
-    def isNetworkConfigured(self, networkId):
-        ret = runShellCommand("nmcli " + self.currentInterface + " get_network " + str(networkId) + " ssid")
-        ret = getLastLine(ret)
-        if(ret == "FAIL"):
-            print("network not configured")
-            return False
-        else:
-            print("network is configured")
-            return ret
-
-    def addNetwork(self):
-        ret = runShellCommand("nmcli " + self.currentInterface + " add_network")
-        ret = getLastLine(ret)
-        return ret
-
-    def removeNetwork(self, networkId):
-        ret = runShellCommand("nmcli " + self.currentInterface + " remove_network " + str(networkId))
-        ret = getLastLine(ret)
-        if(ret == "OK"):
-            return True
-        return False
+    def getAllWifiAP(self):
+        ret = runShellCommand("nmcli dev wifi list")
+        print(ret)
 
     def connect(self, ssid, psk):
-        networkId = self.addNetwork()
-        print("networkId: " + networkId)
-        self.configNetwork(networkId, ssid, psk)
+        print("connection to ssid: " + ssid)
 
-    def configNetwork(self, networkId, ssid, psk):
-        print(networkId, ssid, psk)
-        ret = runShellCommand("nmcli " + self.currentInterface + " set_network " + networkId + \
-                              " ssid '\"" + ssid + "\"'")
-        ret = getLastLine(ret)
-        if(ret != "OK"):
-            print("Error: set ssid " + ret)
-            return False
+        if(ssid == self.connectedAP):
+            # already connected to same AP
+            return True
+        
+        ret = runShellCommand("nmcli device wifi connect " + ssid + " password " + psk)
+        self.readNetworks()
 
-        ret = runShellCommand("nmcli " + self.currentInterface + " set_network " + networkId + \
-                              " psk '\"" + psk + "\"'")
-        ret = getLastLine(ret)
-        if(ret != "OK"):
-            print("Error: set psk " + ret)
-            return False
-
-        ret = runShellCommand("nmcli " + self.currentInterface + " enable_network " + networkId)
-        ret = getLastLine(ret)
-
-        if(ret != "OK"):
-            print("Error: enable network " + ret)
-            return False
-
-        ret = runShellCommand("nmcli " + self.currentInterface + " save_conf")
-        ret = getLastLine(ret)
-
-        if(ret != "OK"):
-            print("Error: save_conf " + ret)
-            return False
+        if(ssid == self.connectedAP):
+            return True
+        return False
+        
 
     def isConnected(self):
-        ret = runShellCommand("nmcli " + self.currentInterface + " status")
-
-        if(ret.find("wpa_state=COMPLETED") == 0):
-            self.connected = True
-            return True
-        self.connected = False
+        for i in range(len(self.networks)):
+            network = self.networks[i]
+            if(network["in-use"] == True):
+                self.connected = True
+                self.connectedAP = network["ssid"]
+                print(self.connectedAP)
         return False

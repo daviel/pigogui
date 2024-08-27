@@ -17,6 +17,8 @@ class BatteryManager:
     _measure_interval = 3000
     _history_len = 20
 
+    __error_count = 0
+
     _address = "/dev/i2c-1"
     file = None
     timer = None
@@ -50,6 +52,9 @@ class BatteryManager:
         
         if(read(self.file, data, 2) != 2):
             print("Error : Input/Output Error")
+            self.__error_count += 1
+            if self.__error_count >= 2:
+                self.timer.delete()
         else:
             self._calc_measure(data)
             self._calc_soc()

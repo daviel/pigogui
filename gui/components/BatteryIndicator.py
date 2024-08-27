@@ -15,9 +15,6 @@ class BatteryIndicator(lv.label):
         soc = SINGLETONS.BATTERY_MANAGER.get_soc()
         voltage = SINGLETONS.BATTERY_MANAGER.get_voltage()
 
-        print("soc: ", soc)
-        print("voltage: ", voltage)
-
         if(soc <= 15):
             obj.set_text(lv.SYMBOL.BATTERY_EMPTY)
         elif(soc <= 40):

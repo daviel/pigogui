@@ -53,6 +53,7 @@ if libc:
     fclose = libc.func("i", "fclose", "s")
     fwrite = libc.func("i", "fwrite", "PiiP")
     fgets = libc.func("s", "fgets", "sis")
+    strerror = libc.func("s", "strerror", "i")
     fflush = libc.func("i", "fflush", "s")
     errno = libc.var("i", "errno")
     kill = libc.func("i", "kill", "ii")
