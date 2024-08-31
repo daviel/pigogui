@@ -85,10 +85,10 @@ class ApplicationManager:
             #print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
             
             args = array.array("L")
-            args.append(uctypes.addressof(b'python'))
-            args.append(uctypes.addressof(bytearray(config["keymapperpath"])))
+            args.append(uctypes.addressof(bytes('python', 'utf8')))
+            args.append(uctypes.addressof(bytearray(config["keymapperpath"], 'utf8')))
             for key in keymap.split(" "):
-                args.append(uctypes.addressof(bytearray(key)))
+                args.append(uctypes.addressof(bytearray(key, 'utf8')))
             
             ret = execv("/usr/bin/python", args)
         #else:
