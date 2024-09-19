@@ -151,6 +151,7 @@ class SetupWifiPage(GenericPage):
 		elif self.keyboard != False:
 			if(self.connectAttempt(event.get_target_obj().get_text())):
 				self.hideKeyboard()
+				self.pageNext(None)
 
 	def pageBack(self, e):
 		SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", False)
@@ -190,5 +191,4 @@ class SetupWifiPage(GenericPage):
 			return False
 		else:
 			self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
-			self.pageNext(None)
 			return True
