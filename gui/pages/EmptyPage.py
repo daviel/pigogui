@@ -12,7 +12,7 @@ class EmptyPage(GenericPage):
 	
 	def __init__(self):
 		super().__init__()
-		self.set_style_bg_color(lv.color_t(), 0)
+		self.set_style_bg_opa(lv.OPA.TRANSP, 0)
 
 		self.group = lv.group_create()
 		button = lv.button()

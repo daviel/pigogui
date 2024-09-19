@@ -26,9 +26,13 @@ lv.theme_default_init(lv.display_get_default(),
 						darkTheme, 
 						lv.font_montserrat_16)
 
-lv.screen_active().set_style_bg_opa(0, 0)
-#lv.display_get_default().set_bg_opa(50)
+disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
+#scr.set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 SDL_ShowCursor(0)
+
 
 while(1):
     lv.timer_handler()
