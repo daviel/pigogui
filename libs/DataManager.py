@@ -19,7 +19,7 @@ class DataManager:
             self.load("./data/configurationDefault.json", "configuration")
             self.fileJSONMap["configuration"] = "./data/configuration.json"
 
-        self.load("./data/store.json", "store")
+        #self.load("./data/store.json", "store")
         #self.save("./data/games1.json", self.data['games'])
         self.findGames(self.get("configuration")["gamesdir"])
         pass
