@@ -11,7 +11,9 @@ class DataManager:
 
     def __init__(self):
         try:
+            print("loading current configuration")
             self.load("./data/configuration.json", "configuration")
+            self.updateConfigDefaults()
         except:
             print("error loading config. Restoring defauls")
             self.load("./data/configurationDefault.json", "configuration")
@@ -22,12 +24,36 @@ class DataManager:
         self.findGames(self.get("configuration")["gamesdir"])
         pass
 
+    def loadJSON(self, filename):
+        file = io.open(filename, 'r')
+        content = file.readlines()
+        jsonContent = json.loads(' '.join(map(str, content)))
+        file.close()
+        return jsonContent
+
     def load(self, filename, key):
         file = io.open(filename, 'r')
         content = file.readlines()
         self.data[key] = json.loads(' '.join(map(str, content)))
         file.close()
         self.fileJSONMap[key] = filename
+
+    def updateConfigDefaults(self):
+        defaults = self.loadJSON("./data/configurationDefault.json")
+        newConf = self.merge(defaults, self.data["configuration"])
+        self.data["configuration"] = newConf
+        pass
+
+    def merge(self, a: dict, b: dict, path=[]):
+        for key in b:
+            if key in a:
+                if isinstance(a[key], dict) and isinstance(b[key], dict):
+                    self.merge(a[key], b[key], path + [str(key)])
+                elif a[key] != b[key]:
+                    a[key] = b[key]
+            else:
+                a[key] = b[key]
+        return a
 
     def save(self, filename, content):
         file = io.open(filename, 'rw')
