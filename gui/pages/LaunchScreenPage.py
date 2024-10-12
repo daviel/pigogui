@@ -54,7 +54,13 @@ class LaunchScreenPage(GenericPage):
 			if(self.keyPressed == False):
 				self.keyPressed = True
 				#self.timer.delete()
-				SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", True, self)
+				config = SINGLETONS.DATA_MANAGER.get("configuration")
+				username = config["user"]["profile"]["username"]
+				if username == "":
+					SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", True, self)
+				else:
+					SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
+
 
 	def update_time(self, timer):
 		if self.labelVisible:

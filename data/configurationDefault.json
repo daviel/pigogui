@@ -8,6 +8,10 @@
     "mandatoryKeyMap": "HOME=KEY_DELETE",
 
     "user": {
+        "profile": {
+            "username": "",
+            "language": ""
+        },
         "theme": {
             "primaryColor": "TEAL",
             "darkTheme": true

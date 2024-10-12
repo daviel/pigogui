@@ -86,8 +86,11 @@ class SetupPage(GenericPage):
 	def page_done(self, e):
 		code = e.get_code()
 		if(self.validateInput()):
+			config = SINGLETONS.DATA_MANAGER.get("configuration")
+			config["user"]["profile"]["username"] = self.nametextarea.get_text()
+			SINGLETONS.DATA_MANAGER.saveAll()
 			SINGLETONS.PAGE_MANAGER.setCurrentPage("setupwifipage", True, self)
-				
+	
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):
 			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
