@@ -36,7 +36,7 @@ class SoundBar(lv.obj):
 
 		bar1 = lv.bar(self)
 		bar1.set_size(16, 116)
-		bar1.set_value(25, lv.ANIM.OFF)
+		bar1.set_value(25, False)
 		bar1.set_range(0, 100)
 		self.bar = bar1
 
@@ -46,12 +46,12 @@ class SoundBar(lv.obj):
 		soundSymbol.set_pos(8, 0)
 		self.soundSymbol = soundSymbol
 
-		self.scroll_to(6, 0, lv.ANIM.OFF)
+		self.scroll_to(6, 0, False)
 		addGlobalKeyCallback(self.globalEvent)
 
 		self.animShow = GenericAnim()
 		self.animShow.set_values(-40, 8)
-		self.animShow.set_time(self.animTime)
+		self.animShow.set_duration(self.animTime)
 		self.animShow.set_path_cb(lv.anim_t.path_ease_in)
 		self.animShow.target = self
 		self.animShow.anim_cb = self.anim_func
@@ -59,7 +59,7 @@ class SoundBar(lv.obj):
 
 		self.animHide = GenericAnim()
 		self.animHide.set_values(8, -40)
-		self.animHide.set_time(self.animTime)
+		self.animHide.set_duration(self.animTime)
 		self.animHide.set_path_cb(lv.anim_t.path_ease_in)
 		self.animHide.target = self
 		self.animHide.set_delay(self.duration)
@@ -93,7 +93,7 @@ class SoundBar(lv.obj):
 			self.soundSymbol.set_text(lv.SYMBOL.VOLUME_MAX)
 		else:
 			self.soundSymbol.set_text(lv.SYMBOL.VOLUME_MID)
-		self.bar.set_value(self.currentValue, lv.ANIM.ON)
+		self.bar.set_value(self.currentValue, True)
 
 	def get_volume(self):
 		return self.currentValue

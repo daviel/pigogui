@@ -5,7 +5,7 @@ from gui.components.Generic.SubPage import SubPage
 from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
-import libs.Singletons as SINGLETONS
+
 
 
 class UserSubPage(SubPage):
@@ -53,7 +53,7 @@ class UserSubPage(SubPage):
 		self.primaryColorRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
 		
 	def loadSubPage(self, event):
-		config = SINGLETONS.DATA_MANAGER.get("configuration")
+		config = DATA_MANAGER.get("configuration")
 		self.primaryColor = config["user"]["theme"]["primaryColor"]
 		self.darkTheme = config["user"]["theme"]["darkTheme"]
 
@@ -76,7 +76,7 @@ class UserSubPage(SubPage):
 
 				colors = lv.PALETTE.__dict__
 				primary_color = colors[self.primaryColor]
-				config = SINGLETONS.DATA_MANAGER.get("configuration")
+				config = DATA_MANAGER.get("configuration")
 
 				if selection == "Light":
 					self.darkTheme = False

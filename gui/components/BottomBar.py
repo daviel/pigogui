@@ -51,7 +51,7 @@ class BottomBar(lv.obj):
 			label = lv.label(self)
 			label.set_text(button['text'])
 
-		self.scroll_to(0, 14, lv.ANIM.OFF)
+		self.scroll_to(0, 14, False)
 
 	def init_button_style(self):
 		button_style = lv.style_t()

@@ -5,7 +5,7 @@ from gui.components.Generic.SubPage import SubPage
 from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
-import libs.Singletons as SINGLETONS
+
 
 
 class SoundSubPage(SubPage):
@@ -44,7 +44,7 @@ class SoundSubPage(SubPage):
 		self.menuSlider.add_event_cb(self.setMenuVolume, lv.EVENT.ALL, None)
 
 	def loadSubPage(self, event):
-		config = SINGLETONS.DATA_MANAGER.get("configuration")
+		config = DATA_MANAGER.get("configuration")
 		self.volume = config["user"]["sound"]["volume"]
 		self.menu = config["user"]["sound"]["menu"]
 
@@ -58,7 +58,7 @@ class SoundSubPage(SubPage):
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
-				config = SINGLETONS.DATA_MANAGER.get("configuration")
+				config = DATA_MANAGER.get("configuration")
 				print("volume changed", self.volumeSlider.get_value())
 				config["user"]["sound"]["volume"] = self.volumeSlider.get_value()
 		pass
@@ -69,7 +69,7 @@ class SoundSubPage(SubPage):
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
-				config = SINGLETONS.DATA_MANAGER.get("configuration")
+				config = DATA_MANAGER.get("configuration")
 				print("volume changed", self.menuSlider.get_value())
 				config["user"]["sound"]["menu"] = self.menuSlider.get_value()
 		pass

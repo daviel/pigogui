@@ -1,9 +1,10 @@
 from libs.ffishell import *
 from libs.init_drv import addGlobalKeyCallback
-import libs.Singletons as SINGLETONS
 from libs.Helper import SDL_KEYS
 import array
 import uctypes
+from libs.Singletons import *
+
 
 class ApplicationManager:
     main_app_pid = -1
@@ -28,14 +29,14 @@ class ApplicationManager:
             if(self.main_app_pid == 0):
                 ret = setenv("SDL_RPI_VIDEO_LAYER", "10", 1)
                 print(ret)
-                execv(app, None)
+                #execv(app, None)
             print("PID: " + str(self.main_app_pid))
         else:
             self.resumeMainApp()
 
         self.setKeyMap(keymap)
         self.app_keymap = keymap
-        SINGLETONS.PAGE_MANAGER.hideCurrentPage()
+        PAGE_MANAGER.hideCurrentPage()
 
     def stopMainApp(self):
         if self.main_app_pid != -1:
@@ -64,15 +65,15 @@ class ApplicationManager:
             if self.is_paused == True and self.key_pressed % 2 == 1:
                 print("hide quickmenu")
                 self.resumeMainApp()
-                SINGLETONS.PAGE_MANAGER.hideCurrentPage()
+                PAGE_MANAGER.hideCurrentPage()
             elif self.is_paused == False:
                 print("show quickmenu")
                 self.pauseMainApp()
-                SINGLETONS.PAGE_MANAGER.showCurrentPage()
+                PAGE_MANAGER.showCurrentPage()
                 self.key_pressed -= 1
 
     def setKeyMap(self, keymap=""):
-        config = SINGLETONS.DATA_MANAGER.get("configuration")
+        config = DATA_MANAGER.get("configuration")
         if self.keymap_pid != -1:
             kill(self.keymap_pid, SIGKILL)
 
@@ -90,7 +91,7 @@ class ApplicationManager:
             for key in keymap.split(" "):
                 args.append(uctypes.addressof(bytearray(key, 'utf8')))
             
-            ret = execv("/usr/bin/python", args)
+            #ret = execv("/usr/bin/python", args)
         #else:
         #    print(self.keymap_pid)
         

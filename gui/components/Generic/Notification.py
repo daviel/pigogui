@@ -35,14 +35,14 @@ class Notification(lv.obj):
 		message = lv.label(self)
 		message.set_text(text)
 		message.set_size(148, 24)
-		message.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		message.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 		self.message = message
 
-		self.scroll_to(0, 2, lv.ANIM.OFF)
+		self.scroll_to(0, 2, False)
 
 		self.animShow = GenericAnim()
 		self.animShow.set_values(0, 200)
-		self.animShow.set_time(self.animTime)
+		self.animShow.set_duration(self.animTime)
 		self.animShow.set_path_cb(lv.anim_t.path_ease_in)
 		self.animShow.target = self
 		self.animShow.anim_cb = self.anim_func
@@ -50,7 +50,7 @@ class Notification(lv.obj):
 
 		self.animHide = GenericAnim()
 		self.animHide.set_values(200, 0)
-		self.animHide.set_time(self.animTime)
+		self.animHide.set_duration(self.animTime)
 		self.animHide.set_path_cb(lv.anim_t.path_ease_in)
 		self.animHide.target = self
 		self.animHide.set_delay(self.duration)

@@ -2,7 +2,7 @@ import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
 from libs.Helper import SDL_KEYS
-import libs.Singletons as SINGLETONS
+
 from libs.init_drv import indev1
 
 class EmptyPage(GenericPage):
@@ -23,5 +23,5 @@ class EmptyPage(GenericPage):
 	def homeButtonPressed(self, indev):
 		if indev.get_key() == SDL_KEYS["SDLK_DELETE"]:
 			print("show quickmenu")
-			SINGLETONS.APPLICATION_MANAGER.pauseMainApp()
-			SINGLETONS.PAGE_MANAGER.showCurrentPage()
+			APPLICATION_MANAGER.pauseMainApp()
+			PAGE_MANAGER.showCurrentPage()

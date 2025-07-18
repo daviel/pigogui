@@ -45,7 +45,7 @@ class AboutSubPage(SubPage):
 Made and developed by David Krawiec \n\n
 Thank you for using PiGO. :)
 """)
-		label.set_long_mode(lv.label.LONG.WRAP)
+		label.set_long_mode(lv.label.LONG_MODE.WRAP)
 		label.set_width(160)
 		
 	def addPressEvent(self, event):

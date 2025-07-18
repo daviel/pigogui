@@ -3,7 +3,6 @@ import io
 import json
 import os
 
-import libs.Singletons as SINGLETONS
 
 class DataManager:
     data = {}

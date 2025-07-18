@@ -8,7 +8,7 @@ from gui.components.Generic.Loader import Loader
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 from libs.WifiShellParser import WifiShellParser
-import libs.Singletons as SINGLETONS
+
 
 
 class SetupWifiPage(GenericPage):
@@ -86,7 +86,7 @@ class SetupWifiPage(GenericPage):
 				wifiConnectButton = Button(self.wifiContainer, wifiEntry["ssid"] + " (" + wifiEntry["security"] + ")")
 			wifiConnectButton.label.align(lv.ALIGN.LEFT_MID, 0, 0)
 			wifiConnectButton.label.set_size(280, 20)
-			wifiConnectButton.label.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+			wifiConnectButton.label.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 			wifiConnectButton.set_width(280)
 			wifiConnectButton.set_height(20)
 			wifiConnectButton.data = wifiEntry
@@ -108,7 +108,7 @@ class SetupWifiPage(GenericPage):
 		errLabel = lv.label(passwordDialogContent)
 		#errLabel.set_recolor(True)
 		errLabel.add_flag(errLabel.FLAG.HIDDEN)
-		errLabel.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		errLabel.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 		self.errLabel = errLabel
 
 		#close_button = passwordDialog.add_footer_button("Abort")
@@ -127,7 +127,7 @@ class SetupWifiPage(GenericPage):
 		nametextarea.add_event_cb(self.cancelInput, lv.EVENT.CANCEL, None)
 		self.nametextarea = nametextarea
 
-		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
+		lv.gridnav_set_focused(self, self.nametextarea, False)
 		self.connectWifi(event)
 
 	def cancelInput(self, e):
@@ -135,7 +135,7 @@ class SetupWifiPage(GenericPage):
 
 	def hideKeyboard(self):
 		indev1.set_group(self.group)
-		self.wifiContainer.scroll_to(0, 0, lv.ANIM.ON)
+		self.wifiContainer.scroll_to(0, 0, True)
 		self.keyboard.delete()
 		self.passwordDialog.close()
 		self.keyboard = False
@@ -154,10 +154,10 @@ class SetupWifiPage(GenericPage):
 				self.pageNext(None)
 
 	def pageBack(self, e):
-		SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", False)
+		PAGE_MANAGER.setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
-		SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
+		PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
 	
 	def pageOpened(self):
 		self.refreshWifiNetworks(None)

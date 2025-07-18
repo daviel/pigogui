@@ -1,6 +1,6 @@
 import lvgl as lv
 import time
-import libs.Singletons as SINGLETONS
+from libs.Singletons import *
 
 
 class BatteryIndicator(lv.label):
@@ -12,8 +12,8 @@ class BatteryIndicator(lv.label):
         self.timer = lv.timer_create(self.update_state, 5000, self)
 
     def update_state(obj, timer):
-        soc = SINGLETONS.BATTERY_MANAGER.get_soc()
-        voltage = SINGLETONS.BATTERY_MANAGER.get_voltage()
+        soc = BATTERY_MANAGER.get_soc()
+        voltage = BATTERY_MANAGER.get_voltage()
 
         if(soc <= 15):
             obj.set_text(lv.SYMBOL.BATTERY_EMPTY)

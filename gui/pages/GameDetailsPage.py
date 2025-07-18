@@ -8,7 +8,7 @@ from gui.components.Generic.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImageAndConvert, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
-import libs.Singletons as SINGLETONS
+
 
 
 class GameDetailsPage(GenericPage):
@@ -69,13 +69,13 @@ class GameDetailsPage(GenericPage):
 		gameTitle = lv.label(self.rightContainer)
 		gameTitle.set_text("Title 1")
 		gameTitle.set_width(200)
-		gameTitle.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		gameTitle.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 		self.gameTitle = gameTitle
 
 		description = lv.label(self.rightContainer)
 		description.set_text("Here is a very long description of a game. It is about testing this textbox.")
 		description.set_size(200, 16)
-		description.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		description.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 		self.description = description
 
 		self.imageContainer = lv.obj(self.rightContainer)
@@ -101,7 +101,7 @@ class GameDetailsPage(GenericPage):
 		lv.gridnav_add(self.imageContainer, lv.GRIDNAV_CTRL.NONE)
 
 	def pageBack(self, e):
-		SINGLETONS.PAGE_MANAGER.pagePrev()
+		PAGE_MANAGER.pagePrev()
 
 	def pageOpened(self):
 		self.gameTitle.set_text(self.data['title'])

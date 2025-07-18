@@ -1,7 +1,7 @@
 import lvgl as lv
 
 from libs.Helper import SDL_KEYS, loadImageAndConvert
-import libs.Singletons as SINGLETONS
+
 
 
 class GameIcon(lv.button):
@@ -19,7 +19,7 @@ class GameIcon(lv.button):
 			self.label = lv.label(self)
 			self.label.set_text(data['title'])
 		else:
-			config = SINGLETONS.DATA_MANAGER.get("configuration")
+			config = DATA_MANAGER.get("configuration")
 			gameImage = loadImageAndConvert(
 				data["main_image"]
 			)
@@ -41,8 +41,8 @@ class GameIcon(lv.button):
 		code = e.get_code()
 		if code == lv.EVENT.PRESSED:
 			print("Game started: ", self.data["title"])
-			config = SINGLETONS.DATA_MANAGER.get("configuration")
-			SINGLETONS.APPLICATION_MANAGER.startApp(
+			config = DATA_MANAGER.get("configuration")
+			APPLICATION_MANAGER.startApp(
 				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
 				self.data["keymap"]
 			)
@@ -57,8 +57,8 @@ class GameIcon(lv.button):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
-				SINGLETONS.PAGE_MANAGER.setCurrentPage("gamedetailspage", True, self.data)
+				PAGE_MANAGER.setCurrentPage("gamedetailspage", True, self.data)
 			elif key == SDL_KEYS["SDLK_DELETE"]:
-				SINGLETONS.APPLICATION_MANAGER.resumeMainApp()
-				SINGLETONS.PAGE_MANAGER.hideCurrentPage()
+				APPLICATION_MANAGER.resumeMainApp()
+				PAGE_MANAGER.hideCurrentPage()
 		

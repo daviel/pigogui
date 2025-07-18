@@ -11,9 +11,9 @@ disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
 
 
 import time
-import libs.Singletons as SINGLETONS
+from libs.Singletons import *
 
-config = SINGLETONS.DATA_MANAGER.get("configuration")
+config = DATA_MANAGER.get("configuration")
 primary_color = config["user"]["theme"]["primaryColor"]
 darkTheme = config["user"]["theme"]["darkTheme"]
 
@@ -36,5 +36,5 @@ SDL_ShowCursor(0)
 
 while(1):
     lv.timer_handler()
-    SINGLETONS.DOWNLOAD_MANAGER.update()
+    DOWNLOAD_MANAGER.update()
     time.sleep(1 / 200)

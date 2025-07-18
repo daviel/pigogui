@@ -21,7 +21,7 @@ class IconButton(lv.button):
 		label = lv.label(self)
 		label.set_text(text)
 		#label.set_width(42)
-		label.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		label.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 
 
 	def addPressEvent(self, e):

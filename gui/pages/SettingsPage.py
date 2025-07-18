@@ -3,7 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
 from libs.Helper import SDL_KEYS, loadImage
-import libs.Singletons as SINGLETONS
+
 
 from gui.pages.SettingsSubPages.DisplaySubPage import DisplaySubPage
 from gui.pages.SettingsSubPages.SoundSubPage import SoundSubPage
@@ -101,14 +101,14 @@ class SettingsPage(GenericPage):
 		self.hidden = False
 
 	def pageClosed(self):
-		SINGLETONS.DATA_MANAGER.saveAll()
+		DATA_MANAGER.saveAll()
 		removeGlobalKeyCallback(self.globalExitPage)
 
 	def globalExitPage(self, indev, drv, data):
 		#print(indev.get_key())
 		if indev.get_key() == 27 and self.hidden == False and indev.group == self.group:
 			self.hidden = True
-			SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
+			PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
 
 	def addMenuPage(self, symbol, title, page):
 		btn = lv.button(self.main_page)
@@ -128,7 +128,7 @@ class SettingsPage(GenericPage):
 		label = lv.label(btn)
 		label.set_text(title)
 		label.set_width(42)
-		label.set_long_mode(lv.label.LONG.SCROLL_CIRCULAR)
+		label.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
 		
 		self.menu.set_load_page_event(btn, page)
 		page.set_width(240)
@@ -140,4 +140,4 @@ class SettingsPage(GenericPage):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_ESCAPE"] and self.hidden == False and indev1.get_group() == self.group:
 				self.hidden = True
-				SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
+				PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)

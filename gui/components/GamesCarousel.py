@@ -3,7 +3,7 @@ from gui.components.GameIcon import GameIcon
 from gui.components.SettingsIcon import SettingsIcon
 from libs.init_drv import indev1
 from libs.Helper import SDL_KEYS
-import libs.Singletons as SINGLETONS
+
 
 
 def anim_game_sizes(game, v):
@@ -33,19 +33,19 @@ class GamesCarousel(lv.obj):
 
 		lv.gridnav_add(self, lv.GRIDNAV_CTRL.ROLLOVER)
 
-		#self.scroll_to(0, 16, lv.ANIM.OFF)
+		#self.scroll_to(0, 16, False)
 
 		self.animZoomOut = lv.anim_t()
 		self.animZoomOut.init()
 		self.animZoomOut.set_values(144, 64)
-		self.animZoomOut.set_time(1000)
+		self.animZoomOut.set_duration(1000)
 		self.animZoomOut.set_path_cb(lv.anim_t.path_ease_in)
 		self.animZoomOut.set_custom_exec_cb(self.anim_func)
 
 		self.animZoomIn = lv.anim_t()
 		self.animZoomIn.init()
 		self.animZoomIn.set_values(64, 144)
-		self.animZoomIn.set_time(1000)
+		self.animZoomIn.set_duration(1000)
 		self.animZoomIn.set_path_cb(lv.anim_t.path_ease_in)
 		self.animZoomIn.set_custom_exec_cb(self.anim_func)
 		
@@ -76,7 +76,7 @@ class GamesCarousel(lv.obj):
 			game.set_size(val, val)
 
 	def load(self):
-		self.gameData = SINGLETONS.DATA_MANAGER.get("games")
+		self.gameData = DATA_MANAGER.get("games")
 		for data in self.gameData:
 			game = GameIcon(self, data)
 			game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)

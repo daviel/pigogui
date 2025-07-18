@@ -3,7 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from libs.init_drv import indev1
 from libs.Helper import loadImage, font_baloo_chettan_24, font_baloo_chettan_14
-import libs.Singletons as SINGLETONS
+from libs.Singletons import *
 
 
 
@@ -40,7 +40,7 @@ class LaunchScreenPage(GenericPage):
 		#self.timer = lv.timer_create(self.update_time, 1500, self)
 
 	def pageOpened(self):
-		config = SINGLETONS.DATA_MANAGER.get("configuration")
+		config = DATA_MANAGER.get("configuration")
 		self.primaryColor = config["user"]["theme"]["primaryColor"]
 
 		colors = []
@@ -54,12 +54,12 @@ class LaunchScreenPage(GenericPage):
 			if(self.keyPressed == False):
 				self.keyPressed = True
 				#self.timer.delete()
-				config = SINGLETONS.DATA_MANAGER.get("configuration")
+				config = DATA_MANAGER.get("configuration")
 				username = config["user"]["profile"]["username"]
 				if username == "":
-					SINGLETONS.PAGE_MANAGER.setCurrentPage("setuppage", True, self)
+					PAGE_MANAGER.setCurrentPage("setuppage", True, self)
 				else:
-					SINGLETONS.PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
+					PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
 
 
 	def update_time(self, timer):

@@ -7,7 +7,7 @@ from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
 from gui.styles.CustomTheme import CustomTheme
 
 from gui.styles.PageStyle import SETUP_PAGE_STYLE
-import libs.Singletons as SINGLETONS
+
 
 
 class SetupPage(GenericPage):
@@ -81,15 +81,15 @@ class SetupPage(GenericPage):
 		self.group.add_obj(container)
 		indev1.set_group(self.group)
 		
-		lv.gridnav_set_focused(self, self.nametextarea, lv.ANIM.OFF)
+		lv.gridnav_set_focused(self, self.nametextarea, False)
 
 	def page_done(self, e):
 		code = e.get_code()
 		if(self.validateInput()):
-			config = SINGLETONS.DATA_MANAGER.get("configuration")
+			config = DATA_MANAGER.get("configuration")
 			config["user"]["profile"]["username"] = self.nametextarea.get_text()
-			SINGLETONS.DATA_MANAGER.saveAll()
-			SINGLETONS.PAGE_MANAGER.setCurrentPage("setupwifipage", True, self)
+			DATA_MANAGER.saveAll()
+			PAGE_MANAGER.setCurrentPage("setupwifipage", True, self)
 	
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):
@@ -116,7 +116,7 @@ class SetupPage(GenericPage):
 			indev1.set_group(group)
 
 			self.container.set_height(120)
-			self.container.scroll_to(0, obj.get_y() + obj.get_height(), lv.ANIM.ON)
+			self.container.scroll_to(0, obj.get_y() + obj.get_height(), True)
 		elif self.keyboard != False:
 			if(self.validateInput()):
 				self.hideKeyboard()
@@ -127,7 +127,7 @@ class SetupPage(GenericPage):
 		self.keyboard = False
 		indev1.set_group(self.group)
 		self.container.set_height(320)
-		self.container.scroll_to(0, 0, lv.ANIM.ON)
+		self.container.scroll_to(0, 0, True)
 
 	def randomizeAvatar(self, name):
 		sum = 0
