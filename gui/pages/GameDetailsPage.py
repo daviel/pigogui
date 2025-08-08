@@ -19,8 +19,9 @@ class GameDetailsPage(GenericPage):
 	wifiContainer = ""
 	loadAnim = ""
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		self.animIn = lv.SCR_LOAD_ANIM.FADE_IN
 		self.animOut = lv.SCR_LOAD_ANIM.FADE_OUT

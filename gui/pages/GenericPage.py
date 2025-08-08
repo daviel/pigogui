@@ -12,7 +12,8 @@ class GenericPage(lv.obj):
 	data = {}
 	singletons = None
 
-	def __init__(self):
+	def __init__(self, singletons):
+		self.setSingletons(singletons)
 		super().__init__()
 		self.group = lv.group_create()
 		self.group.add_obj(self)
@@ -29,6 +30,6 @@ class GenericPage(lv.obj):
 
 	def pageClosed(self):
 		print("page has been closed")
-
+    
 	def setSingletons(self, singletons):
 		self.singletons = singletons

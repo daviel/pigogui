@@ -53,7 +53,7 @@ class UserSubPage(SubPage):
 		self.primaryColorRoller.add_event_cb(self.changeThemeHandler, lv.EVENT.ALL, None)
 		
 	def loadSubPage(self, event):
-		config = DATA_MANAGER.get("configuration")
+		config = self.singletons["DATA_MANAGER"].get("configuration")
 		self.primaryColor = config["user"]["theme"]["primaryColor"]
 		self.darkTheme = config["user"]["theme"]["darkTheme"]
 
@@ -76,7 +76,7 @@ class UserSubPage(SubPage):
 
 				colors = lv.PALETTE.__dict__
 				primary_color = colors[self.primaryColor]
-				config = DATA_MANAGER.get("configuration")
+				config = self.singletons["DATA_MANAGER"].get("configuration")
 
 				if selection == "Light":
 					self.darkTheme = False

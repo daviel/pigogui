@@ -40,10 +40,9 @@ class PageManager(GenericManager):
 		if self.currentPage != None:
 			self.currentPage.pageClosed()
 
-		self.currentPage = self.getPageByName(pageName)
-		page = self.currentPage()
+		self.currentPage = self.getPageByName(pageName)(self.singletons)
+		page = self.currentPage
 		self.currentPageName = pageName
-		page.setSingletons(self.singletons)
 		self.currentPageGroup = page.group
 		page.data = pageData
 		self.history.append(pageName)

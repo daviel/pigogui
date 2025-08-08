@@ -74,7 +74,7 @@ class ApplicationManager(GenericManager):
                 self.key_pressed -= 1
 
     def setKeyMap(self, keymap=""):
-        config = DATA_MANAGER.get("configuration")
+        config = self.singletons["DATA_MANAGER"].get("configuration")
         if self.keymap_pid != -1:
             kill(self.keymap_pid, SIGKILL)
 

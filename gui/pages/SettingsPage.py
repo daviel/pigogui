@@ -18,8 +18,9 @@ class SettingsPage(GenericPage):
 	menu = None
 	hidden = False
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		container = lv.obj(self)
 		container.set_size(320, 240)
@@ -101,7 +102,7 @@ class SettingsPage(GenericPage):
 		self.hidden = False
 
 	def pageClosed(self):
-		DATA_MANAGER.saveAll()
+		self.singletons["DATA_MANAGER"].saveAll()
 		removeGlobalKeyCallback(self.globalExitPage)
 
 	def globalExitPage(self, indev, drv, data):

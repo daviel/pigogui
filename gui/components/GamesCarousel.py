@@ -17,9 +17,11 @@ class GamesCarousel(lv.obj):
 	group = ""
 
 	gameData = []
+	parent = None
 
 	def __init__(self, container):
 		super().__init__(container)
+		self.parent = container
 
 		self.set_size(320, 200)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
@@ -76,7 +78,7 @@ class GamesCarousel(lv.obj):
 			game.set_size(val, val)
 
 	def load(self):
-		self.gameData = DATA_MANAGER.get("games")
+		self.gameData = self.parent.singletons["DATA_MANAGER"].get("games")
 		for data in self.gameData:
 			game = GameIcon(self, data)
 			game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)

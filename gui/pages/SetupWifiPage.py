@@ -21,8 +21,9 @@ class SetupWifiPage(GenericPage):
 	currentWiFiData = ""
 	refreshTimer = ""
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)

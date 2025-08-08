@@ -27,8 +27,9 @@ class SetupPage(GenericPage):
 		'sloth.png', 'snake.png', 'walrus.png', 'whale.png', 'zebra.png',
 	]
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		container = lv.obj(self)
 		container.set_size(320, 240)
@@ -86,9 +87,9 @@ class SetupPage(GenericPage):
 	def page_done(self, e):
 		code = e.get_code()
 		if(self.validateInput()):
-			config = DATA_MANAGER.get("configuration")
+			config = self.singletons["DATA_MANAGER"].get("configuration")
 			config["user"]["profile"]["username"] = self.nametextarea.get_text()
-			DATA_MANAGER.saveAll()
+			self.singletons["DATA_MANAGER"].saveAll()
 			self.singletons["PAGE_MANAGER"].setCurrentPage("setupwifipage", True, self)
 	
 	def validateInput(self):

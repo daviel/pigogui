@@ -10,8 +10,8 @@ class EmptyPage(GenericPage):
 	animIn = lv.SCR_LOAD_ANIM.MOVE_TOP
 	animDuration = 500
 	
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		super().__init__(singletons)
 		self.set_style_bg_opa(lv.OPA.TRANSP, 0)
 
 		self.group = lv.group_create()

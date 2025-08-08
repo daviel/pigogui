@@ -10,16 +10,18 @@ class GameIcon(lv.button):
 	data = {}
 
 	pressCallback = None
+	parent = None
 
 	def __init__(self, container, data):
 		super().__init__(container)
+		self.parent = container
 		self.data = data
 
 		if data['main_image'] == None:
 			self.label = lv.label(self)
 			self.label.set_text(data['title'])
 		else:
-			config = DATA_MANAGER.get("configuration")
+			config = self.parent.parent.singletons["DATA_MANAGER"].get("configuration")
 			gameImage = loadImageAndConvert(
 				data["main_image"]
 			)
@@ -41,7 +43,7 @@ class GameIcon(lv.button):
 		code = e.get_code()
 		if code == lv.EVENT.PRESSED:
 			print("Game started: ", self.data["title"])
-			config = DATA_MANAGER.get("configuration")
+			config = self.parent.parent.singletons["DATA_MANAGER"].get("configuration")
 			APPLICATION_MANAGER.startApp(
 				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
 				self.data["keymap"]
@@ -57,8 +59,8 @@ class GameIcon(lv.button):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
-				self.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
+				self.parent.parent.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				APPLICATION_MANAGER.resumeMainApp()
-				self.singletons["PAGE_MANAGER"].hideCurrentPage()
+				self.parent.parent.singletons["PAGE_MANAGER"].hideCurrentPage()
 		

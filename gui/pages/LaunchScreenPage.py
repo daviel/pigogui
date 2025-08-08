@@ -12,8 +12,9 @@ class LaunchScreenPage(GenericPage):
 	pigoLabel = ""
 	animDuration = 1000
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		self.animIn = lv.SCR_LOAD_ANIM.NONE
 

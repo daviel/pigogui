@@ -9,7 +9,7 @@ from libs.BatteryManager import BatteryManager
 
 
 
-class Singletons():
+class SingletonsClass():
     singletons = {}
 
     def __init__(self):
@@ -19,6 +19,3 @@ class Singletons():
         self.singletons["DOWNLOAD_MANAGER"] = DownloadManager(self.singletons)
         self.singletons["BATTERY_MANAGER"] = BatteryManager(self.singletons)
         self.singletons["PAGE_MANAGER"] = PageManager(self.singletons)
-
-
-SINGLETONS = Singletons()

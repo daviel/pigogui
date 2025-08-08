@@ -12,8 +12,9 @@ class GamesOverviewPage(GenericPage):
 	animIn = lv.SCR_LOAD_ANIM.MOVE_TOP
 	animDuration = 500
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, singletons):
+		#self.setSingletons(singletons)
+		super().__init__(singletons)
 
 		self.set_flex_flow(lv.FLEX_FLOW.COLUMN)
 		self.set_size(320, 240)

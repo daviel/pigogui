@@ -11,8 +11,9 @@ disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
 
 
 import time
-from libs.Singletons import SINGLETONS
+from libs.Singletons import *
 
+SINGLETONS = SingletonsClass()
 config = SINGLETONS.singletons["DATA_MANAGER"].get("configuration")
 primary_color = config["user"]["theme"]["primaryColor"]
 darkTheme = config["user"]["theme"]["darkTheme"]
@@ -27,14 +28,14 @@ lv.theme_default_init(lv.display_get_default(),
 						lv.font_montserrat_16)
 
 #disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
-#lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
-#lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
-#lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
-#lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
-#SDL_ShowCursor(0)
+lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
+lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
+SDL_ShowCursor(0)
 
 
 while(1):
     lv.timer_handler()
-    #SINGLETONS["DOWNLOAD_MANAGER"].update()
+    SINGLETONS.singletons["DOWNLOAD_MANAGER"].update()
     time.sleep(1 / 200)

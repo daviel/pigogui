@@ -44,7 +44,7 @@ class SoundSubPage(SubPage):
 		self.menuSlider.add_event_cb(self.setMenuVolume, lv.EVENT.ALL, None)
 
 	def loadSubPage(self, event):
-		config = DATA_MANAGER.get("configuration")
+		config = self.singletons["DATA_MANAGER"].get("configuration")
 		self.volume = config["user"]["sound"]["volume"]
 		self.menu = config["user"]["sound"]["menu"]
 
@@ -58,7 +58,7 @@ class SoundSubPage(SubPage):
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
-				config = DATA_MANAGER.get("configuration")
+				config = self.singletons["DATA_MANAGER"].get("configuration")
 				print("volume changed", self.volumeSlider.get_value())
 				config["user"]["sound"]["volume"] = self.volumeSlider.get_value()
 		pass
@@ -69,7 +69,7 @@ class SoundSubPage(SubPage):
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
-				config = DATA_MANAGER.get("configuration")
+				config = self.singletons["DATA_MANAGER"].get("configuration")
 				print("volume changed", self.menuSlider.get_value())
 				config["user"]["sound"]["menu"] = self.menuSlider.get_value()
 		pass
