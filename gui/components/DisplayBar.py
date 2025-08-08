@@ -66,6 +66,8 @@ class DisplayBar(lv.obj):
 		self.animHide.anim_cb = self.anim_func
 		self.animHide.anim_done_cb = self.done
 
+		self.inc_volume(0)
+
 	def show(self):
 		if self.isVisible == False:
 			self.isVisible = True
