@@ -7,9 +7,10 @@ from gui.components.BatteryIndicator import BatteryIndicator
 class TopBar(lv.obj):
 	label_time = ""
 	timer = ""
-
+	singletons = None
 
 	def __init__(self, container):
+		self.singletons = container.singletons
 		super().__init__(container)
 
 		self.set_size(320, 16)
