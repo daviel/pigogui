@@ -10,6 +10,7 @@ class GenericPage(lv.obj):
 	animDuration = 1000
 	group = None
 	data = {}
+	singletons = None
 
 	def __init__(self):
 		super().__init__()
@@ -28,3 +29,6 @@ class GenericPage(lv.obj):
 
 	def pageClosed(self):
 		print("page has been closed")
+
+	def setSingletons(self, singletons):
+		self.singletons = singletons

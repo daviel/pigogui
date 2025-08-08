@@ -1,8 +1,8 @@
 from libs.ffishell import *
 import lvgl as lv
+from libs.GenericManager import GenericManager
 
-
-class BatteryManager:
+class BatteryManager(GenericManager):
     voltage = 0
     soc = 0
 
@@ -23,9 +23,11 @@ class BatteryManager:
     file = None
     timer = None
 
-    def __init__(self):
-        self.setup()
-        self.timer = lv.timer_create(self.measure, self._measure_interval, None)
+    def __init__(self, singletons):
+        self.setSingletons(singletons)
+        #self.setup()
+        #self.timer = lv.timer_create(self.measure, self._measure_interval, None)
+        print("init batterymanager")
 
     def setup(self):
         print("setting up i2c connection")

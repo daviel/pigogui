@@ -57,8 +57,8 @@ class GameIcon(lv.button):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
-				PAGE_MANAGER.setCurrentPage("gamedetailspage", True, self.data)
+				self.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				APPLICATION_MANAGER.resumeMainApp()
-				PAGE_MANAGER.hideCurrentPage()
+				self.singletons["PAGE_MANAGER"].hideCurrentPage()
 		

@@ -154,10 +154,10 @@ class SetupWifiPage(GenericPage):
 				self.pageNext(None)
 
 	def pageBack(self, e):
-		PAGE_MANAGER.setCurrentPage("setuppage", False)
+		self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
-		PAGE_MANAGER.setCurrentPage("gamesoverviewpage", True)
+		self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", True)
 	
 	def pageOpened(self):
 		self.refreshWifiNetworks(None)

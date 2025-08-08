@@ -10,8 +10,9 @@ from gui.pages.EmptyPage import EmptyPage
 from libs.init_drv import indev1
 
 from libs.Helper import SDL_KEYS
+from libs.GenericManager import GenericManager
 
-class PageManager():
+class PageManager(GenericManager):
 	currentPage = None
 	currentPageName = None
 	currentPageGroup = None
@@ -20,16 +21,17 @@ class PageManager():
 	timer = ""
 
 	index = {
-		'launchscreenpage': LaunchScreenPage(),
-		'setuppage': SetupPage(),
-		'setupwifipage': SetupWifiPage(),
-		'gamesoverviewpage': GamesOverviewPage(),
-		'settingspage': SettingsPage(),
-		'gamedetailspage': GameDetailsPage(),
-		'emptypage': EmptyPage(),
+		'launchscreenpage': LaunchScreenPage,
+		'setuppage': SetupPage,
+		'setupwifipage': SetupWifiPage,
+		'gamesoverviewpage': GamesOverviewPage,
+		'settingspage': SettingsPage,
+		'gamedetailspage': GameDetailsPage,
+		'emptypage': EmptyPage,
 	}
 
-	def __init__(self):
+	def __init__(self, singletons):
+		self.setSingletons(singletons)
 		self.timer = lv.timer_create(self.animDone, 1000, None)
 		self.setCurrentPage("launchscreenpage", True)
 		#self.setCurrentPage("gamesoverviewpage", True)
@@ -38,9 +40,10 @@ class PageManager():
 		if self.currentPage != None:
 			self.currentPage.pageClosed()
 
-		self.currentPageName = pageName
 		self.currentPage = self.getPageByName(pageName)
-		page = self.currentPage
+		page = self.currentPage()
+		self.currentPageName = pageName
+		page.setSingletons(self.singletons)
 		self.currentPageGroup = page.group
 		page.data = pageData
 		self.history.append(pageName)

@@ -24,4 +24,4 @@ class EmptyPage(GenericPage):
 		if indev.get_key() == SDL_KEYS["SDLK_DELETE"]:
 			print("show quickmenu")
 			APPLICATION_MANAGER.pauseMainApp()
-			PAGE_MANAGER.showCurrentPage()
+			self.singletons["PAGE_MANAGER"].showCurrentPage()

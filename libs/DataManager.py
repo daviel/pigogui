@@ -2,13 +2,15 @@
 import io
 import json
 import os
+from libs.GenericManager import GenericManager
 
-
-class DataManager:
+class DataManager(GenericManager):
     data = {}
     fileJSONMap = {}
 
-    def __init__(self):
+    def __init__(self, singletons):
+        self.setSingletons(singletons)
+
         try:
             print("loading current configuration")
             self.load("./data/configuration.json", "configuration")

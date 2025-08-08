@@ -7,10 +7,18 @@ from libs.DownloadManager import DownloadManager
 from libs.BatteryManager import BatteryManager
 
 
-DATA_MANAGER = DataManager()
-NOTIFICATION_MANAGER = NotificationManager()
-SOUNDDISPLAYBAR_MANAGER = SoundDisplayBarManager()
-DOWNLOAD_MANAGER = DownloadManager()
-BATTERY_MANAGER = BatteryManager()
-#PAGE_MANAGER = PageManager()
-#APPLICATION_MANAGER = ApplicationManager()
+
+
+class Singletons():
+    singletons = {}
+
+    def __init__(self):
+        self.singletons["DATA_MANAGER"] = DataManager(self.singletons)
+        self.singletons["NOTIFICATION_MANAGER"] = NotificationManager(self.singletons)
+        self.singletons["SOUNDDISPLAYBAR_MANAGER"] = SoundDisplayBarManager(self.singletons)
+        self.singletons["DOWNLOAD_MANAGER"] = DownloadManager(self.singletons)
+        self.singletons["BATTERY_MANAGER"] = BatteryManager(self.singletons)
+        self.singletons["PAGE_MANAGER"] = PageManager(self.singletons)
+
+
+SINGLETONS = Singletons()

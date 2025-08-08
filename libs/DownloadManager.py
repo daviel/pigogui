@@ -1,6 +1,6 @@
 from libs.libcurl import *
 from libs.Helper import longByteToInteger
-
+from libs.GenericManager import GenericManager
 
 class Download():
     filename = ""
@@ -45,13 +45,14 @@ class Download():
         pass
 
 
-class DownloadManager():
+class DownloadManager(GenericManager):
     multi_handle = None
     downloads = {}
     still_running = b'1' * 4
     downloading = False
 
-    def __init__(self):
+    def __init__(self, singletons):
+        self.setSingletons(singletons)
         curl_global_init(CURL_GLOBAL_ALL)
         self.multi_handle = curl_multi_init()
         pass

@@ -108,7 +108,7 @@ class SettingsPage(GenericPage):
 		#print(indev.get_key())
 		if indev.get_key() == 27 and self.hidden == False and indev.group == self.group:
 			self.hidden = True
-			PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
+			self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", False)
 
 	def addMenuPage(self, symbol, title, page):
 		btn = lv.button(self.main_page)
@@ -140,4 +140,4 @@ class SettingsPage(GenericPage):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_ESCAPE"] and self.hidden == False and indev1.get_group() == self.group:
 				self.hidden = True
-				PAGE_MANAGER.setCurrentPage("gamesoverviewpage", False)
+				self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", False)

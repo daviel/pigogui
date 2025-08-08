@@ -1,14 +1,15 @@
 import collections
 
 from gui.components.Generic.Notification import Notification
-
+from libs.GenericManager import GenericManager
 # usage: notificationManager.add(lv.SYMBOL.OK, "message")
 
-class NotificationManager():
+class NotificationManager(GenericManager):
 	notifications = collections.deque((), 10)
 	_notificationIsShown = False
 
-	def __init__(self):
+	def __init__(self, singletons):
+		self.setSingletons(singletons)
 		pass
 
 	def add(self, symbol, text, duration=5000):

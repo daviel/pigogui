@@ -22,4 +22,4 @@ class SettingsIcon(GameIcon):
 
 	def start(self, e):
 		print("show settingspage")
-		PAGE_MANAGER.setCurrentPage("settingspage", True)
+		self.singletons["PAGE_MANAGER"].setCurrentPage("settingspage", True)

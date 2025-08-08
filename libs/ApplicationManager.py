@@ -3,10 +3,10 @@ from libs.init_drv import addGlobalKeyCallback
 from libs.Helper import SDL_KEYS
 import array
 import uctypes
-from libs.Singletons import *
+from libs.GenericManager import GenericManager
 
 
-class ApplicationManager:
+class ApplicationManager(GenericManager):
     main_app_pid = -1
     app_call = ""
     app_keymap = ""
@@ -16,7 +16,8 @@ class ApplicationManager:
     key_pressed = 0
 
 
-    def __init__(self):
+    def __init__(self, singletons):
+        self.setSingletons(singletons)
         addGlobalKeyCallback(self.triggerQuickMenu)
         self.setKeyMap()
 
@@ -36,7 +37,7 @@ class ApplicationManager:
 
         self.setKeyMap(keymap)
         self.app_keymap = keymap
-        PAGE_MANAGER.hideCurrentPage()
+        self.singletons["PAGE_MANAGER"].hideCurrentPage()
 
     def stopMainApp(self):
         if self.main_app_pid != -1:
@@ -65,11 +66,11 @@ class ApplicationManager:
             if self.is_paused == True and self.key_pressed % 2 == 1:
                 print("hide quickmenu")
                 self.resumeMainApp()
-                PAGE_MANAGER.hideCurrentPage()
+                self.singletons["PAGE_MANAGER"].hideCurrentPage()
             elif self.is_paused == False:
                 print("show quickmenu")
                 self.pauseMainApp()
-                PAGE_MANAGER.showCurrentPage()
+                self.singletons["PAGE_MANAGER"].showCurrentPage()
                 self.key_pressed -= 1
 
     def setKeyMap(self, keymap=""):

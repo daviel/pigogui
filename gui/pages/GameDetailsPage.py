@@ -101,7 +101,7 @@ class GameDetailsPage(GenericPage):
 		lv.gridnav_add(self.imageContainer, lv.GRIDNAV_CTRL.NONE)
 
 	def pageBack(self, e):
-		PAGE_MANAGER.pagePrev()
+		self.singletons["PAGE_MANAGER"].pagePrev()
 
 	def pageOpened(self):
 		self.gameTitle.set_text(self.data['title'])

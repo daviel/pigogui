@@ -89,7 +89,7 @@ class SetupPage(GenericPage):
 			config = DATA_MANAGER.get("configuration")
 			config["user"]["profile"]["username"] = self.nametextarea.get_text()
 			DATA_MANAGER.saveAll()
-			PAGE_MANAGER.setCurrentPage("setupwifipage", True, self)
+			self.singletons["PAGE_MANAGER"].setCurrentPage("setupwifipage", True, self)
 	
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):
