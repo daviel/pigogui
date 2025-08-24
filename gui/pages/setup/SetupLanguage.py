@@ -89,6 +89,7 @@ class SetupLanguage(GenericPage):
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				config["user"]["system"]["country"] = selection
+				config["user"]["system"]["country_code"] = country_code
 				self.singletons["DATA_MANAGER"].saveAll()
 
 	def changeLanguageHandler(self, e):
