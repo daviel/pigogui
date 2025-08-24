@@ -3,7 +3,6 @@ import lvgl as lv
 from gui.components.Generic.SubPage import SubPage
 
 from gui.components.Generic.ActiveSlider import ActiveSlider
-from gui.components.Generic.ActiveRoller import ActiveRoller
 
 
 

@@ -35,23 +35,10 @@ class GameIcon(lv.button):
 		self.set_size(100, 172)
 		#self.set_style_radius(16, 0)
 		#self.set_style_clip_corner(16, 0)
-		self.add_event_cb(self.showDetails, lv.EVENT.KEY, None)
-		self.add_event_cb(self.start, lv.EVENT.PRESSED, None)
+		self.add_event_cb(self.handleKey, lv.EVENT.KEY, None)
 
-	def start(self, e):
-		code = e.get_code()
-		if code == lv.EVENT.PRESSED:
-			print("Game started: ", self.data["title"])
-			config = self.singletons["DATA_MANAGER"].get("configuration")
-			APPLICATION_MANAGER.startApp(
-				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
-				self.data["keymap"]
-			)
-		
-		if(self.pressCallback):
-			self.pressCallback(self, e)
 
-	def showDetails(self, e):
+	def handleKey(self, e):
 		code = e.get_code()
 
 		if code == lv.EVENT.KEY:
@@ -62,4 +49,14 @@ class GameIcon(lv.button):
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				APPLICATION_MANAGER.resumeMainApp()
 				self.singletons["PAGE_MANAGER"].hideCurrentPage()
+			elif key == SDL_KEYS["SDLK_a"]:
+				print("Game started: ", self.data["title"])
+				config = self.singletons["DATA_MANAGER"].get("configuration")
+				APPLICATION_MANAGER.startApp(
+					config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
+					self.data["keymap"]
+				)
+				
+				if(self.pressCallback):
+					self.pressCallback(self, e)
 		

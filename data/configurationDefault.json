@@ -9,8 +9,12 @@
 
     "user": {
         "profile": {
-            "username": "",
-            "language": ""
+            "username": ""
+        },
+        "system": {
+            "language": "",
+            "timezone": "",
+            "country": ""
         },
         "theme": {
             "primaryColor": "TEAL",

@@ -17,7 +17,12 @@ class WifiShellParser():
     connectedAP = ""
 
     def __init__(self):
+        self.enableWifi()
         self.readNetworks()
+        pass
+
+    def enableWifi(self):
+        ret = runShellCommand("rfkill unblock wifi")
         pass
 
     def getInterfaces(self):

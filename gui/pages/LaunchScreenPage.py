@@ -56,7 +56,7 @@ class LaunchScreenPage(GenericPage):
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				username = config["user"]["profile"]["username"]
 				if username == "":
-					self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", True, self)
+					self.singletons["PAGE_MANAGER"].setCurrentPage("setuplanguage", True, self)
 				else:
 					self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", True)
 
