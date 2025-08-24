@@ -23,6 +23,7 @@ class WifiShellParser():
 
     def enableWifi(self):
         ret = runShellCommand("rfkill unblock wifi")
+        ret = runShellCommand("nmcli radio wifi on")
         pass
 
     def getInterfaces(self):
