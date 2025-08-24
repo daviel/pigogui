@@ -17,11 +17,11 @@ class WifiShellParser():
     connectedAP = ""
 
     def __init__(self):
-        self.enableWifi()
         self.readNetworks()
         pass
 
     def enableWifi(self):
+        print("wifi enabled")
         ret = runShellCommand("rfkill unblock wifi")
         ret = runShellCommand("nmcli radio wifi on")
         pass
@@ -37,6 +37,7 @@ class WifiShellParser():
         return self.networks
 
     def scan(self):
+        self.enableWifi()
         ret = runShellCommand("nmcli device wifi rescan&")
 
     def readNetworks(self):
