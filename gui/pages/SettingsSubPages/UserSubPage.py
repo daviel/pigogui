@@ -18,8 +18,8 @@ class UserSubPage(SubPage):
 	primaryColorRoller = ""
 	darkThemeRoller = ""
 
-	def __init__(self, container):
-		super().__init__(container)
+	def __init__(self, container, singletons):
+		super().__init__(container, singletons)
 		# Create sub pages
 		self.set_width(240)
 		self.set_style_pad_column(8, 0)

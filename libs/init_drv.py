@@ -4,7 +4,9 @@ from lv_utils import event_loop
 
 globalKeyCallbacks = []
 
-def global_key_callback(drv, data):
+def global_key_callback():
+    print(indev1.get_state())
+    print(indev1.get_key())
     if data == lv.EVENT.PRESSED or data == lv.EVENT.RELEASED or data == lv.EVENT.KEY:
         print(indev1.get_key(), data)
         for func in globalKeyCallbacks:

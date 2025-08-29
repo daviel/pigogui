@@ -51,37 +51,37 @@ class SettingsPage(GenericPage):
 
 		pages = [
 			{
-				"page": DisplaySubPage(menu),
+				"page": DisplaySubPage(menu, singletons),
 				"symbol": lv.SYMBOL.IMAGE,
 				"name": "Display"
 			},
 			{
-				"page": SoundSubPage(menu),
+				"page": SoundSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.AUDIO,
 				"name": "Sound"
 			},
 			{
-				"page": WifiSubPage(menu),
+				"page": WifiSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.WIFI,
 				"name": "Wifi"
 			},
 			{
-				"page": BluetoothSubPage(menu),
+				"page": BluetoothSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.BLUETOOTH,
 				"name": "Bluetooth"
 			},
 			{
-				"page": UserSubPage(menu),
+				"page": UserSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.HOME,
 				"name": "User"
 			},
 			{
-				"page": StorageSubPage(menu),
+				"page": StorageSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.SD_CARD,
 				"name": "Storage"
 			},
 			{
-				"page": AboutSubPage(menu),
+				"page": AboutSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.LIST,
 				"name": "About"
 			}
