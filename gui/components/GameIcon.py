@@ -45,6 +45,8 @@ class GameIcon(lv.button):
 			key = e.get_key()
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
+				config = self.singletons["DATA_MANAGER"].get("configuration")
+				self.singletons["AUDIO_MANAGER"].play(config["sounddir"] + "/tick_002.ogg")
 				self.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				self.singletons["APPLICATION_MANAGER"].resumeMainApp()

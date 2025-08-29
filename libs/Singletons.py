@@ -5,7 +5,7 @@ from libs.SoundDisplayBarManager import SoundDisplayBarManager
 from libs.ApplicationManager import ApplicationManager
 from libs.DownloadManager import DownloadManager
 from libs.BatteryManager import BatteryManager
-
+from libs.AudioManager import AudioManager
 
 
 
@@ -20,3 +20,4 @@ class SingletonsClass():
         self.singletons["BATTERY_MANAGER"] = BatteryManager(self.singletons)
         self.singletons["PAGE_MANAGER"] = PageManager(self.singletons)
         self.singletons["APPLICATION_MANAGER"] = ApplicationManager(self.singletons)
+        self.singletons["AUDIO_MANAGER"] = AudioManager()

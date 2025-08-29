@@ -3,6 +3,7 @@
     "gamesdir": "/opt/pigo/games/",
     "keymapperpath": "/opt/pigo/keymapper/main.py",
     "imgdir": "/opt/pigo/pigogui/imgs/",
+    "sounddir": "/opt/pigo/pigogui/audio/",
     
     "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME",
     "mandatoryKeyMap": "HOME=KEY_DELETE",
