@@ -22,6 +22,15 @@ class SettingsIcon(GameIcon):
 			'deletable': False,
 			'screenshots': []
 		})
+		self.add_event_cb(self.handleKey, lv.EVENT.KEY, None)
+
+
+	def handleKey(self, e):
+		code = e.get_code()
+		if code == lv.EVENT.KEY:
+			key = e.get_key()
+			if key == SDL_KEYS["SDLK_a"]:
+				self.start(e)
 
 	def start(self, e):
 		print("show settingspage")

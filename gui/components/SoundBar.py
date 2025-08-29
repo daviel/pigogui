@@ -65,7 +65,6 @@ class SoundBar(lv.obj):
 		self.animHide.set_delay(self.duration)
 		self.animHide.anim_cb = self.anim_func
 		self.animHide.anim_done_cb = self.done
-
 		self.inc_volume(0)
 
 	def show(self):
@@ -101,7 +100,6 @@ class SoundBar(lv.obj):
 		return self.currentValue
 
 	def globalEvent(self, indev, drv, data):
-		#print(indev.get_key())
 		if indev.get_key() == 43:
 			self.inc_volume(5)
 		elif indev.get_key() == 45:

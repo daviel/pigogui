@@ -19,7 +19,7 @@ class ApplicationManager(GenericManager):
     def __init__(self, singletons):
         self.setSingletons(singletons)
         addGlobalKeyCallback(self.triggerQuickMenu)
-        self.setKeyMap()
+        #self.setKeyMap()
 
     def startApp(self, app, keymap=""):
         if app != self.app_call:

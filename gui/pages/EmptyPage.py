@@ -23,5 +23,5 @@ class EmptyPage(GenericPage):
 	def homeButtonPressed(self, indev):
 		if indev.get_key() == SDL_KEYS["SDLK_DELETE"]:
 			print("show quickmenu")
-			APPLICATION_MANAGER.pauseMainApp()
+			self.singletons["APPLICATION_MANAGER"].pauseMainApp()
 			self.singletons["PAGE_MANAGER"].showCurrentPage()

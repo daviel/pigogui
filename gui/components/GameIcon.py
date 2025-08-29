@@ -47,12 +47,12 @@ class GameIcon(lv.button):
 				print("loading detailspage")
 				self.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
 			elif key == SDL_KEYS["SDLK_DELETE"]:
-				APPLICATION_MANAGER.resumeMainApp()
+				self.singletons["APPLICATION_MANAGER"].resumeMainApp()
 				self.singletons["PAGE_MANAGER"].hideCurrentPage()
 			elif key == SDL_KEYS["SDLK_a"]:
 				print("Game started: ", self.data["title"])
 				config = self.singletons["DATA_MANAGER"].get("configuration")
-				APPLICATION_MANAGER.startApp(
+				self.singletons["APPLICATION_MANAGER"].startApp(
 					config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
 					self.data["keymap"]
 				)

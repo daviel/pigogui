@@ -19,3 +19,4 @@ class SingletonsClass():
         self.singletons["DOWNLOAD_MANAGER"] = DownloadManager(self.singletons)
         self.singletons["BATTERY_MANAGER"] = BatteryManager(self.singletons)
         self.singletons["PAGE_MANAGER"] = PageManager(self.singletons)
+        self.singletons["APPLICATION_MANAGER"] = ApplicationManager(self.singletons)
