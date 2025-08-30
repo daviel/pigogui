@@ -77,7 +77,7 @@ class ApplicationManager(GenericManager):
         config = self.singletons["DATA_MANAGER"].get("configuration")
 
         debug = config["debug"]
-        if debug == "false":
+        if debug == False:
             if self.keymap_pid != -1:
                 kill(self.keymap_pid, SIGKILL)
 
