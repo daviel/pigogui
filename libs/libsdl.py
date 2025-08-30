@@ -200,8 +200,8 @@ keystates = {
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
-    "F9": {
-        "scancode": SCANCODES["F9"],
+    "F12": {
+        "scancode": SCANCODES["F12"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
@@ -248,8 +248,8 @@ def keyboard_loop():
         if combination == "F7+F8":
             if keystates["F8"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("louder")
-        elif combination == "F7+F9":
-            if keystates["F9"]["pressingHistory"] == [0, 1]:
+        elif combination == "F7+F12":
+            if keystates["F12"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("quieter")
         elif combination == "F7+F10":
             if keystates["F10"]["pressingHistory"] == [0, 1]:
