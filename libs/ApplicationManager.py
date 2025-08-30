@@ -30,7 +30,7 @@ class ApplicationManager(GenericManager):
             if(self.main_app_pid == 0):
                 ret = setenv("SDL_RPI_VIDEO_LAYER", "10", 1)
                 print(ret)
-                #execv(app, None)
+                execv(app, None)
             print("PID: " + str(self.main_app_pid))
         else:
             self.resumeMainApp()
