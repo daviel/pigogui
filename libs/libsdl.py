@@ -245,15 +245,16 @@ def keyboard_loop():
 
     if pressed:
         combination = "+".join(pressed)
-        if combination == "F1+F2":
-            if keystates["F2"]["pressingHistory"] == [0, 1]:
-                handleGlobalKeys("louder")
-        elif combination == "F1+F3":
-            if keystates["F3"]["pressingHistory"] == [0, 1]:
-                handleGlobalKeys("quieter")
-        elif combination == "F1+F4":
-            if keystates["F4"]["pressingHistory"] == [0, 1]:
-                handleGlobalKeys("lighter")
-        elif combination == "F1+F5":
-            if keystates["F5"]["pressingHistory"] == [0, 1]:
-                handleGlobalKeys("darker")
+        if combination.find("F1") != -1:
+            if combination.find("F2") != -1:
+                if keystates["F2"]["pressingHistory"] == [0, 1]:
+                    handleGlobalKeys("louder")
+            elif combination.find("F3") != -1:
+                if keystates["F3"]["pressingHistory"] == [0, 1]:
+                    handleGlobalKeys("quieter")
+            elif combination.find("F4") != -1:
+                if keystates["F4"]["pressingHistory"] == [0, 1]:
+                    handleGlobalKeys("lighter")
+            elif combination.find("F5") != -1:
+                if keystates["F5"]["pressingHistory"] == [0, 1]:
+                    handleGlobalKeys("darker")
