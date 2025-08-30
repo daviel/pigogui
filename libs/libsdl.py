@@ -190,28 +190,28 @@ def handleGlobalKeys(type):
         globalKeyCallbacks[type]()
 
 keystates = {
-    "F7": {
-        "scancode": SCANCODES["F7"],
+    "F1": {
+        "scancode": SCANCODES["F1"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
-    "F8": {
-        "scancode": SCANCODES["F8"],
+    "F2": {
+        "scancode": SCANCODES["F2"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
-    "F9": {
-        "scancode": SCANCODES["F9"],
+    "F3": {
+        "scancode": SCANCODES["F3"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
-    "F10": {
-        "scancode": SCANCODES["F10"],
+    "F4": {
+        "scancode": SCANCODES["F4"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
-    "F11": {
-        "scancode": SCANCODES["F11"],
+    "F5": {
+        "scancode": SCANCODES["F5"],
         "pressed": 0,
         "pressingHistory": [0, 0]
     },
@@ -245,15 +245,15 @@ def keyboard_loop():
 
     if pressed:
         combination = "+".join(pressed)
-        if combination == "F7+F8":
-            if keystates["F8"]["pressingHistory"] == [0, 1]:
+        if combination == "F1+F2":
+            if keystates["F2"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("louder")
-        elif combination == "F7+F9":
-            if keystates["F9"]["pressingHistory"] == [0, 1]:
+        elif combination == "F1+F3":
+            if keystates["F3"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("quieter")
-        elif combination == "F7+F10":
-            if keystates["F10"]["pressingHistory"] == [0, 1]:
+        elif combination == "F1+F4":
+            if keystates["F4"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("lighter")
-        elif combination == "F7+F11":
-            if keystates["F11"]["pressingHistory"] == [0, 1]:
+        elif combination == "F1+F5":
+            if keystates["F5"]["pressingHistory"] == [0, 1]:
                 handleGlobalKeys("darker")
