@@ -35,8 +35,9 @@ lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
+
 SDL_ShowCursor(0)
-SDL_SetRenderDrawColor(lv.sdl_window_get_renderer(disp_drv), 255, 0, 0, 255)
+SDL_SetRenderDrawColor(lv.sdl_window_get_renderer(disp_drv), 0, 0, 0, 0)
 
 
 while(1):
