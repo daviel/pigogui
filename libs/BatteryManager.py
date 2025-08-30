@@ -25,8 +25,10 @@ class BatteryManager(GenericManager):
 
     def __init__(self, singletons):
         self.setSingletons(singletons)
-        #self.setup()
-        #self.timer = lv.timer_create(self.measure, self._measure_interval, None)
+        config = self.singletons["DATA_MANAGER"].get("configuration")
+        if config["debug"] == False:
+            self.setup()
+            self.timer = lv.timer_create(self.measure, self._measure_interval, None)
         print("init batterymanager")
 
     def setup(self):

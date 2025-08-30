@@ -19,7 +19,7 @@ class ApplicationManager(GenericManager):
     def __init__(self, singletons):
         self.setSingletons(singletons)
         addGlobalKeyCallback(self.triggerQuickMenu)
-        #self.setKeyMap()
+        self.setKeyMap()
 
     def startApp(self, app, keymap=""):
         if app != self.app_call:
@@ -75,24 +75,27 @@ class ApplicationManager(GenericManager):
 
     def setKeyMap(self, keymap=""):
         config = self.singletons["DATA_MANAGER"].get("configuration")
-        if self.keymap_pid != -1:
-            kill(self.keymap_pid, SIGKILL)
 
-        if keymap == "":
-            keymap = config["defaultKeyMap"]
-        keymap = keymap + " " + config["mandatoryKeyMap"]
-        
-        self.keymap_pid = fork()
-        if(self.keymap_pid == 0):
-            #print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
+        debug = config["debug"]
+        if debug == "false":
+            if self.keymap_pid != -1:
+                kill(self.keymap_pid, SIGKILL)
+
+            if keymap == "":
+                keymap = config["defaultKeyMap"]
+            keymap = keymap + " " + config["mandatoryKeyMap"]
             
-            args = array.array("L")
-            args.append(uctypes.addressof(bytes('python', 'utf8')))
-            args.append(uctypes.addressof(bytearray(config["keymapperpath"], 'utf8')))
-            for key in keymap.split(" "):
-                args.append(uctypes.addressof(bytearray(key, 'utf8')))
-            
-            #ret = execv("/usr/bin/python", args)
-        #else:
-        #    print(self.keymap_pid)
+            self.keymap_pid = fork()
+            if(self.keymap_pid == 0):
+                print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
+                
+                args = array.array("L")
+                args.append(uctypes.addressof(bytes('python', 'utf8')))
+                args.append(uctypes.addressof(bytearray(config["keymapperpath"], 'utf8')))
+                for key in keymap.split(" "):
+                    args.append(uctypes.addressof(bytearray(key, 'utf8')))
+                
+                ret = execv("/usr/bin/python", args)
+            else:
+                print(self.keymap_pid)
         

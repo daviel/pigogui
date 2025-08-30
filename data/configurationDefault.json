@@ -5,8 +5,10 @@
     "imgdir": "/opt/pigo/pigogui/imgs/",
     "sounddir": "/opt/pigo/pigogui/audio/",
     
-    "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC HOME=KEY_HOME",
+    "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_A B=KEY_ESC Y=KEY_Y HOME=KEY_HOME",
     "mandatoryKeyMap": "HOME=KEY_DELETE",
+
+    "debug": false,
 
     "user": {
         "profile": {

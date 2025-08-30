@@ -83,9 +83,11 @@ class SetupLanguage(GenericPage):
 						country_code = country
 						break
 
-				# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
-				#ret = runShellCommand('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom' + country_code + '/" "/boot/firmware/cmdline.txt"')
-				#print('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom=' + country_code + '/" "/boot/firmware/cmdline.txt"')
+				config = self.singletons["DATA_MANAGER"].get("configuration")
+				if config["debug"] == False:
+					# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
+					ret = runShellCommand('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom' + country_code + '/" "/boot/firmware/cmdline.txt"')
+					print('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom=' + country_code + '/" "/boot/firmware/cmdline.txt"')
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				config["user"]["system"]["country"] = selection
