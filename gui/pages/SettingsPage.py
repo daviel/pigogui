@@ -1,7 +1,7 @@
 import lvgl as lv
 
 from gui.pages.GenericPage import GenericPage
-from libs.init_drv import indev1, addGlobalKeyCallback, removeGlobalKeyCallback
+from libs.init_drv import indev1
 from libs.Helper import SDL_KEYS, loadImage
 
 
@@ -98,12 +98,10 @@ class SettingsPage(GenericPage):
 		menu.set_page(pages[0]["page"])
 
 	def pageOpened(self):
-		addGlobalKeyCallback(self.globalExitPage)
 		self.hidden = False
 
 	def pageClosed(self):
 		self.singletons["DATA_MANAGER"].saveAll()
-		removeGlobalKeyCallback(self.globalExitPage)
 
 	def globalExitPage(self, indev, drv, data):
 		#print(indev.get_key())

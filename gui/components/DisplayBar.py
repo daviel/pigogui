@@ -1,7 +1,7 @@
 import lvgl as lv
 
 from gui.anims.GenericAnim import GenericAnim
-from libs.init_drv import addGlobalKeyCallback
+from libs.libsdl import addGlobalKeyCallback
 
 
 class DisplayBar(lv.obj):
@@ -47,7 +47,8 @@ class DisplayBar(lv.obj):
 		self.displaySymbol = displaySymbol
 
 		self.scroll_to(6, 0, False)
-		addGlobalKeyCallback(self.globalEvent)
+		addGlobalKeyCallback(self.inc_vol, "lighter")
+		addGlobalKeyCallback(self.dec_vol, "darker")
 
 		self.animShow = GenericAnim()
 		self.animShow.set_values(40, -8)
@@ -96,8 +97,8 @@ class DisplayBar(lv.obj):
 	def get_volume(self):
 		return self.currentValue
 
-	def globalEvent(self, indev, drv, data):
-		if indev.get_key() == 49:
-			self.inc_volume(10)
-		elif indev.get_key() == 50:
-			self.inc_volume(-10)
+	def inc_vol(self):
+		self.inc_volume(10)
+	
+	def dec_vol(self):
+		self.inc_volume(-10)

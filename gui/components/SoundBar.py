@@ -1,7 +1,7 @@
 import lvgl as lv
 
 from gui.anims.GenericAnim import GenericAnim
-from libs.init_drv import addGlobalKeyCallback
+from libs.libsdl import addGlobalKeyCallback
 
 
 class SoundBar(lv.obj):
@@ -47,7 +47,8 @@ class SoundBar(lv.obj):
 		self.soundSymbol = soundSymbol
 
 		self.scroll_to(6, 0, False)
-		addGlobalKeyCallback(self.globalEvent)
+		addGlobalKeyCallback(self.inc_vol, "louder")
+		addGlobalKeyCallback(self.dec_vol, "quieter")
 
 		self.animShow = GenericAnim()
 		self.animShow.set_values(-40, 8)
@@ -99,8 +100,8 @@ class SoundBar(lv.obj):
 	def get_volume(self):
 		return self.currentValue
 
-	def globalEvent(self, indev, drv, data):
-		if indev.get_key() == 43:
-			self.inc_volume(5)
-		elif indev.get_key() == 45:
-			self.inc_volume(-5)
+	def inc_vol(self):
+		self.inc_volume(10)
+	
+	def dec_vol(self):
+		self.inc_volume(-10)

@@ -1,5 +1,4 @@
 from libs.ffishell import *
-from libs.init_drv import addGlobalKeyCallback
 from libs.Helper import SDL_KEYS
 import array
 import uctypes
@@ -18,7 +17,6 @@ class ApplicationManager(GenericManager):
 
     def __init__(self, singletons):
         self.setSingletons(singletons)
-        addGlobalKeyCallback(self.triggerQuickMenu)
         self.setKeyMap()
 
     def startApp(self, app, keymap=""):

@@ -13,8 +13,6 @@ disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
 import time
 from libs.Singletons import *
 
-from libs.init_drv import indev1, global_key_callback
-
 
 SINGLETONS = SingletonsClass()
 config = SINGLETONS.singletons["DATA_MANAGER"].get("configuration")
@@ -42,6 +40,6 @@ SDL_SetRenderDrawColor(lv.sdl_window_get_renderer(disp_drv), 0, 0, 0, 0)
 
 while(1):
     lv.timer_handler()
+    keyboard_loop()
     SINGLETONS.singletons["DOWNLOAD_MANAGER"].update()
-    #global_key_callback()
-    time.sleep(1 / 200)
+    time.sleep(1 / 60)
