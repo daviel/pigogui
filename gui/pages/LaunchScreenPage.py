@@ -42,6 +42,8 @@ class LaunchScreenPage(GenericPage):
 		config = self.singletons["DATA_MANAGER"].get("configuration")
 		self.primaryColor = config["user"]["theme"]["primaryColor"]
 
+		self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.HOME, "Welcome back!")
+
 		colors = []
 		for color in lv.PALETTE.__dict__:
 			colors.append(color)

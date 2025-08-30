@@ -12,7 +12,7 @@ class SoundBar(lv.obj):
 
 	message = ""
 	timer = None
-	animTime = 500
+	animTime = 250
 	duration = 3000
 	doneCB = None
 
