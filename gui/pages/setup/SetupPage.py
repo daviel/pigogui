@@ -90,7 +90,11 @@ class SetupPage(GenericPage):
 		if(self.validateInput()):
 			config = self.singletons["DATA_MANAGER"].get("configuration")
 			config["user"]["profile"]["username"] = self.nametextarea.get_text()
-			runShellCommand('hostnamectl set-hostname "pigo-' +config["user"]["profile"]["username"] + '" 2> /dev/null')
+			
+			config = self.singletons["DATA_MANAGER"].get("configuration")
+			if config["debug"] == False:
+				runShellCommand('hostnamectl set-hostname "pigo-' +config["user"]["profile"]["username"] + '" 2> /dev/null')
+			
 			self.singletons["DATA_MANAGER"].saveAll()
 			self.singletons["PAGE_MANAGER"].setCurrentPage("setupwifipage", True, self)
 	
