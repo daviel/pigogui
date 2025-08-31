@@ -89,7 +89,7 @@ def add_or_replace_in_file(filename, new_string, identifier=None):
         lines.append(new_string + "\n")
 
     file = io.open(filename, 'rw')
-    content = file.write(lines)
+    content = file.write("\n".join(lines))
     file.close()
 
 
