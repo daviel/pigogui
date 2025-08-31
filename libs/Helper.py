@@ -86,8 +86,9 @@ def add_or_replace_in_file(filename, new_string, identifier=None):
     if not found:
         lines.append(new_string + "\n")
 
-    with open(filename, "w") as f:
-        f.writelines(lines)
+    file = io.open(filename, 'rw')
+    content = file.write(lines)
+    file.close()
 
 
 
