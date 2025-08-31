@@ -9,6 +9,7 @@ HEIGHT = 240
 disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
 disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
 
+SDL_ShowCursor(0)
 
 import time
 from libs.Singletons import *
@@ -33,7 +34,7 @@ lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 
-SDL_ShowCursor(0)
+
 
 
 while(1):
