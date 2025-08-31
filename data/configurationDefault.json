@@ -18,7 +18,8 @@
             "language": "",
             "timezone": "",
             "country_code": "",
-            "country": ""
+            "country": "",
+            "ssh": false
         },
         "theme": {
             "primaryColor": "TEAL",

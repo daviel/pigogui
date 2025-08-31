@@ -19,6 +19,7 @@ class DataManager(GenericManager):
             print("error loading config. Restoring defauls")
             self.load("./data/configurationDefault.json", "configuration")
             self.fileJSONMap["configuration"] = "./data/configuration.json"
+            self.saveAll()
 
         #self.load("./data/store.json", "store")
         #self.save("./data/games1.json", self.data['games'])

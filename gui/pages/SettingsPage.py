@@ -12,6 +12,7 @@ from gui.pages.SettingsSubPages.BluetoothSubPage import BluetoothSubPage
 from gui.pages.SettingsSubPages.StorageSubPage import StorageSubPage
 from gui.pages.SettingsSubPages.UserSubPage import UserSubPage
 from gui.pages.SettingsSubPages.AboutSubPage import AboutSubPage
+from gui.pages.SettingsSubPages.SystemSubPage import SystemSubPage
 
 
 class SettingsPage(GenericPage):
@@ -84,6 +85,11 @@ class SettingsPage(GenericPage):
 				"page": AboutSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.LIST,
 				"name": "About"
+			},
+			{
+				"page": SystemSubPage(menu, singletons),
+				"symbol": lv.SYMBOL.LIST,
+				"name": "System"
 			}
 		]
 		self.group = lv.group_create()

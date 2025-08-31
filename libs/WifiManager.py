@@ -9,16 +9,21 @@ def getLastLine(text):
 
 
 
-class WifiShellParser():
+class WifiManager():
     networks = []
     interfaces = []
     currentInterface = "wlp7s0"
     connected = False
     connectedAP = ""
+    IPAddress = ""
+
+    timer = ""
+    
 
     def __init__(self):
         self.readNetworks()
-        pass
+        self.timer = lv.timer_create(self.isConnected, 5000, None)
+
 
     def enableWifi(self):
         print("wifi enabled")
@@ -77,7 +82,7 @@ class WifiShellParser():
                     "security": wifiEntry[7],
                 }
             self.networks.append(wifiEntry)
-        self.isConnected()
+        #self.isConnected()
 
     def getAllWifiAP(self):
         ret = runShellCommand("nmcli dev wifi list")
@@ -85,24 +90,27 @@ class WifiShellParser():
 
     def connect(self, ssid, psk):
         print("connection to ssid: " + ssid)
-
         if(ssid == self.connectedAP):
             # already connected to same AP
             return True
         
-        ret = runShellCommand("nmcli device wifi connect " + ssid + " password " + psk)
+        ret = runShellCommand("nmcli device wifi connect " + ssid + " password " + psk + " &")
         self.readNetworks()
-
-        if(ssid == self.connectedAP):
-            return True
-        return False
         
-
-    def isConnected(self):
+    def isConnected(self, timer):
+        self.readNetworks()
         for i in range(len(self.networks)):
             network = self.networks[i]
             if(network["in-use"] == True):
                 self.connected = True
                 self.connectedAP = network["ssid"]
-                print(self.connectedAP)
+                #print(self.connectedAP)
+                nmcli = runShellCommand("nmcli -t -f IP4.ADDRESS device show")
+                for line in nmcli.splitlines():
+                    if line.startswith("IP4.ADDRESS"):
+                        ip = line.split(":")[1].split("/")[0]
+                        #print("found IP:", ip)
+                        if not ip.startswith("127.0.0.1") and not ip.startswith("172"):
+                            self.IPAddress = ip
+                            break
         return False

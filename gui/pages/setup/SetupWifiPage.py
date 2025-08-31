@@ -7,13 +7,11 @@ from gui.components.Generic.Loader import Loader
 
 from libs.init_drv import indev1
 from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS
-from libs.WifiShellParser import WifiShellParser
 
 
 
 class SetupWifiPage(GenericPage):
 	nextbutton = ""
-	wifiShellParser = WifiShellParser()
 	wifiContainer = ""
 	loadAnim = ""
 	nametextarea = ""
@@ -166,14 +164,14 @@ class SetupWifiPage(GenericPage):
 	def refreshWifiNetworks(self, e):
 		self.wifiContainer.add_flag(self.FLAG.HIDDEN)
 		self.loaderContainer.remove_flag(self.FLAG.HIDDEN)
-		self.wifiShellParser.scan()
+		self.singletons["WIFI_MANAGER"].scan()
 		self.refreshbutton.add_state(lv.STATE.DISABLED)
 		self.timer.reset()
 		self.timer.resume()
 
 	def delayedRefresh(self, e):
 		self.timer.pause()
-		self.renderWifiNetworks(self.wifiShellParser.getNetworks())
+		self.renderWifiNetworks(self.singletons["WIFI_MANAGER"].getNetworks())
 		self.refreshbutton.remove_state(lv.STATE.DISABLED)
 
 	def connectAttempt(self, password):
@@ -185,7 +183,7 @@ class SetupWifiPage(GenericPage):
 		self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
 		self.errLabel.set_text("Connection... Please wait.")
 		
-		status = self.wifiShellParser.connect(self.currentWiFiData["ssid"], password)
+		status = self.singletons["WIFI_MANAGER"].connect(self.currentWiFiData["ssid"], password)
 		if status != True:
 			self.errLabel.set_text("Error: Connection failed")
 			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)

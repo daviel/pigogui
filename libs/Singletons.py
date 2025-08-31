@@ -6,6 +6,7 @@ from libs.ApplicationManager import ApplicationManager
 from libs.DownloadManager import DownloadManager
 from libs.BatteryManager import BatteryManager
 from libs.AudioManager import AudioManager
+from libs.WifiManager import WifiManager
 
 
 
@@ -21,3 +22,4 @@ class SingletonsClass():
         self.singletons["PAGE_MANAGER"] = PageManager(self.singletons)
         self.singletons["APPLICATION_MANAGER"] = ApplicationManager(self.singletons)
         self.singletons["AUDIO_MANAGER"] = AudioManager()
+        self.singletons["WIFI_MANAGER"] = WifiManager()

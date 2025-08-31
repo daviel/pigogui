@@ -26,21 +26,22 @@ class SetupLanguage(GenericPage):
 	def __init__(self, container):
 		super().__init__(container)
 
+		self.add_style(SETUP_PAGE_STYLE, 0)
+		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
+		self.set_style_pad_column(4, 0)
+		self.set_style_pad_row(4, 0)
+
 		for country in self.language_list:
 			self.language_list_parsed.append(self.language_list[country])
 
-		# Create sub pages
-		self.set_width(240)
-		self.set_style_pad_column(8, 0)
-		self.set_style_pad_row(8, 0)
-		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		# content
 		label = lv.label(self)
 		label.set_text("Country")
 		label.set_width(100)
 
 		self.countryRoller = ActiveRoller(self)
-		self.countryRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.NORMAL)
+		self.countryRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.INFINITE)
 		self.countryRoller.set_visible_row_count(2)
 		self.countryRoller.set_width(180)
 		self.countryRoller.add_event_cb(self.changeCountryHandler, lv.EVENT.ALL, None)
@@ -50,7 +51,7 @@ class SetupLanguage(GenericPage):
 		label.set_width(100)
 
 		self.languageRoller = ActiveRoller(self)
-		self.languageRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.NORMAL)
+		self.languageRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.INFINITE)
 		self.languageRoller.set_visible_row_count(2)
 		self.languageRoller.set_width(180)
 		self.languageRoller.add_event_cb(self.changeLanguageHandler, lv.EVENT.ALL, None)
@@ -88,7 +89,7 @@ class SetupLanguage(GenericPage):
 					configline = "cfg80211.ieee80211_regdom={}".format(country_code)
 					# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
 					ret = runShellCommand('cp "/boot/firmware/cmdline.txt" "/boot/firmware/cmdline.txt.old"')
-					add_or_replace_in_file("/boot/firmware/cmdline.txt", "configline", identifier="cfg80211.ieee80211_regdom=")
+					add_or_replace_in_file("/boot/firmware/cmdline.txt", configline, identifier="cfg80211.ieee80211_regdom=")
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				config["user"]["system"]["country"] = selection
@@ -110,6 +111,6 @@ class SetupLanguage(GenericPage):
 				self.singletons["DATA_MANAGER"].saveAll()
 
 	def pageNext(self, e):
-		self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", True)
+		self.singletons["PAGE_MANAGER"].setCurrentPage("setuptimepage", True)
 	
 	

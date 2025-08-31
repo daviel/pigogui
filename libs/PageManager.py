@@ -4,6 +4,7 @@ from gui.pages.LaunchScreenPage import LaunchScreenPage
 from gui.pages.setup.SetupPage import SetupPage
 from gui.pages.setup.SetupWifiPage import SetupWifiPage
 from gui.pages.setup.SetupLanguage import SetupLanguage
+from gui.pages.setup.SetupTimePage import SetupTimePage
 from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
 from gui.pages.GameDetailsPage import GameDetailsPage
@@ -26,6 +27,7 @@ class PageManager(GenericManager):
 		'setuppage': SetupPage,
 		'setupwifipage': SetupWifiPage,
 		'setuplanguage': SetupLanguage,
+		'setuptimepage': SetupTimePage,
 		'gamesoverviewpage': GamesOverviewPage,
 		'settingspage': SettingsPage,
 		'gamedetailspage': GameDetailsPage,
