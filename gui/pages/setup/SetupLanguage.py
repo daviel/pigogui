@@ -3,7 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from gui.components.Generic.Button import Button
 from libs.init_drv import indev1
-from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST, add_or_replace
+from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST, add_or_replace_in_file
 from gui.styles.CustomTheme import CustomTheme
 
 from gui.components.Generic.ActiveSlider import ActiveSlider
