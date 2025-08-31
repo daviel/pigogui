@@ -7,7 +7,7 @@ from libs.libsdl import *
 WIDTH = 320
 HEIGHT = 240
 disp_drv = lv.sdl_window_create(WIDTH, HEIGHT)
-
+disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
 
 
 import time
@@ -28,14 +28,12 @@ lv.theme_default_init(lv.display_get_default(),
 						darkTheme, 
 						lv.font_montserrat_16)
 
-disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
 lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 
 SDL_ShowCursor(0)
-SDL_SetRenderDrawColor(lv.sdl_window_get_renderer(disp_drv), 0, 0, 0, 0)
 
 
 while(1):
