@@ -3,7 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from gui.components.Generic.Button import Button
 from libs.init_drv import indev1
-from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST
+from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST, add_or_replace
 from gui.styles.CustomTheme import CustomTheme
 
 from gui.components.Generic.ActiveSlider import ActiveSlider
@@ -85,10 +85,10 @@ class SetupLanguage(GenericPage):
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				if config["debug"] == False:
+					configline = "cfg80211.ieee80211_regdom={}".format(country_code)
 					# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
 					ret = runShellCommand('cp "/boot/firmware/cmdline.txt" "/boot/firmware/cmdline.txt.old"')
-					ret = runShellCommand('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom=' + country_code + '/" "/boot/firmware/cmdline.txt"')
-					print('sed -i -e "s/\s*cfg80211.ieee80211_regdom=\S*//" -e "s/\(.*\)/\1 cfg80211.ieee80211_regdom=' + country_code + '/" "/boot/firmware/cmdline.txt"')
+					add_or_replace_in_file("/boot/firmware/cmdline.txt", "configline", identifier="cfg80211.ieee80211_regdom=")
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				config["user"]["system"]["country"] = selection

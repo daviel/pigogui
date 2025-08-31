@@ -56,6 +56,41 @@ def KEYBOARD_ALL_SYMBOLS():
 	return KEYBOARD
 
 
+def add_or_replace_in_file(filename, new_string, identifier=None):
+    """
+    filename   : Dateiname (z.B. "data.txt")
+    new_string : Der String, der gespeichert werden soll
+    identifier : Optionaler Marker/Schlüssel, nach dem gesucht werden soll
+                 Wenn None, wird einfach genau new_string gesucht
+    """
+    try:
+        with open(filename, "r") as f:
+            lines = f.readlines()
+    except OSError:
+        # Datei existiert noch nicht
+        lines = []
+
+    found = False
+    for i, line in enumerate(lines):
+        # Vergleich nach identifier oder nach vollständigem String
+        if identifier:
+            if line.startswith(identifier):
+                lines[i] = new_string + "\n"
+                found = True
+                break
+        else:
+            if line.strip() == new_string:
+                found = True
+                break
+
+    if not found:
+        lines.append(new_string + "\n")
+
+    with open(filename, "w") as f:
+        f.writelines(lines)
+
+
+
 SDL_KEYS = {
     'SDLK_UNKNOWN': 0,
     'SDLK_BACKSPACE': 8,
