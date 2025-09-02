@@ -35,8 +35,8 @@ class SetupPage(GenericPage):
 		container = lv.obj(self)
 		container.set_size(320, 240)
 		self.container = container
+
 		container.add_style(SETUP_PAGE_STYLE, 0)
-		
 		container.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		container.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		container.set_style_pad_column(12, 0)
@@ -72,8 +72,13 @@ class SetupPage(GenericPage):
 		errLabel.add_flag(errLabel.FLAG.HIDDEN)
 		self.errLabel = errLabel
 
+		self.prevButton = Button(container, lv.SYMBOL.LEFT)
+		self.prevButton.set_size(120, 30)
+		self.prevButton.label.center()
+		self.prevButton.add_event_cb(self.pageBack, lv.EVENT.PRESSED, None)
+
 		nextbutton = Button(container, lv.SYMBOL.RIGHT)
-		nextbutton.set_size(260, 30)
+		nextbutton.set_size(120, 30)
 		nextbutton.label.center()
 		nextbutton.add_state(lv.STATE.DISABLED)
 		nextbutton.add_event_cb(self.page_done, lv.EVENT.PRESSED, None)
@@ -96,8 +101,11 @@ class SetupPage(GenericPage):
 				runShellCommand('hostnamectl set-hostname "pigo-' +config["user"]["profile"]["username"] + '" 2> /dev/null')
 			
 			self.singletons["DATA_MANAGER"].saveAll()
-			self.singletons["PAGE_MANAGER"].setCurrentPage("setupwifipage", True, self)
+			self.singletons["PAGE_MANAGER"].setCurrentPage("setupthemepage", True, self)
 	
+	def pageBack(self, e):
+		self.singletons["PAGE_MANAGER"].setCurrentPage("setuptimepage", False)
+
 	def validateInput(self):
 		if(len(self.nametextarea.get_text()) < 3):
 			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)

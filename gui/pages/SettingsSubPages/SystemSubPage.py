@@ -79,7 +79,7 @@ class SystemSubPage(SubPage):
 			config = self.singletons["DATA_MANAGER"].get("configuration")
 			if config["debug"] == False:
 				if enabled:
-					add_or_replace_in_file("/etc/ssh/ssh_config", "PasswordAuthentication Yes", identifier="PasswordAuthentication")
+					add_or_replace_in_file("/etc/ssh/ssh_config", "PasswordAuthentication Yes", identifier="PasswordAuthentication", replace_line=True)
 					ret = runShellCommand('systemctl enable ssh &')
 					ret = runShellCommand('systemctl start ssh &')
 					config["user"]["system"]["ssh"] = True

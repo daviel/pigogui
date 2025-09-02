@@ -1,18 +1,24 @@
 import lvgl as lv
 
 from gui.pages.LaunchScreenPage import LaunchScreenPage
+
+from gui.pages.setup.SetupIntro import SetupIntro
+from gui.pages.setup.SetupTheme import SetupTheme
 from gui.pages.setup.SetupPage import SetupPage
 from gui.pages.setup.SetupWifiPage import SetupWifiPage
 from gui.pages.setup.SetupLanguage import SetupLanguage
 from gui.pages.setup.SetupTimePage import SetupTimePage
+
 from gui.pages.GamesOverviewPage import GamesOverviewPage
 from gui.pages.SettingsPage import SettingsPage
 from gui.pages.GameDetailsPage import GameDetailsPage
 from gui.pages.EmptyPage import EmptyPage
+
 from libs.init_drv import indev1
 
 from libs.Helper import SDL_KEYS
 from libs.GenericManager import GenericManager
+
 
 class PageManager(GenericManager):
 	currentPage = None
@@ -24,10 +30,14 @@ class PageManager(GenericManager):
 
 	index = {
 		'launchscreenpage': LaunchScreenPage,
+
+		'setupintropage': SetupIntro,
 		'setuppage': SetupPage,
+		'setupthemepage': SetupTheme,
 		'setupwifipage': SetupWifiPage,
-		'setuplanguage': SetupLanguage,
+		'setuplanguagepage': SetupLanguage,
 		'setuptimepage': SetupTimePage,
+
 		'gamesoverviewpage': GamesOverviewPage,
 		'settingspage': SettingsPage,
 		'gamedetailspage': GameDetailsPage,

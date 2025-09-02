@@ -29,7 +29,7 @@ class SettingsIcon(GameIcon):
 		code = e.get_code()
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
-			if key == SDL_KEYS["SDLK_a"]:
+			if key == SDL_KEYS["SDLK_RETURN"]:
 				self.start(e)
 
 	def start(self, e):

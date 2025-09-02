@@ -58,7 +58,36 @@ def KEYBOARD_ALL_SYMBOLS():
 	return KEYBOARD
 
 
-def add_or_replace_in_file(filename, new_string, identifier=None):
+def set_cmdline_option(filename, option, value):
+    new_entry = f"{option}={value}"
+    updated = False
+
+    try:
+        with open(filename, "r") as f:
+            content = f.read().strip()
+    except OSError:
+        content = ""
+
+    parts = content.split()
+
+    for i, part in enumerate(parts):
+        if part.startswith(option + "="):
+            parts[i] = new_entry
+            updated = True
+            break
+
+    if not updated:
+        parts.append(new_entry)
+
+    new_content = " ".join(parts) + "\n"
+    
+    file = io.open(filename, 'rw')
+    content = file.write(new_content)
+    file.close()
+
+
+
+def add_or_replace_in_file(filename, new_string, identifier=None, replace_line=False):
     """
     filename   : Dateiname (z.B. "data.txt")
     new_string : Der String, der gespeichert werden soll
@@ -77,7 +106,10 @@ def add_or_replace_in_file(filename, new_string, identifier=None):
         # Vergleich nach identifier oder nach vollständigem String
         if identifier:
             if line.startswith(identifier):
-                lines[i] = new_string + "\n"
+                if replace_line == True:
+                    lines[i] = new_string
+                else:
+                    lines[i] = lines[i].replace(identifier, new_string)
                 found = True
                 break
         else:
@@ -86,7 +118,7 @@ def add_or_replace_in_file(filename, new_string, identifier=None):
                 break
 
     if not found:
-        lines.append(new_string + "\n")
+        lines.append(" " + new_string)
 
     file = io.open(filename, 'rw')
     content = file.write("\n".join(lines))

@@ -156,6 +156,7 @@ class SetupWifiPage(GenericPage):
 		self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
+		self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.HOME, "Setup done. Have fun!")
 		self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", True)
 	
 	def pageOpened(self):

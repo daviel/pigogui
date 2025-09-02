@@ -51,7 +51,7 @@ class GameIcon(lv.button):
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				self.singletons["APPLICATION_MANAGER"].resumeMainApp()
 				self.singletons["PAGE_MANAGER"].hideCurrentPage()
-			elif key == SDL_KEYS["SDLK_a"]:
+			elif key == SDL_KEYS["SDLK_RETURN"]:
 				print("Game started: ", self.data["title"])
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				self.singletons["APPLICATION_MANAGER"].startApp(

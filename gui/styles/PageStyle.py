@@ -13,3 +13,5 @@ GENERIC_PAGE_STYLE.set_border_width(0)
 
 
 SETUP_PAGE_STYLE = lv.style_t()
+col_dsc = [320, lv.GRID_TEMPLATE_LAST]
+row_dsc = [240, lv.GRID_TEMPLATE_LAST]

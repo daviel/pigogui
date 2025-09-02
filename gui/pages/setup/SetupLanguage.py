@@ -3,7 +3,7 @@ import lvgl as lv
 from gui.pages.GenericPage import GenericPage
 from gui.components.Generic.Button import Button
 from libs.init_drv import indev1
-from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST, add_or_replace_in_file
+from libs.Helper import loadImage, KEYBOARD_LETTERS_ONLY, KEYBOARD_ALL_SYMBOLS, COUNTRY_LIST
 from gui.styles.CustomTheme import CustomTheme
 
 from gui.components.Generic.ActiveSlider import ActiveSlider
@@ -26,38 +26,41 @@ class SetupLanguage(GenericPage):
 	def __init__(self, container):
 		super().__init__(container)
 
+		self.set_size(320, 240)
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
-		self.set_style_pad_column(4, 0)
-		self.set_style_pad_row(4, 0)
+		self.set_style_pad_column(12, 0)
+		self.set_style_pad_row(12, 0)
 
 		for country in self.language_list:
 			self.language_list_parsed.append(self.language_list[country])
 
 		# content
 		label = lv.label(self)
-		label.set_text("Country")
-		label.set_width(100)
+		label.set_text("\nCountry")
+		label.set_size(100, 80)
+		label.set_style_text_align(lv.TEXT_ALIGN.CENTER, 0)
 
 		self.countryRoller = ActiveRoller(self)
 		self.countryRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.INFINITE)
 		self.countryRoller.set_visible_row_count(2)
-		self.countryRoller.set_width(180)
+		self.countryRoller.set_width(170)
 		self.countryRoller.add_event_cb(self.changeCountryHandler, lv.EVENT.ALL, None)
 
 		label = lv.label(self)
-		label.set_text("Language")
-		label.set_width(100)
+		label.set_text("\nLanguage")
+		label.set_size(100, 80)
+		label.set_style_text_align(lv.TEXT_ALIGN.CENTER, 0)
 
 		self.languageRoller = ActiveRoller(self)
 		self.languageRoller.set_options("\n".join(self.language_list_parsed), lv.roller.MODE.INFINITE)
 		self.languageRoller.set_visible_row_count(2)
-		self.languageRoller.set_width(180)
+		self.languageRoller.set_width(170)
 		self.languageRoller.add_event_cb(self.changeLanguageHandler, lv.EVENT.ALL, None)
 
 		self.nextbutton = Button(self, lv.SYMBOL.RIGHT)
-		self.nextbutton.set_size(50, 30)
+		self.nextbutton.set_size(260, 30)
 		self.nextbutton.label.center()
 		self.nextbutton.add_event_cb(self.pageNext, lv.EVENT.PRESSED, None)
 
@@ -86,10 +89,9 @@ class SetupLanguage(GenericPage):
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				if config["debug"] == False:
-					configline = "cfg80211.ieee80211_regdom={}".format(country_code)
-					# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
 					ret = runShellCommand('cp "/boot/firmware/cmdline.txt" "/boot/firmware/cmdline.txt.old"')
-					add_or_replace_in_file("/boot/firmware/cmdline.txt", configline, identifier="cfg80211.ieee80211_regdom=")
+					# add cfg80211.ieee80211_regdom=DE to /boot/firmware/cmdline.txt
+					set_cmdline_option("/boot/firmware/cmdline.txt", "cfg80211.ieee80211_regdom", country_code)
 
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				config["user"]["system"]["country"] = selection
