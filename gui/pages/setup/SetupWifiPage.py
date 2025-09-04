@@ -22,6 +22,8 @@ class SetupWifiPage(GenericPage):
 	loaderDialogContainer = ""
 	passwordTextarea = ""
 	timerEval = ""
+	loaderDialogLoader = ""
+	loader = ""
 
 	def __init__(self, singletons):
 		#self.setSingletons(singletons)
@@ -173,8 +175,10 @@ class SetupWifiPage(GenericPage):
 		self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
-		self.loaderDialogLoader.timer.pause()
-		self.loader.timer.pause()
+		if self.loaderDialogLoader != "":
+			self.loaderDialogLoader.timer.pause()
+		if self.loader != "":
+			self.loader.timer.pause()
 
 		self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.HOME, "Setup done. Have fun!")
 		config = self.singletons["DATA_MANAGER"].get("configuration")
