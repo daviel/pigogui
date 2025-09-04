@@ -36,13 +36,15 @@ class GameIcon(lv.button):
 		#self.set_style_radius(16, 0)
 		#self.set_style_clip_corner(16, 0)
 		self.add_event_cb(self.handleKey, lv.EVENT.KEY, None)
+		self.add_event_cb(self.startGame, lv.EVENT.PRESSED, None)
 
 
 	def handleKey(self, e):
 		code = e.get_code()
-
+		print(code)
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
+			print(key)
 			if key == SDL_KEYS["SDLK_y"]:
 				print("loading detailspage")
 				config = self.singletons["DATA_MANAGER"].get("configuration")
@@ -51,14 +53,18 @@ class GameIcon(lv.button):
 			elif key == SDL_KEYS["SDLK_DELETE"]:
 				self.singletons["APPLICATION_MANAGER"].resumeMainApp()
 				self.singletons["PAGE_MANAGER"].hideCurrentPage()
-			elif key == SDL_KEYS["SDLK_RETURN"]:
-				print("Game started: ", self.data["title"])
-				config = self.singletons["DATA_MANAGER"].get("configuration")
-				self.singletons["APPLICATION_MANAGER"].startApp(
-					config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
-					self.data["keymap"]
-				)
-				
-				if(self.pressCallback):
-					self.pressCallback(self, e)
+
+	def startGame(self, e):
+		code = e.get_code()
+		if code == lv.EVENT.PRESSED:
+			key = e.get_key()
+			print("Game started: ", self.data["title"])
+			config = self.singletons["DATA_MANAGER"].get("configuration")
+			self.singletons["APPLICATION_MANAGER"].startApp(
+				config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
+				self.data["keymap"]
+			)
+			
+			if(self.pressCallback):
+				self.pressCallback(self, e)
 		
