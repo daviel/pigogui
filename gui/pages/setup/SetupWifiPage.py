@@ -167,7 +167,6 @@ class SetupWifiPage(GenericPage):
 			group.add_obj(self.keyboard)
 			indev1.set_group(group)
 		elif self.keyboard != False:
-			print(event.get_target_obj().get_text())
 			self.connectAttempt(event.get_target_obj().get_text())
 
 	def pageBack(self, e):
