@@ -5,8 +5,8 @@
     "imgdir": "/opt/pigo/pigogui/imgs/",
     "sounddir": "/opt/pigo/pigogui/audio/",
     
-    "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC Y=KEY_Y SPECIAL=KEY_F1 SL1=KEY_F2 SL2=KEY_F3 SR1=KEY_F4 SR2=KEY_F5 HOME=KEY_DELETE",
-    "mandatoryKeyMap": "HOME=KEY_DELETE SPECIAL=KEY_F1 SL1=KEY_F2 SL2=KEY_F3 SR1=KEY_F4 SR2=KEY_F5",
+    "defaultKeyMap": "UP=KEY_UP DOWN=KEY_DOWN LEFT=KEY_LEFT RIGHT=KEY_RIGHT A=KEY_ENTER B=KEY_ESC Y=KEY_Y SPECIAL=KEY_F1 SL1=KEY_F2 SL2=KEY_F3 SR1=KEY_F4 SR2=KEY_F5 HOME=KEY_DELETE START=NONE",
+    "mandatoryKeyMap": "SL1=KEY_F2 SL2=KEY_F3 SR1=KEY_F4 SR2=KEY_F5",
 
     "debug": false,
     "setupDone": false,
