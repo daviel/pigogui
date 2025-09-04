@@ -46,7 +46,7 @@ class PageManager(GenericManager):
 
 	def __init__(self, singletons):
 		self.setSingletons(singletons)
-		self.timer = lv.timer_create(self.animDone, 1000, None)
+		self.timer = lv.timer_create(self.animDone, 500, None)
 		self.setCurrentPage("launchscreenpage", True)
 		#self.setCurrentPage("gamesoverviewpage", True)
 

@@ -7,7 +7,7 @@ from gui.styles.PageStyle import GENERIC_PAGE_STYLE
 class GenericPage(lv.obj):
 	animOut = lv.SCR_LOAD_ANIM.MOVE_RIGHT
 	animIn = lv.SCR_LOAD_ANIM.MOVE_LEFT
-	animDuration = 1000
+	animDuration = 500
 	group = None
 	data = {}
 	singletons = None

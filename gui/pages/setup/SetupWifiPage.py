@@ -14,10 +14,14 @@ class SetupWifiPage(GenericPage):
 	nextbutton = ""
 	wifiContainer = ""
 	loadAnim = ""
-	nametextarea = ""
+	passwordTextarea = ""
 	keyboard = False
 	currentWiFiData = ""
-	refreshTimer = ""
+
+	errLabel = ""
+	loaderDialogContainer = ""
+	passwordTextarea = ""
+	timerEval = ""
 
 	def __init__(self, singletons):
 		#self.setSingletons(singletons)
@@ -28,6 +32,8 @@ class SetupWifiPage(GenericPage):
 		self.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
 		self.set_style_pad_column(0, 0)
 		self.set_style_pad_row(4, 0)
+
+		# timer for wifi scan
 		self.timer = lv.timer_create(self.delayedRefresh, 5000, self)
 		self.timer.pause()
 		
@@ -99,7 +105,7 @@ class SetupWifiPage(GenericPage):
 		wifiData = object.data
 		self.currentWiFiData = wifiData
 		passwordDialog = lv.msgbox(self.get_parent())
-		passwordDialog.align(lv.ALIGN.TOP_MID, 0, 4)
+		passwordDialog.align(lv.ALIGN.TOP_MID, 0, 0)
 		passwordDialog.add_text("SSID: " + wifiData["ssid"])
 		passwordDialogContent = passwordDialog.get_content()
 		self.passwordDialog = passwordDialog
@@ -115,18 +121,31 @@ class SetupWifiPage(GenericPage):
 		#accept_button = passwordDialog.add_footer_button("Connect")
 		#accept_button.set_height(20)
 
-		nametextarea = lv.textarea(passwordDialogContent)
-		nametextarea.set_one_line(True)
-		nametextarea.set_max_length(16)
-		nametextarea.set_password_mode(True)
-		nametextarea.set_height(40)
-		nametextarea.set_width(240)
-		nametextarea.set_placeholder_text("WiFi Password")
-		nametextarea.add_event_cb(self.connectWifi, lv.EVENT.READY, None)
-		nametextarea.add_event_cb(self.cancelInput, lv.EVENT.CANCEL, None)
-		self.nametextarea = nametextarea
+		passwordTextarea = lv.textarea(passwordDialogContent)
+		passwordTextarea.set_one_line(True)
+		passwordTextarea.set_max_length(16)
+		passwordTextarea.set_password_mode(True)
+		passwordTextarea.set_height(40)
+		passwordTextarea.set_width(240)
+		passwordTextarea.set_placeholder_text("WiFi Password")
+		passwordTextarea.add_event_cb(self.connectWifi, lv.EVENT.READY, None)
+		passwordTextarea.add_event_cb(self.cancelInput, lv.EVENT.CANCEL, None)
+		self.passwordTextarea = passwordTextarea
 
-		lv.gridnav_set_focused(self, self.nametextarea, False)
+		loaderDialogContainer = lv.obj(passwordDialogContent)
+		loaderDialogContainer.set_size(240, 40)
+		loaderDialogContainer.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
+		loaderDialogContainer.set_flex_align(lv.FLEX_FLOW.ROW_WRAP, lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.START)
+		loaderDialogContainer.set_style_pad_column(0, 0)
+		loaderDialogContainer.set_style_pad_row(0, 0)
+		loaderDialogContainer.add_flag(loaderDialogContainer.FLAG.HIDDEN)
+		loaderDialogContainer.remove_flag(loaderDialogContainer.FLAG.SCROLLABLE)
+		loader = Loader(loaderDialogContainer)
+		loader.set_size(20, 20)
+		self.loaderDialogLoader = loader
+		self.loaderDialogContainer = loaderDialogContainer
+
+		lv.gridnav_set_focused(self, self.passwordTextarea, False)
 		self.connectWifi(event)
 
 	def cancelInput(self, e):
@@ -142,25 +161,28 @@ class SetupWifiPage(GenericPage):
 	def connectWifi(self, event):
 		if self.keyboard == False:
 			self.keyboard = KEYBOARD_ALL_SYMBOLS()
-			self.keyboard.set_textarea(self.nametextarea)
+			self.keyboard.set_textarea(self.passwordTextarea)
 
 			group = lv.group_create()
 			group.add_obj(self.keyboard)
 			indev1.set_group(group)
 		elif self.keyboard != False:
-			if(self.connectAttempt(event.get_target_obj().get_text())):
-				self.hideKeyboard()
-				self.pageNext(None)
+			print(event.get_target_obj().get_text())
+			self.connectAttempt(event.get_target_obj().get_text())
 
 	def pageBack(self, e):
 		self.singletons["PAGE_MANAGER"].setCurrentPage("setuppage", False)
 
 	def pageNext(self, e):
+		self.loaderDialogLoader.timer.pause()
+		self.loader.timer.pause()
+
 		self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.HOME, "Setup done. Have fun!")
-		self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", True)
 		config = self.singletons["DATA_MANAGER"].get("configuration")
 		config["setupDone"] = True
 		self.singletons["DATA_MANAGER"].saveAll()
+
+		self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", True)
 	
 	def pageOpened(self):
 		self.refreshWifiNetworks(None)
@@ -179,19 +201,37 @@ class SetupWifiPage(GenericPage):
 		self.refreshbutton.remove_state(lv.STATE.DISABLED)
 
 	def connectAttempt(self, password):
-		if(len(self.nametextarea.get_text()) < 8):
+		if(len(self.passwordTextarea.get_text()) < 8):
 			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
 			self.errLabel.set_text("#ff0000 Should at least have 8 characters #")
 			return False
 
 		self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
-		self.errLabel.set_text("Connection... Please wait.")
+		self.errLabel.set_text("Connecting... Please wait.")
+		self.loaderDialogContainer.remove_flag(self.errLabel.FLAG.HIDDEN)
+		self.passwordTextarea.add_state(lv.STATE.DISABLED)
 		
-		status = self.singletons["WIFI_MANAGER"].connect(self.currentWiFiData["ssid"], password)
-		if status != True:
+		self.singletons["WIFI_MANAGER"].connect(self.currentWiFiData["ssid"], password)
+
+		# timer for password evaluation
+		if self.timerEval == "":
+			self.timerEval = lv.timer_create(self.check_connect_attempt, 10 * 1000, self)
+		self.timerEval.reset()
+		self.timerEval.resume()
+
+	def check_connect_attempt(self, e):
+		self.timerEval.pause()
+		print("checking attempt")
+
+		isConnected = self.singletons["WIFI_MANAGER"].connected
+
+		if isConnected != True:
 			self.errLabel.set_text("Error: Connection failed")
 			self.errLabel.remove_flag(self.errLabel.FLAG.HIDDEN)
-			return False
+			self.loaderDialogContainer.add_flag(self.errLabel.FLAG.HIDDEN)
+			self.passwordTextarea.remove_state(lv.STATE.DISABLED)
 		else:
 			self.errLabel.add_flag(self.errLabel.FLAG.HIDDEN)
-			return True
+			self.hideKeyboard()
+			self.pageNext(None)
+		

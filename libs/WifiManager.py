@@ -93,8 +93,9 @@ class WifiManager():
         if(ssid == self.connectedAP):
             # already connected to same AP
             return True
-        
-        ret = runShellCommand("nmcli device wifi connect " + ssid + " password " + psk + " &")
+
+        runShellCommand("nmcli connection delete " + ssid)        
+        runShellCommand("nmcli device wifi connect " + ssid + " password " + psk + " &")
         self.readNetworks()
         
     def isConnected(self, timer):
@@ -112,5 +113,6 @@ class WifiManager():
                         #print("found IP:", ip)
                         if not ip.startswith("127.0.0.1") and not ip.startswith("172"):
                             self.IPAddress = ip
+                            self.timer.pause()
                             break
         return False
