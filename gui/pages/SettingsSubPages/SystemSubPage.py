@@ -80,6 +80,11 @@ class SystemSubPage(SubPage):
 			if config["debug"] == False:
 				if enabled:
 					add_or_replace_in_file("/etc/ssh/ssh_config", "PasswordAuthentication Yes", identifier="PasswordAuthentication", replace_line=True)
+					
+					ret = runShellCommand('rm /etc/ssh/ssh_host_*')
+					ret = runShellCommand('dpkg-reconfigure openssh-server')
+					ret = runShellCommand('ssh-keygen -A')
+					
 					ret = runShellCommand('systemctl enable ssh &')
 					ret = runShellCommand('systemctl start ssh &')
 					config["user"]["system"]["ssh"] = True
