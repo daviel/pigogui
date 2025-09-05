@@ -85,12 +85,16 @@ Thank you for using PiGo. :)
 		gitret = ret.split("\t")
 		if gitret[0] != "0":
 			print("update available")
-			self.updateCheckBtn.add_flag(self.FLAG.HIDDEN)
+			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
 			self.updateBtn.remove_flag(self.FLAG.HIDDEN)
+			#self.group.add_obj(self.updateBtn)
+			lv.gridnav_set_focused(self, self.updateBtn, False)
 		else:
 			print("no update available")
 			self.updateCheckBtn.remove_flag(self.FLAG.HIDDEN)
-			self.updateBtn.add_flag(self.FLAG.HIDDEN)
+			self.updateBtn.add_state(self.FLAG.HIDDEN)
+			#self.group.add_obj(self.updateCheckBtn)
+			lv.gridnav_set_focused(self, self.updateCheckBtn, False)
 		
 		self.updateCheckBtn.remove_state(lv.STATE.DISABLED)
 
