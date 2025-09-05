@@ -3,6 +3,9 @@ import io
 import json
 import os
 from libs.GenericManager import GenericManager
+import time
+
+from libs.ffishell import runShellCommand
 
 class DataManager(GenericManager):
     data = {}
@@ -26,6 +29,7 @@ class DataManager(GenericManager):
         #self.load("./data/store.json", "store")
         #self.save("./data/games1.json", self.data['games'])
         self.findGames(self.get("configuration")["gamesdir"])
+        self.update_available()
         pass
 
     def loadJSON(self, filename):
@@ -102,3 +106,21 @@ class DataManager(GenericManager):
 
                     self.data["games"].append(game)
                     file.close()
+
+    def update_available(self):
+        t = time.localtime()
+        year, month, day, hour, minute, second, _, _, _ = t
+        date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
+
+        config = self.get("configuration")
+        config["user"]["system"]["updateCheckDate"] = date
+        self.saveAll()
+
+        runShellCommand('git fetch --quiet')
+        ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
+        gitret = ret.split("\t")
+        if gitret[0] != "0":
+            self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.UPLOAD, "New update available.")
+            return True
+        else:
+            return False

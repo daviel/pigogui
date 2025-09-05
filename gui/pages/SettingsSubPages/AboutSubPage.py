@@ -6,7 +6,6 @@ from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
 from libs.ffishell import runShellCommand
-from libs.Helper import update_available
 
 
 class AboutSubPage(SubPage):
@@ -69,7 +68,7 @@ Thank you for using PiGo. :)
 		label.set_width(180)
 		
 	def checkUpdate(self, event):
-		if update_available():
+		if self.singletons["DATA_MANAGER"].update_available():
 			print("update available")
 			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
 			self.updateBtn.remove_flag(self.FLAG.HIDDEN)

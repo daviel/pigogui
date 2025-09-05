@@ -126,24 +126,6 @@ def add_or_replace_in_file(filename, new_string, identifier=None, replace_line=F
     content = file.write("\n".join(lines))
     file.close()
 
-def update_available():
-    t = time.localtime()
-    year, month, day, hour, minute, second, _, _, _ = t
-    date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
-    self.checkDate.set_text(date)
-
-    config = self.singletons["DATA_MANAGER"].get("configuration")
-    config["user"]["system"]["updateCheckDate"] = date
-    self.singletons["DATA_MANAGER"].saveAll()
-
-    runShellCommand('git fetch --quiet')
-    ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
-    gitret = ret.split("\t")
-    if gitret[0] != "0":
-        return True
-    else:
-        return False
-
 
 SDL_KEYS = {
     'SDLK_UNKNOWN': 0,
