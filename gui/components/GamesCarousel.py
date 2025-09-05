@@ -1,6 +1,7 @@
 import lvgl as lv
 from gui.components.GameIcon import GameIcon
 from gui.components.SettingsIcon import SettingsIcon
+from gui.components.StoreIcon import StoreIcon
 from libs.init_drv import indev1
 from libs.Helper import SDL_KEYS
 
@@ -84,6 +85,7 @@ class GamesCarousel(lv.obj):
 			game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)
 			self.games.append(game)
 		SettingsIcon(self)
+		StoreIcon(self)
 
 	def key_pressed(self, event):
 		code = event.get_code()
