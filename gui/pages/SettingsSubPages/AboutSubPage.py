@@ -72,13 +72,11 @@ Thank you for using PiGo. :)
 			print("update available")
 			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
 			self.updateBtn.remove_flag(self.FLAG.HIDDEN)
-			#self.group.add_obj(self.updateBtn)
 			lv.gridnav_set_focused(self, self.updateBtn, False)
 		else:
 			print("no update available")
 			self.updateCheckBtn.remove_flag(self.FLAG.HIDDEN)
 			self.updateBtn.add_state(self.FLAG.HIDDEN)
-			#self.group.add_obj(self.updateCheckBtn)
 			lv.gridnav_set_focused(self, self.updateCheckBtn, False)
 
 	def installUpdate(self, event):
