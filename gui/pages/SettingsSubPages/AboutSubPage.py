@@ -69,8 +69,6 @@ Thank you for using PiGo. :)
 		label.set_width(180)
 		
 	def checkUpdate(self, event):
-		self.updateCheckBtn.add_state(lv.STATE.DISABLED)
-		
 		t = time.localtime()
 		year, month, day, hour, minute, second, _, _, _ = t
 		date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
@@ -95,8 +93,6 @@ Thank you for using PiGo. :)
 			self.updateBtn.add_state(self.FLAG.HIDDEN)
 			#self.group.add_obj(self.updateCheckBtn)
 			lv.gridnav_set_focused(self, self.updateCheckBtn, False)
-		
-		self.updateCheckBtn.remove_state(lv.STATE.DISABLED)
 
 	def installUpdate(self, event):
 		ret = runShellCommand('git pull')
