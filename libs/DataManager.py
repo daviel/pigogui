@@ -26,9 +26,7 @@ class DataManager(GenericManager):
             self.load("./data/configurationDefault.json", "configuration")
             self.fileJSONMap["configuration"] = "./data/configuration.json"
             self.saveAll()
-
-        #self.load("./data/store.json", "store")
-        #self.save("./data/games1.json", self.data['games'])
+        
         self.findGames(self.get("configuration")["gamesdir"])
         self.update_available()
         pass
