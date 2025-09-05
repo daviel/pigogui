@@ -5,6 +5,7 @@ import io
 import json
 import os
 from libs.ffishell import runShellCommand
+import time
 
 fs_drv = lv.fs_drv_t()
 fs_driver.fs_register(fs_drv, 'S')
@@ -126,6 +127,15 @@ def add_or_replace_in_file(filename, new_string, identifier=None, replace_line=F
     file.close()
 
 def update_available():
+    t = time.localtime()
+    year, month, day, hour, minute, second, _, _, _ = t
+    date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
+    self.checkDate.set_text(date)
+
+    config = self.singletons["DATA_MANAGER"].get("configuration")
+    config["user"]["system"]["updateCheckDate"] = date
+    self.singletons["DATA_MANAGER"].saveAll()
+
     runShellCommand('git fetch --quiet')
     ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
     gitret = ret.split("\t")

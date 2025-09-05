@@ -7,7 +7,6 @@ from gui.components.Generic.ActiveRoller import ActiveRoller
 
 from libs.ffishell import runShellCommand
 from libs.Helper import update_available
-import time
 
 
 class AboutSubPage(SubPage):
@@ -70,15 +69,6 @@ Thank you for using PiGo. :)
 		label.set_width(180)
 		
 	def checkUpdate(self, event):
-		t = time.localtime()
-		year, month, day, hour, minute, second, _, _, _ = t
-		date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
-		self.checkDate.set_text(date)
-	
-		config = self.singletons["DATA_MANAGER"].get("configuration")
-		config["user"]["system"]["updateCheckDate"] = date
-		self.singletons["DATA_MANAGER"].saveAll()
-
 		if update_available():
 			print("update available")
 			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
