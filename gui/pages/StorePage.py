@@ -29,7 +29,7 @@ class StorePage(GenericPage):
 		self.group = self.games1.group
 
 	def pageOpened(self):
-		self.games1.load()
+		self.games1.load(True)
 
 	def pageClosed(self):
 		self.games1.unload()

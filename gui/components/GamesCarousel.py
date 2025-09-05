@@ -78,14 +78,21 @@ class GamesCarousel(lv.obj):
 		for game in self.games:
 			game.set_size(val, val)
 
-	def load(self):
-		self.gameData = self.singletons["DATA_MANAGER"].get("games")
-		for data in self.gameData:
-			game = GameIcon(self, data)
-			game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)
-			self.games.append(game)
-		SettingsIcon(self)
-		StoreIcon(self)
+	def load(self, isStore=False):
+		if isStore:
+			self.gameData = self.singletons["DATA_MANAGER"].get("store")
+			for data in self.gameData:
+				game = GameIcon(self, data)
+				game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)
+				self.games.append(game)
+		else:
+			self.gameData = self.singletons["DATA_MANAGER"].get("games")
+			for data in self.gameData:
+				game = GameIcon(self, data)
+				game.add_event_cb(self.key_pressed, lv.EVENT.KEY, None)
+				self.games.append(game)
+			SettingsIcon(self)
+			StoreIcon(self)
 
 	def key_pressed(self, event):
 		code = event.get_code()
