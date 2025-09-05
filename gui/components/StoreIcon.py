@@ -28,4 +28,4 @@ class StoreIcon(GameIcon):
 
 	def start(self, e):
 		print("show storepage")
-		#self.singletons["PAGE_MANAGER"].setCurrentPage("settingspage", True)
+		self.singletons["PAGE_MANAGER"].setCurrentPage("storepage", True)

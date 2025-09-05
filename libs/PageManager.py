@@ -10,6 +10,7 @@ from gui.pages.setup.SetupLanguage import SetupLanguage
 from gui.pages.setup.SetupTimePage import SetupTimePage
 
 from gui.pages.GamesOverviewPage import GamesOverviewPage
+from gui.pages.StorePage import StorePage
 from gui.pages.SettingsPage import SettingsPage
 from gui.pages.GameDetailsPage import GameDetailsPage
 from gui.pages.EmptyPage import EmptyPage
@@ -38,6 +39,7 @@ class PageManager(GenericManager):
 		'setuplanguagepage': SetupLanguage,
 		'setuptimepage': SetupTimePage,
 
+		'storepage': StorePage,
 		'gamesoverviewpage': GamesOverviewPage,
 		'settingspage': SettingsPage,
 		'gamedetailspage': GameDetailsPage,
