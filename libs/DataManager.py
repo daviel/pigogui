@@ -14,6 +14,7 @@ class DataManager(GenericManager):
         try:
             print("loading current configuration")
             self.load("./data/configuration.json", "configuration")
+            self.load("./data/pigo.json", "pigo")
             self.updateConfigDefaults()
         except:
             print("error loading config. Restoring defauls")

@@ -20,7 +20,8 @@
             "timezone": "",
             "country_code": "",
             "country": "",
-            "ssh": false
+            "ssh": false,
+            "updateCheckDate": "Never"
         },
         "theme": {
             "primaryColor": "TEAL",

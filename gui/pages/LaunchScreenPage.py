@@ -31,7 +31,8 @@ class LaunchScreenPage(GenericPage):
 
 		versionLabel = lv.label(container)
 		versionLabel.align(lv.ALIGN.BOTTOM_RIGHT, 0, 0)
-		versionLabel.set_text("v1.0")
+		versions = self.singletons["DATA_MANAGER"].get("pigo")
+		versionLabel.set_text("v" + versions["versions"]["pigogui"])
 		versionLabel.set_style_text_font(font_baloo_chettan_14, 0)
 		versionLabel.fade_in(1000, 3000)
 
