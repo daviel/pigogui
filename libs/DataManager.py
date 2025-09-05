@@ -4,6 +4,7 @@ import json
 import os
 from libs.GenericManager import GenericManager
 import time
+import lvgl as lv
 
 from libs.ffishell import runShellCommand
 
