@@ -4,6 +4,7 @@ import ustruct
 import io
 import json
 import os
+from libs.ffishell import runShellCommand
 
 fs_drv = lv.fs_drv_t()
 fs_driver.fs_register(fs_drv, 'S')
@@ -124,6 +125,14 @@ def add_or_replace_in_file(filename, new_string, identifier=None, replace_line=F
     content = file.write("\n".join(lines))
     file.close()
 
+def update_available():
+    runShellCommand('git fetch --quiet')
+    ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
+    gitret = ret.split("\t")
+    if gitret[0] != "0":
+        return True
+    else:
+        return False
 
 
 SDL_KEYS = {

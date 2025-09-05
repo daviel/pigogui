@@ -6,6 +6,7 @@ from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 
 from libs.ffishell import runShellCommand
+from libs.Helper import update_available
 import time
 
 
@@ -78,10 +79,7 @@ Thank you for using PiGo. :)
 		config["user"]["system"]["updateCheckDate"] = date
 		self.singletons["DATA_MANAGER"].saveAll()
 
-		runShellCommand('git fetch --quiet')
-		ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
-		gitret = ret.split("\t")
-		if gitret[0] != "0":
+		if update_available():
 			print("update available")
 			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
 			self.updateBtn.remove_flag(self.FLAG.HIDDEN)

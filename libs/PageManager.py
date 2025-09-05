@@ -17,7 +17,7 @@ from gui.pages.EmptyPage import EmptyPage
 
 from libs.init_drv import indev1
 
-from libs.Helper import SDL_KEYS
+from libs.Helper import SDL_KEYS, update_available
 from libs.GenericManager import GenericManager
 
 
@@ -50,6 +50,9 @@ class PageManager(GenericManager):
 		self.setSingletons(singletons)
 		self.timer = lv.timer_create(self.animDone, 500, None)
 		self.setCurrentPage("launchscreenpage", True)
+
+		if update_available():
+			self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.UPLOAD, "New update available.")
 		#self.setCurrentPage("gamesoverviewpage", True)
 
 	def setCurrentPage(self, pageName, movingIn, pageData=None):
