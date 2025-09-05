@@ -80,6 +80,7 @@ Thank you for using PiGo. :)
 		config["user"]["system"]["updateCheckDate"] = date
 		self.singletons["DATA_MANAGER"].saveAll()
 
+		runShellCommand('git fetch --quiet')
 		ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
 		gitret = ret.split("\t")
 		if gitret[0] != "0":
