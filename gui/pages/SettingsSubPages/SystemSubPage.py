@@ -41,10 +41,6 @@ class SystemSubPage(SubPage):
 
 		config = self.singletons["DATA_MANAGER"].get("configuration")
 
-		self.labelUsername = lv.label(self)
-		self.labelUsername.set_text("Username: pigo")
-		self.labelUsername.set_width(160)
-
 		self.labelHostname = lv.label(self)
 		self.labelHostname.set_text("Hostname: pigo-" + config["user"]["profile"]["username"])
 		self.labelHostname.set_width(160)
@@ -52,12 +48,16 @@ class SystemSubPage(SubPage):
 		self.labelIP = lv.label(self)
 		self.labelIP.set_text("IP: " + self.singletons["WIFI_MANAGER"].IPAddress)
 		self.labelIP.set_width(160)
+		
+		self.labelUsername = lv.label(self)
+		self.labelUsername.set_text("Username: pigo")
+		self.labelUsername.set_width(160)
 
 		label = lv.label(self)
 		label.set_text("Default password: pigo")
 		label.set_width(160)
 
-		button = Button(self, "Set new password")
+		#button = Button(self, "Set new password")
 	
 	def loadSubPage(self, event):
 		config = self.singletons["DATA_MANAGER"].get("configuration")
