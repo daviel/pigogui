@@ -30,6 +30,14 @@ class GameIcon(lv.button):
 			#titleScreen.set_style_radius(16, 0)
 			#titleScreen.set_style_clip_corner(16, 0)
 			titleScreen.align(lv.ALIGN.CENTER, 0, 0)
+
+			gameName = lv.label(titleScreen)
+			gameName.set_size(92, 24)
+			gameName.set_pos(0, 164-24)
+			gameName.set_style_text_align(lv.TEXT_ALIGN.CENTER, 0)
+			gameName.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
+			gameName.set_text(data['title'])
+
 			self.titleScreen = titleScreen
 			
 		self.set_size(100, 172)

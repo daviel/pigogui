@@ -28,7 +28,9 @@ class DataManager(GenericManager):
             self.saveAll()
         
         self.findGames(self.get("configuration")["gamesdir"])
-        self.update_available()
+        config = self.get("configuration")
+        if config["debug"] == False:
+            self.update_available()
         pass
 
     def loadJSON(self, filename):

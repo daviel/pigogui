@@ -1,5 +1,6 @@
 import lvgl as lv
 from gui.components.GameIcon import GameIcon
+from gui.components.DownloadIcon import DownloadIcon
 from gui.components.SettingsIcon import SettingsIcon
 from gui.components.StoreIcon import StoreIcon
 from libs.init_drv import indev1
@@ -82,7 +83,7 @@ class GamesCarousel(lv.obj):
 		if isStore:
 			self.gameData = self.singletons["DATA_MANAGER"].get("store")
 			for data in self.gameData:
-				game = GameIcon(self, data)
+				game = DownloadIcon(self, data)
 				game.add_event_cb(self.key_pressed_store, lv.EVENT.KEY, None)
 				self.games.append(game)
 		else:

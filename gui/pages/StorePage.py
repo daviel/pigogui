@@ -25,6 +25,7 @@ class StorePage(GenericPage):
 
 		self.tobpar1 = TopBar(self)
 		self.games1 = GamesCarousel(self)
+		self.bottombar1 = BottomBar(self)
 
 		self.group = self.games1.group
 
