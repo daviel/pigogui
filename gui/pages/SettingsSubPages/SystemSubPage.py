@@ -64,7 +64,6 @@ class SystemSubPage(SubPage):
 
 		self.labelIP.set_text("IP: " + self.singletons["WIFI_MANAGER"].IPAddress)
 		self.labelHostname.set_text("Hostname: pigo-" + config["user"]["profile"]["username"])
-		self.labelUsername.set_text("Username: " + config["user"]["profile"]["username"])
 
 		if config["user"]["system"]["ssh"] == True:
 			self.switch.add_state(lv.STATE.CHECKED)
