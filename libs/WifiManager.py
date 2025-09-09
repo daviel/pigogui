@@ -27,7 +27,6 @@ class WifiManager():
 
     def enableWifi(self):
         print("wifi enabled")
-        ret = runShellCommand("rfkill unblock wifi")
         ret = runShellCommand("nmcli radio wifi on")
         pass
 
