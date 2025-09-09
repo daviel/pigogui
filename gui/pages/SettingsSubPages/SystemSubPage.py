@@ -79,11 +79,11 @@ class SystemSubPage(SubPage):
 			if config["debug"] == False:
 				if enabled:
 					add_or_replace_in_file("/etc/ssh/ssh_config", "PasswordAuthentication Yes", identifier="PasswordAuthentication", replace_line=True)
-					ret = runShellCommand('systemctl enable ssh &')
-					ret = runShellCommand('systemctl start ssh &')
+            		runShellCommand_bg("systemctl enable ssh")
+					runShellCommand_bg("systemctl start ssh")
 					config["user"]["system"]["ssh"] = True
 				else:
-					ret = runShellCommand('systemctl disable ssh &')
-					ret = runShellCommand('systemctl stop ssh &')
+					runShellCommand_bg("systemctl disable ssh")
+					runShellCommand_bg("systemctl stop ssh")
 					config["user"]["system"]["ssh"] = False
 				self.singletons["DATA_MANAGER"].saveAll()
