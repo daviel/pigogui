@@ -7,7 +7,7 @@ from gui.components.Generic.ActiveRoller import ActiveRoller
 from gui.components.Generic.Switch import Switch
 from gui.components.Generic.Button import Button
 
-from libs.ffishell import runShellCommand
+from libs.threading import runShellCommand_bg
 
 from libs.Helper import add_or_replace_in_file
 
