@@ -39,16 +39,10 @@ lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 
 
 async def main():
-    for i in range(3600):
-        await asyncio.sleep_ms(200)
+    while True:
+        await asyncio.sleep_ms(16)
+        lv.timer_handler()
+        keyboard_loop()
     print("Exit-Code:", rc)
 
 asyncio.run(main())
-
-
-while(1):
-    lv.timer_handler()
-    keyboard_loop()
-    #SINGLETONS.singletons["DOWNLOAD_MANAGER"].update()
-    time.sleep(1 / 60)
-
