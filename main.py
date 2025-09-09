@@ -1,6 +1,10 @@
+import time
 import usys as sys
 import lvgl as lv
 lv.init()
+
+import uasyncio as asyncio
+from libs.threading import runShellCommand_bg
 
 from libs.libsdl import * 
 
@@ -11,7 +15,6 @@ disp_drv.set_color_format(lv.COLOR_FORMAT.ARGB8888)
 
 SDL_ShowCursor(0)
 
-import time
 from libs.Singletons import *
 
 
@@ -35,10 +38,17 @@ lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
 lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 
 
+async def main():
+    for i in range(3600):
+        await asyncio.sleep_ms(200)
+    print("Exit-Code:", rc)
+
+asyncio.run(main())
 
 
 while(1):
     lv.timer_handler()
     keyboard_loop()
-    SINGLETONS.singletons["DOWNLOAD_MANAGER"].update()
+    #SINGLETONS.singletons["DOWNLOAD_MANAGER"].update()
     time.sleep(1 / 60)
+
