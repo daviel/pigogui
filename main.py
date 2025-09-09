@@ -4,7 +4,6 @@ import lvgl as lv
 lv.init()
 
 import uasyncio as asyncio
-from libs.threading import runShellCommand_bg
 
 from libs.libsdl import * 
 
