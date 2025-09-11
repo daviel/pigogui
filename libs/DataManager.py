@@ -7,10 +7,12 @@ import time
 import lvgl as lv
 
 from libs.ffishell import runShellCommand
+from libs.threading import runShellCommand_bg
 
 class DataManager(GenericManager):
     data = {}
     fileJSONMap = {}
+    updateAvailableCallbacks = []
 
     def __init__(self, singletons):
         self.setSingletons(singletons)
@@ -30,7 +32,7 @@ class DataManager(GenericManager):
         self.findGames(self.get("configuration")["gamesdir"])
         config = self.get("configuration")
         if config["debug"] == False:
-            self.update_available()
+            self.checkForUpdate()
         pass
 
     def loadJSON(self, filename):
@@ -108,20 +110,27 @@ class DataManager(GenericManager):
                     self.data["games"].append(game)
                     file.close()
 
-    def update_available(self):
+    def checkForUpdate(self):
         t = time.localtime()
         year, month, day, hour, minute, second, _, _, _ = t
         date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
-
         config = self.get("configuration")
         config["user"]["system"]["updateCheckDate"] = date
         self.saveAll()
+        self.handle = runShellCommand_bg("git fetch --quiet", on_done=self.checkForUpdateDone)
 
-        runShellCommand('git fetch --quiet')
+    def checkForUpdateDone(self, rc):
         ret = runShellCommand('git rev-list --count --left-right @{u}...HEAD')
         gitret = ret.split("\t")
+        config = self.get("configuration")
         if gitret[0] != "0":
             self.singletons["NOTIFICATION_MANAGER"].add(lv.SYMBOL.UPLOAD, "New update available.")
-            return True
+            config["user"]["system"]["updateAvailable"] = True
         else:
-            return False
+            config["user"]["system"]["updateAvailable"] = False
+        self.saveAll()
+        for func in self.updateAvailableCallbacks:
+            func(config["user"]["system"]["updateAvailable"])
+    
+    def updateAvailable(self):
+        return self.get("configuration")["user"]["system"]["updateAvailable"]

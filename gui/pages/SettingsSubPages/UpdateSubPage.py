@@ -4,11 +4,12 @@ from gui.components.Generic.SubPage import SubPage
 
 from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
+from gui.components.Generic.Loader import Loader
 
 from libs.ffishell import runShellCommand
 
 
-class AboutSubPage(SubPage):
+class UpdateSubPage(SubPage):
 	label = ""
 	data = ""
 	pressCallback = False
@@ -32,7 +33,19 @@ class AboutSubPage(SubPage):
 
 		label = lv.label(self)
 		label.set_text("PiGo: V" + versions["versions"]["pigogui"])
-		label.set_width(180)
+		label.set_width(100)
+
+		loader = Loader(self)
+		loader.set_size(24, 24)
+		loader.add_flag(loader.FLAG.HIDDEN)
+		self.loader = loader
+
+		btn = lv.button(self)
+		btn.add_event_cb(self.checkUpdate, lv.EVENT.PRESSED, None)
+		btn.set_width(180)
+		label = lv.label(btn)
+		label.set_text("Check for updates")
+		self.updateCheckBtn = btn
 
 		label = lv.label(self)
 		label.set_text("Last time checked:")
@@ -44,13 +57,6 @@ class AboutSubPage(SubPage):
 		self.checkDate = label
 
 		btn = lv.button(self)
-		btn.add_event_cb(self.checkUpdate, lv.EVENT.PRESSED, None)
-		btn.set_width(180)
-		label = lv.label(btn)
-		label.set_text("Check for Updates")
-		self.updateCheckBtn = btn
-
-		btn = lv.button(self)
 		btn.add_event_cb(self.installUpdate, lv.EVENT.PRESSED, None)
 		btn.set_width(180)
 		label = lv.label(btn)
@@ -58,17 +64,14 @@ class AboutSubPage(SubPage):
 		btn.add_flag(self.FLAG.HIDDEN)
 		self.updateBtn = btn
 
-		label = lv.label(self)
-		label.set_text(
-"""
-Made and developed by David Krawiec \n
-Thank you for using PiGo. :)
-""")
-		label.set_long_mode(lv.label.LONG_MODE.WRAP)
-		label.set_width(180)
+		config = self.singletons["DATA_MANAGER"].updateAvailableCallbacks.append(self.checkUpdateDone)
 		
 	def checkUpdate(self, event):
-		if self.singletons["DATA_MANAGER"].update_available():
+		self.loader.remove_flag(self.loader.FLAG.HIDDEN)
+		self.singletons["DATA_MANAGER"].checkForUpdate()
+
+	def checkUpdateDone(self, updateAvailable):
+		if updateAvailable:
 			print("update available")
 			self.updateCheckBtn.add_state(self.FLAG.HIDDEN)
 			self.updateBtn.remove_flag(self.FLAG.HIDDEN)
@@ -78,8 +81,13 @@ Thank you for using PiGo. :)
 			self.updateCheckBtn.remove_flag(self.FLAG.HIDDEN)
 			self.updateBtn.add_state(self.FLAG.HIDDEN)
 			lv.gridnav_set_focused(self, self.updateCheckBtn, False)
+		self.loader.add_flag(self.loader.FLAG.HIDDEN)
 
 	def installUpdate(self, event):
-		ret = runShellCommand('git pull')
-		ret = runShellCommand('systemctl restart pigogui')
+		self.updateBtn.add_state(lv.STATE.DISABLED)
+		self.updateBtn.set_text("Installing...")
+		self.handle = runShellCommand_bg("git pull", on_done=self.restartPigoGUI)
 		pass
+
+	def restartPigoGUI(self, rc):
+		ret = runShellCommand_bg('systemctl restart pigogui')

@@ -11,8 +11,9 @@ from gui.pages.SettingsSubPages.WifiSubPage import WifiSubPage
 from gui.pages.SettingsSubPages.BluetoothSubPage import BluetoothSubPage
 from gui.pages.SettingsSubPages.StorageSubPage import StorageSubPage
 from gui.pages.SettingsSubPages.UserSubPage import UserSubPage
-from gui.pages.SettingsSubPages.AboutSubPage import AboutSubPage
+from gui.pages.SettingsSubPages.UpdateSubPage import UpdateSubPage
 from gui.pages.SettingsSubPages.SystemSubPage import SystemSubPage
+from gui.pages.SettingsSubPages.InfoSubPage import InfoSubPage
 
 
 class SettingsPage(GenericPage):
@@ -82,14 +83,19 @@ class SettingsPage(GenericPage):
 				"name": "Storage"
 			},
 			{
-				"page": AboutSubPage(menu, singletons),
+				"page": UpdateSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.LIST,
-				"name": "About"
+				"name": "Update"
 			},
 			{
 				"page": SystemSubPage(menu, singletons),
 				"symbol": lv.SYMBOL.LIST,
 				"name": "System"
+			},
+			{
+				"page": InfoSubPage(menu, singletons),
+				"symbol": lv.SYMBOL.LIST,
+				"name": "Info"
 			}
 		]
 		self.group = lv.group_create()

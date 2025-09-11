@@ -3,9 +3,9 @@ import uos, time
 
 # ---------- Public API ----------
 
-def runShellCommand_bg(cmd: str, on_line=print, timeout_ms: int | None = None):
+def runShellCommand_bg(cmd: str, on_line=print, on_done=None, timeout_ms: int | None = None):
     loop = asyncio.get_event_loop()
-    runner = _BgRunner(cmd, on_line=on_line, timeout_ms=timeout_ms)
+    runner = _BgRunner(cmd, on_line=on_line, on_done=on_done, timeout_ms=timeout_ms)
     task = loop.create_task(runner._run())   # im Event-Loop starten
     return BgHandle(runner, task)
 
@@ -31,9 +31,10 @@ class BgHandle:
         return self._runner.pid
 
 class _BgRunner:
-    def __init__(self, cmd, on_line, timeout_ms):
+    def __init__(self, cmd, on_line, on_done, timeout_ms):
         self.cmd = cmd
         self.on_line = on_line
+        self.on_done = on_done
         self.timeout_ms = timeout_ms
         self.base = str(time.ticks_us())
         self.out_path = f"/tmp/bg_{self.base}.out"
@@ -72,6 +73,12 @@ class _BgRunner:
         for p in (self.pid_path,):
             try: uos.remove(p)
             except OSError: pass
+        
+        print("process done")
+        try:
+            self.on_done(rc)
+        except Exception:
+            pass
         return rc
 
     async def _tail_and_wait(self, pid: int, start_ticks: int) -> int:

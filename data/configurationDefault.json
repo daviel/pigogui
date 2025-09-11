@@ -21,7 +21,8 @@
             "country_code": "",
             "country": "",
             "ssh": false,
-            "updateCheckDate": "Never"
+            "updateCheckDate": "Never",
+            "updateAvailable": false
         },
         "theme": {
             "primaryColor": "TEAL",
