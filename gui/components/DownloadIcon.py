@@ -93,16 +93,16 @@ class DownloadIcon(lv.button):
         downloadPath = config["user"]["store"]["downloadpath"]
         gamePath = config["gamesdir"]
         print("7z -y -bso0 x " + downloadPath + self.data["filename"] + " -o"+gamePath)
-        self.handle = runShellCommand_bg("7z -y -bso0 x " + downloadPath + self.data["filename"] + " -o"+gamePath, on_line=self.extractingProgress, on_done=self.extractionDone)
+        self.handle = runShellCommand_bg("7z -y x " + downloadPath + self.data["filename"] + " -o"+gamePath, on_line=self.extractingProgress, on_done=self.extractionDone)
         pass
 
     def extractingProgress(self, s: str):
-        print("extract progress")
-        print("progress: " + s)
-        self.installProgressLabel.set_text("Extracting: " + s)
+        #print("extract progress")
+        self.installProgressLabel.set_text("Extracting")
         pass
 
     def extractionDone(self, rc):
-        print("extraction done")
+        #print("extraction done")
+        self.installProgressLabel.set_text("Installed")
         self.singletons["DATA_MANAGER"].findGames(self.singletons["DATA_MANAGER"].get("configuration")["gamesdir"])
         pass
