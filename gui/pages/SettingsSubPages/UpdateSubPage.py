@@ -47,6 +47,14 @@ class UpdateSubPage(SubPage):
 		label.set_text("Check for updates")
 		self.updateCheckBtn = btn
 
+		btn = lv.button(self)
+		btn.add_event_cb(self.installUpdate, lv.EVENT.PRESSED, None)
+		btn.set_width(180)
+		label = lv.label(btn)
+		label.set_text("Install update")
+		btn.add_flag(self.FLAG.HIDDEN)
+		self.updateBtn = btn
+
 		label = lv.label(self)
 		label.set_text("Last time checked:")
 		label.set_width(180)
@@ -55,14 +63,6 @@ class UpdateSubPage(SubPage):
 		label.set_text(config["user"]["system"]["updateCheckDate"])
 		label.set_width(180)
 		self.checkDate = label
-
-		btn = lv.button(self)
-		btn.add_event_cb(self.installUpdate, lv.EVENT.PRESSED, None)
-		btn.set_width(180)
-		label = lv.label(btn)
-		label.set_text("Install Update")
-		btn.add_flag(self.FLAG.HIDDEN)
-		self.updateBtn = btn
 
 		config = self.singletons["DATA_MANAGER"].updateAvailableCallbacks.append(self.checkUpdateDone)
 		
