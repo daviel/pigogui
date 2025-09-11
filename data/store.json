@@ -18,6 +18,7 @@
  "rating": null,
  "requirements": ["godot-3.4.4"],
  "version": "1.0",
+ "filename": "picowar.zip",
  "dirname": "picowar",
  "size": "104"}
 ,
@@ -41,6 +42,7 @@
  "rating": null,
  "requirements": ["godot-3.4.4"],
  "version": "1.0",
+ "filename": "pico-rogue.zip",
  "dirname": "picoRogue",
  "size": "104"}
 ,
@@ -64,6 +66,7 @@
  "rating": null,
  "requirements": ["godot-3.4.4"],
  "version": "1.0",
+ "filename": "opentyrian.zip",
  "dirname": "opentyrian",
  "size": "104"}
 ]

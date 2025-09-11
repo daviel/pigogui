@@ -41,10 +41,10 @@ class DownloadIcon(lv.button):
             downloadImg.set_pos(2, 2)
 
             installProgressLabel = lv.label(titleScreen)
-            installProgressLabel.set_size(92, 24)
-            installProgressLabel.set_pos(0, 82)
+            installProgressLabel.set_size(92, 48)
+            installProgressLabel.set_pos(0, 64)
             installProgressLabel.set_style_text_align(lv.TEXT_ALIGN.CENTER, 0)
-            installProgressLabel.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
+            #installProgressLabel.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
             installProgressLabel.set_text("")
             self.installProgressLabel = installProgressLabel
 
@@ -76,11 +76,33 @@ class DownloadIcon(lv.button):
             key = e.get_key()
             # install dialog
             config = self.singletons["DATA_MANAGER"].get("configuration")
-            self.handle = runShellCommand_bg(config["pigoguidir"] + "/installGame.sh", on_line=self.progress)
+            downloadPath = config["user"]["store"]["downloadpath"]
+            self.handle = runShellCommand_bg("wget --progress=dot " + self.data["file_url"] + " -P " + downloadPath, on_line=self.downloadProgress, on_done=self.downloadDone)
             
             if(self.pressCallback):
                 self.pressCallback(self, e)
 
-    def progress(self, s: str):
-        self.installProgressLabel.set_text(s)
-        print(">>> ", s)
+    def downloadProgress(self, s: str):
+        progressArray = s.split(" ")
+        if len(progressArray) >= 8 and progressArray[7].find("%") != -1:
+            self.installProgressLabel.set_text("Download: " + progressArray[7])
+
+    def downloadDone(self, rc):
+        print("extracting...")
+        config = self.singletons["DATA_MANAGER"].get("configuration")
+        downloadPath = config["user"]["store"]["downloadpath"]
+        gamePath = config["gamesdir"]
+        print("7z -y -bso0 x " + downloadPath + self.data["filename"] + " -o"+gamePath)
+        self.handle = runShellCommand_bg("7z -y -bso0 x " + downloadPath + self.data["filename"] + " -o"+gamePath, on_line=self.extractingProgress, on_done=self.extractionDone)
+        pass
+
+    def extractingProgress(self, s: str):
+        print("extract progress")
+        print("progress: " + s)
+        self.installProgressLabel.set_text("Extracting: " + s)
+        pass
+
+    def extractionDone(self, rc):
+        print("extraction done")
+        self.singletons["DATA_MANAGER"].findGames(self.singletons["DATA_MANAGER"].get("configuration")["gamesdir"])
+        pass

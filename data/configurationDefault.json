@@ -36,6 +36,9 @@
         "sound": {
             "volume": 10,
             "menu": 5
+        },
+        "store": {
+            "downloadpath": "/tmp/"
         }
     }
 }
