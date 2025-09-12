@@ -84,8 +84,10 @@ class DownloadIcon(lv.button):
 
     def downloadProgress(self, s: str):
         progressArray = s.split(" ")
-        if len(progressArray) >= 8 and progressArray[7].find("%") != -1:
-            self.installProgressLabel.set_text("Download: " + progressArray[7])
+        for val in progressArray:
+            if val.find("%") != -1:
+                self.installProgressLabel.set_text("Download: " + val)
+                break
 
     def downloadDone(self, rc):
         print("extracting...")
