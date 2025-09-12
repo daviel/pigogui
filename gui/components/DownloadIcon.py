@@ -74,11 +74,13 @@ class DownloadIcon(lv.button):
         code = e.get_code()
         if code == lv.EVENT.PRESSED:
             key = e.get_key()
-            # install dialog
-            config = self.singletons["DATA_MANAGER"].get("configuration")
-            downloadPath = config["user"]["store"]["downloadpath"]
-            self.handle = runShellCommand_bg("wget --progress=dot " + self.data["file_url"] + " -P " + downloadPath, on_line=self.downloadProgress, on_done=self.downloadDone)
             
+            if "installing" not in self.data:
+                config = self.singletons["DATA_MANAGER"].get("configuration")
+                downloadPath = config["user"]["store"]["downloadpath"]
+                self.handle = runShellCommand_bg("wget --progress=dot " + self.data["file_url"] + " -P " + downloadPath, on_line=self.downloadProgress, on_done=self.downloadDone)
+                self.data["installing"] = True
+
             if(self.pressCallback):
                 self.pressCallback(self, e)
 
