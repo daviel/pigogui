@@ -86,8 +86,5 @@ class UpdateSubPage(SubPage):
 	def installUpdate(self, event):
 		self.updateBtn.add_state(lv.STATE.DISABLED)
 		self.updateBtn.set_text("Installing...")
-		self.handle = runShellCommand_bg("git pull", on_done=self.restartPigoGUI)
+		ret = runShellCommand_bg('git pull && systemctl restart pigogui')
 		pass
-
-	def restartPigoGUI(self, rc):
-		ret = runShellCommand_bg('systemctl restart pigogui')
