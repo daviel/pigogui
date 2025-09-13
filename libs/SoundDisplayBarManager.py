@@ -5,11 +5,13 @@ from libs.GenericManager import GenericManager
 
 
 class SoundDisplayBarManager(GenericManager):
-	soundbar = SoundBar()
-	displaybar = DisplayBar()
+	soundbar = ""
+	displaybar = ""
 
 	def __init__(self, singletons):
 		self.setSingletons(singletons)
+		self.soundbar = SoundBar(singletons)
+		self.displaybar = DisplayBar(singletons)
 		pass
 
 	

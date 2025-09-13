@@ -2,6 +2,7 @@ import lvgl as lv
 
 from gui.anims.GenericAnim import GenericAnim
 from libs.libsdl import addGlobalKeyCallback
+from libs.threading import runShellCommand_bg
 
 
 class SoundBar(lv.obj):
@@ -16,8 +17,9 @@ class SoundBar(lv.obj):
 	duration = 3000
 	doneCB = None
 
-	def __init__(self):
+	def __init__(self, singletons):
 		super().__init__(lv.layer_top())
+		self.singletons = singletons
 
 		self.set_size(32, 160)
 		self.fade_out(0, 0)
@@ -66,6 +68,9 @@ class SoundBar(lv.obj):
 		self.animHide.set_delay(self.duration)
 		self.animHide.anim_cb = self.anim_func
 		self.animHide.anim_done_cb = self.done
+		
+		config = self.singletons["DATA_MANAGER"].get("configuration")
+		self.currentValue = config["user"]["sound"]["volume"]
 		self.inc_volume(0)
 
 	def show(self):
@@ -96,6 +101,12 @@ class SoundBar(lv.obj):
 		else:
 			self.soundSymbol.set_text(lv.SYMBOL.VOLUME_MID)
 		self.bar.set_value(self.currentValue, True)
+		
+		config = self.singletons["DATA_MANAGER"].get("configuration")
+		if config["debug"] == False:
+			handle = runShellCommand_bg("amixer set PCM " + self.currentValue + "%")
+		config["user"]["sound"]["volume"] = self.currentValue
+		self.singletons["DATA_MANAGER"].saveAll()
 
 	def get_volume(self):
 		return self.currentValue

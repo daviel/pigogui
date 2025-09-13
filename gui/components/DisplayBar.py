@@ -16,8 +16,9 @@ class DisplayBar(lv.obj):
 	duration = 3000
 	doneCB = None
 
-	def __init__(self):
+	def __init__(self, singletons):
 		super().__init__(lv.layer_top())
+		self.singletons = singletons
 
 		self.set_size(32, 160)
 		self.fade_out(0, 0)
@@ -67,8 +68,10 @@ class DisplayBar(lv.obj):
 		self.animHide.anim_cb = self.anim_func
 		self.animHide.anim_done_cb = self.done
 
+		config = self.singletons["DATA_MANAGER"].get("configuration")
+		self.currentValue = config["user"]["display"]["brightness"]
 		self.inc_volume(0)
-
+		
 	def show(self):
 		if self.isVisible == False:
 			self.isVisible = True
@@ -93,6 +96,12 @@ class DisplayBar(lv.obj):
 		elif self.currentValue > 100:
 			self.currentValue = 100
 		self.bar.set_value(self.currentValue, True)
+
+		config = self.singletons["DATA_MANAGER"].get("configuration")
+		if config["debug"] == False:
+			handle = runShellCommand_bg("gpio -g pwm 13 " + self.currentValue / 100 * 1024)
+		config["user"]["display"]["brightness"] = self.currentValue
+		self.singletons["DATA_MANAGER"].saveAll()
 	
 	def get_volume(self):
 		return self.currentValue
