@@ -74,9 +74,10 @@ class DataManager(GenericManager):
 
     def saveAll(self):
         for key in self.fileJSONMap:
-            content = self.get(key)
-            filename = self.fileJSONMap[key]
-            self.save(filename, content)
+            if key == "configuration":
+                content = self.get(key)
+                filename = self.fileJSONMap[key]
+                self.save(filename, content)
 
     def get(self, key):
         return self.data[key]
