@@ -99,7 +99,7 @@ class DisplayBar(lv.obj):
 
 		config = self.singletons["DATA_MANAGER"].get("configuration")
 		if config["debug"] == False:
-			handle = runShellCommand_bg("gpio -g pwm 13 " + self.currentValue / 100 * 1024)
+			handle = runShellCommand_bg("gpio -g pwm 13 " + str(self.currentValue / 100 * 1024))
 		config["user"]["display"]["brightness"] = self.currentValue
 		self.singletons["DATA_MANAGER"].saveAll()
 	
