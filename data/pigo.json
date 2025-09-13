@@ -1,6 +1,7 @@
 {
-"versions": {
-"keymapper": "1.0.0",
- "fbcp": "1.0.0",
- "pigogui": "0.4.1"}
+    "versions": {
+        "keymapper": "1.0.0",
+        "fbcp": "1.0.0",
+        "pigogui": "0.4.1"
+    }
 }
