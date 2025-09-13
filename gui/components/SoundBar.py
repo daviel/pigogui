@@ -70,7 +70,7 @@ class SoundBar(lv.obj):
 		self.animHide.anim_done_cb = self.done
 		
 		config = self.singletons["DATA_MANAGER"].get("configuration")
-		self.currentValue = config["user"]["sound"]["volume"]
+		self.currentValue = int(config["user"]["sound"]["volume"])
 		self.inc_volume(0)
 
 	def show(self):

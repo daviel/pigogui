@@ -69,7 +69,7 @@ class DisplayBar(lv.obj):
 		self.animHide.anim_done_cb = self.done
 
 		config = self.singletons["DATA_MANAGER"].get("configuration")
-		self.currentValue = config["user"]["display"]["brightness"]
+		self.currentValue = int(config["user"]["display"]["brightness"])
 		self.inc_volume(0)
 		
 	def show(self):
