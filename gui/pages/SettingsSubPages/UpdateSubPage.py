@@ -15,6 +15,7 @@ class UpdateSubPage(SubPage):
 	pressCallback = False
 	updateCheckBtn = ""
 	updateBtn = ""
+	updateBtnLabel = ""
 
 	checkDate = ""
 
@@ -54,6 +55,7 @@ class UpdateSubPage(SubPage):
 		label.set_text("Install update")
 		btn.add_flag(self.FLAG.HIDDEN)
 		self.updateBtn = btn
+		self.updateBtnLabel = label
 
 		label = lv.label(self)
 		label.set_text("Last time checked:")
@@ -85,6 +87,6 @@ class UpdateSubPage(SubPage):
 
 	def installUpdate(self, event):
 		self.updateBtn.add_state(lv.STATE.DISABLED)
-		self.updateBtn.set_text("Installing...")
+		self.updateBtnLabel.set_text("Installing...")
 		ret = runShellCommand_bg('git pull && systemctl restart pigogui')
 		pass
