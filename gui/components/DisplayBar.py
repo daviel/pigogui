@@ -2,6 +2,7 @@ import lvgl as lv
 
 from gui.anims.GenericAnim import GenericAnim
 from libs.libsdl import addGlobalKeyCallback
+from libs.threading import runShellCommand_bg
 
 
 class DisplayBar(lv.obj):
