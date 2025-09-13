@@ -6,7 +6,7 @@ from gui.components.Generic.ActiveSlider import ActiveSlider
 from gui.components.Generic.ActiveRoller import ActiveRoller
 from gui.components.Generic.Loader import Loader
 
-from libs.ffishell import runShellCommand
+from libs.threading import runShellCommand_bg
 
 
 class UpdateSubPage(SubPage):
