@@ -26,7 +26,7 @@
     "description": "An medieval fantasy RTS"
   },
   {
-    "file_url": "https://github.com/daviel/pigo-games/releases/download/PicoRogue-v0.1.0/pico-rogue.zip",
+    "file_url": "https://github.com/daviel/pigo-games/releases/download/PicoRogue-v0.2.0/pico-rogue.zip",
     "tags": [
       "Rogue-Like",
       "godot"
