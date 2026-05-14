@@ -7,11 +7,11 @@ def getLastLine(text):
     lastline = lines[len(lines) - 1]
     return lastline
 
+def _sh_quote(s):
+    return "'" + s.replace("'", "'\\''") + "'"
 
 
 class WifiManager():
-    networks = []
-    interfaces = []
     currentInterface = "wlp7s0"
     connected = False
     connectedAP = ""
@@ -21,6 +21,8 @@ class WifiManager():
     
 
     def __init__(self):
+        self.networks = []
+        self.interfaces = []
         self.readNetworks()
         self.timer = lv.timer_create(self.isConnected, 5000, None)
 
@@ -80,6 +82,8 @@ class WifiManager():
                     "bars": wifiEntry[6],
                     "security": wifiEntry[7],
                 }
+            else:
+                continue
             self.networks.append(wifiEntry)
         #self.isConnected()
 
@@ -93,8 +97,8 @@ class WifiManager():
             # already connected to same AP
             return True
 
-        runShellCommand("nmcli connection delete " + ssid)        
-        runShellCommand("nmcli device wifi connect " + ssid + " password " + psk + " &")
+        runShellCommand("nmcli connection delete " + _sh_quote(ssid))
+        runShellCommand("nmcli device wifi connect " + _sh_quote(ssid) + " password " + _sh_quote(psk) + " &")
         self.readNetworks()
         
     def isConnected(self, timer):

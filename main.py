@@ -42,6 +42,5 @@ async def main():
         await asyncio.sleep_ms(16)
         lv.timer_handler()
         keyboard_loop()
-    print("Exit-Code:", rc)
 
 asyncio.run(main())

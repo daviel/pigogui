@@ -4,7 +4,7 @@ import uctypes
 libc = None
 try:
     libc = ffi.open("libc.so.6")
-except:
+except Exception:
     print("libc could not be found")
 
 
@@ -48,13 +48,13 @@ I2C_SLAVE = 1795
 if libc:
     perror = libc.func("v", "perror", "s")
     popen = libc.func("p", "popen", "ss")
-    pclose = libc.func("i", "pclose", "s")
+    pclose = libc.func("i", "pclose", "p")
     fopen = libc.func("p", "fopen", "ss")
-    fclose = libc.func("i", "fclose", "s")
-    fwrite = libc.func("i", "fwrite", "PiiP")
-    fgets = libc.func("s", "fgets", "sis")
+    fclose = libc.func("i", "fclose", "p")
+    fwrite = libc.func("i", "fwrite", "piip")
+    fgets = libc.func("s", "fgets", "sip")
     strerror = libc.func("s", "strerror", "i")
-    fflush = libc.func("i", "fflush", "s")
+    fflush = libc.func("i", "fflush", "p")
     errno = libc.var("i", "errno")
     kill = libc.func("i", "kill", "ii")
     waitpid = libc.func("i", "waitpid", "iii")
@@ -62,7 +62,7 @@ if libc:
     execv = libc.func("i", "execv", "ss")
     setenv = libc.func("i", "setenv", "ssi")
 
-    open = libc.func("p", "open", "si")
+    c_open = libc.func("p", "open", "si")
     ioctl = libc.func("p", "ioctl", "iii")
     write = libc.func("p", "write", "isi")
     read = libc.func("p", "read", "isi")

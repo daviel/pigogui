@@ -6,8 +6,6 @@ class BatteryManager(GenericManager):
     voltage = 0
     soc = 0
 
-    measure_value_history = []
-
     _max_voltage = 4.2
     _min_voltage = 3.0
 
@@ -24,6 +22,7 @@ class BatteryManager(GenericManager):
     timer = None
 
     def __init__(self, singletons):
+        self.measure_value_history = []
         self.setSingletons(singletons)
         config = self.singletons["DATA_MANAGER"].get("configuration")
         if config["debug"] == False:
@@ -33,7 +32,7 @@ class BatteryManager(GenericManager):
 
     def setup(self):
         print("setting up i2c connection")
-        self.file = open(self._address, O_RDWR)
+        self.file = c_open(self._address, O_RDWR)
         if(self.file < 0):
             print("error opening bus")
             return

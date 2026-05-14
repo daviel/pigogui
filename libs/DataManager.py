@@ -10,11 +10,10 @@ from libs.ffishell import runShellCommand
 from libs.threading import runShellCommand_bg
 
 class DataManager(GenericManager):
-    data = {}
-    fileJSONMap = {}
-    updateAvailableCallbacks = []
-
     def __init__(self, singletons):
+        self.data = {}
+        self.fileJSONMap = {}
+        self.updateAvailableCallbacks = []
         self.setSingletons(singletons)
 
         try:
@@ -23,8 +22,8 @@ class DataManager(GenericManager):
             self.load("./data/pigo.json", "pigo")
             self.load("./data/store.json", "store")
             self.updateConfigDefaults()
-        except:
-            print("error loading config. Restoring defauls")
+        except Exception:
+            print("error loading config. Restoring defaults")
             self.load("./data/configurationDefault.json", "configuration")
             self.fileJSONMap["configuration"] = "./data/configuration.json"
             self.saveAll()
@@ -67,7 +66,7 @@ class DataManager(GenericManager):
         return a
 
     def save(self, filename, content):
-        file = io.open(filename, 'rw')
+        file = io.open(filename, 'w')
         content = file.write(self.makeReadable(json.dumps(content)))
         file.close()
         pass
@@ -89,31 +88,34 @@ class DataManager(GenericManager):
         self.data["games"] = []
         gamesdir = self.get("configuration")["gamesdir"]
 
-        for dir in os.ilistdir(dir):
-            type = dir[1]
-            if type == 0x4000: # check if dir
-                dirname = dir[0]
+        for entry in os.ilistdir(dir):
+            entry_type = entry[1]
+            if entry_type == 0x4000: # check if dir
+                dirname = entry[0]
                 gameDir = gamesdir + "/" + dirname
                 gameJson = gameDir + "/game.json"
-                if(os.stat(gameJson)):
-                    print("game.json found ", gameDir)
-                    file = io.open(gameJson, 'r')
-                    content = file.readlines()
-                    
-                    game = json.loads(' '.join(map(str, content)))
-                    game["dirname"] = dirname
-                    game["main_image"] = gameDir + "/" + game["main_image"]
-                    game["small_image"] = gameDir + "/" + game["small_image"]
+                try:
+                    os.stat(gameJson)
+                except OSError:
+                    continue
+                print("game.json found ", gameDir)
+                file = io.open(gameJson, 'r')
+                content = file.readlines()
+                file.close()
 
-                    for i in range(len(game["screenshots"])):
-                        game["screenshots"][i] = gameDir + "/" + game["screenshots"][i]
+                game = json.loads(' '.join(map(str, content)))
+                game["dirname"] = dirname
+                game["main_image"] = gameDir + "/" + game["main_image"]
+                game["small_image"] = gameDir + "/" + game["small_image"]
 
-                    self.data["games"].append(game)
-                    file.close()
+                for i in range(len(game["screenshots"])):
+                    game["screenshots"][i] = gameDir + "/" + game["screenshots"][i]
+
+                self.data["games"].append(game)
 
     def checkForUpdate(self):
         t = time.localtime()
-        year, month, day, hour, minute, second, _, _, _ = t
+        year, month, day, hour, minute, second, _, _ = t
         date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
         config = self.get("configuration")
         config["user"]["system"]["updateCheckDate"] = date

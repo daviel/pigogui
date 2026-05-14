@@ -9,16 +9,16 @@ class Download():
     curl_handle = None
 
     download_started = False
-    info = {
-        CURLINFO_SIZE_DOWNLOAD_T: 0,
-        CURLINFO_TOTAL_TIME: 0,
-        CURLINFO_SPEED_DOWNLOAD_T: 0,
-        CURLINFO_CONTENT_LENGTH_DOWNLOAD_T : 0,
-    }
 
     def __init__(self, filename, url):
         self.filename = filename
         self.url = url
+        self.info = {
+            CURLINFO_SIZE_DOWNLOAD_T: 0,
+            CURLINFO_TOTAL_TIME: 0,
+            CURLINFO_SPEED_DOWNLOAD_T: 0,
+            CURLINFO_CONTENT_LENGTH_DOWNLOAD_T: 0,
+        }
         self.fileHandle = fopen(filename, "wb")
 
         self.curl_handle = curl_easy_init()
@@ -47,11 +47,11 @@ class Download():
 
 class DownloadManager(GenericManager):
     multi_handle = None
-    downloads = {}
     still_running = b'1' * 4
     downloading = False
 
     def __init__(self, singletons):
+        self.downloads = {}
         self.setSingletons(singletons)
         curl_global_init(CURL_GLOBAL_ALL)
         self.multi_handle = curl_multi_init()
@@ -60,13 +60,13 @@ class DownloadManager(GenericManager):
     def update(self):
         if self.downloading == True:
             mc = curl_multi_perform(self.multi_handle, self.still_running)
-            for dl in self.downloads:
+            for dl in self.downloads.values():
                 dl.update()
             if(mc):
                 self.downloading = False
 
     def destroy(self):
-        for dl in self.downloads:
+        for dl in self.downloads.values():
             dl.destroy()
         curl_global_cleanup()
         self.downloads = {}

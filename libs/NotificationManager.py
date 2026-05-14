@@ -5,12 +5,11 @@ from libs.GenericManager import GenericManager
 # usage: notificationManager.add(lv.SYMBOL.OK, "message")
 
 class NotificationManager(GenericManager):
-	notifications = collections.deque((), 10)
 	_notificationIsShown = False
 
 	def __init__(self, singletons):
+		self.notifications = collections.deque((), 10)
 		self.setSingletons(singletons)
-		pass
 
 	def add(self, symbol, text, duration=5000):
 		notification = Notification(symbol, text, duration, self._done)

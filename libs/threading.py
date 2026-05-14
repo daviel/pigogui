@@ -3,7 +3,7 @@ import uos, time
 
 # ---------- Public API ----------
 
-def runShellCommand_bg(cmd: str, on_line=print, on_done=None, timeout_ms: int | None = None):
+def runShellCommand_bg(cmd: str, on_line=print, on_done=None, timeout_ms=None):
     loop = asyncio.get_event_loop()
     runner = _BgRunner(cmd, on_line=on_line, on_done=on_done, timeout_ms=timeout_ms)
     task = loop.create_task(runner._run())   # im Event-Loop starten
@@ -27,7 +27,7 @@ class BgHandle:
         self._runner._request_cancel()
 
     @property
-    def pid(self) -> int | None:
+    def pid(self):
         return self._runner.pid
 
 class _BgRunner:
@@ -70,7 +70,7 @@ class _BgRunner:
                 raise RuntimeError("Konnte PID nicht ermitteln")
 
         rc = await self._tail_and_wait(self.pid, start_ticks)
-        for p in (self.pid_path,):
+        for p in (self.out_path, self.pid_path):
             try: uos.remove(p)
             except OSError: pass
         
@@ -106,7 +106,7 @@ class _BgRunner:
                             line = partial[:nl]
                             partial = partial[nl+1:]
                             try:
-                                self.on_line(line.decode("utf-8", "ignore"))
+                                self.on_line(line.decode("utf-8"))
                             except Exception:
                                 pass
                 except OSError:
@@ -124,7 +124,7 @@ class _BgRunner:
 
             if not _is_alive(pid):
                 if partial:
-                    try: self.on_line(partial.decode("utf-8", "ignore"))
+                    try: self.on_line(partial.decode("utf-8"))
                     except Exception: pass
                     partial = b""
                 return self._final_rc(default_rc=0)
