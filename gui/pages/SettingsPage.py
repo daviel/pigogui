@@ -98,6 +98,7 @@ class SettingsPage(GenericPage):
 				"name": "Info"
 			}
 		]
+		self.inSubPage = False
 		self.group = lv.group_create()
 		self.group.add_obj(main_page)
 		for page in pages:
@@ -111,13 +112,13 @@ class SettingsPage(GenericPage):
 
 	def pageOpened(self):
 		self.hidden = False
+		self.inSubPage = False
 
 	def pageClosed(self):
 		self.singletons["DATA_MANAGER"].saveAll()
 
 	def globalExitPage(self, indev, drv, data):
-		#print(indev.get_key())
-		if indev.get_key() == 27 and self.hidden == False and indev.group == self.group:
+		if indev.get_key() == 27 and not self.hidden and not self.inSubPage and indev.group == self.group:
 			self.hidden = True
 			self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", False)
 
@@ -127,10 +128,9 @@ class SettingsPage(GenericPage):
 		btn.set_style_pad_hor(4, 0)
 		btn.set_style_pad_ver(4, 0)
 		btn.set_flex_flow(lv.FLEX_FLOW.ROW)
-		#btn.add_flag(btn.FLAG.EVENT_BUBBLE)
 		btn.add_event_cb(page.loadSubPage, lv.EVENT.PRESSED, None)
 		btn.add_event_cb(self.handleReturn, lv.EVENT.KEY, None)
-		
+
 		symbolLabel = lv.label(btn)
 		symbolLabel.set_text(symbol)
 		symbolLabel.set_width(18)
@@ -140,15 +140,31 @@ class SettingsPage(GenericPage):
 		label.set_text(title)
 		label.set_width(42)
 		label.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
-		
+
 		self.menu.set_load_page_event(btn, page)
 		page.set_width(240)
+
+		def make_enter_cb(pg):
+			def cb(_):
+				self.inSubPage = True
+				lv.group_focus_obj(pg)
+			return cb
+		btn.add_event_cb(make_enter_cb(page), lv.EVENT.CLICKED, None)
+
+		def make_back_cb(main_pg):
+			def cb(e):
+				if e.get_code() == lv.EVENT.KEY and e.get_key() == 27:
+					self.inSubPage = False
+					lv.group_focus_obj(main_pg)
+			return cb
+		page.add_event_cb(make_back_cb(self.main_page), lv.EVENT.KEY, None)
+
 		return btn
 	
 	def handleReturn(self, e):
 		code = e.get_code()
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
-			if key == SDL_KEYS["SDLK_ESCAPE"] and self.hidden == False and indev1.get_group() == self.group:
+			if key == SDL_KEYS["SDLK_ESCAPE"] and not self.hidden and not self.inSubPage and indev1.get_group() == self.group:
 				self.hidden = True
 				self.singletons["PAGE_MANAGER"].setCurrentPage("gamesoverviewpage", False)

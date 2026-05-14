@@ -22,50 +22,39 @@ class BluetoothSubPage(SubPage):
 	def __init__(self, container, singletons):
 		super().__init__(container, singletons)
 		self.set_width(240)
-		self.set_style_pad_column(4, 0)
-		self.set_style_pad_row(6, 0)
-		self.set_flex_flow(lv.FLEX_FLOW.COLUMN)
+		self.set_style_pad_column(8, 0)
+		self.set_style_pad_row(8, 0)
+		self.set_flex_flow(lv.FLEX_FLOW.ROW_WRAP)
 		self.set_style_pad_hor(4, 0)
 		self.set_style_pad_ver(4, 0)
 
-		powerRow = lv.obj(self)
-		powerRow.set_size(220, 32)
-		powerRow.set_flex_flow(lv.FLEX_FLOW.ROW)
-		powerRow.set_style_border_width(0, 0)
-		powerRow.set_style_bg_opa(lv.OPA.TRANSP, 0)
-		powerRow.set_style_pad_column(8, 0)
-		powerRow.remove_flag(lv.obj.FLAG.SCROLLABLE)
-
-		powerLabel = lv.label(powerRow)
+		# Row 1: power toggle — label + switch as direct children (gridnav-reachable)
+		powerLabel = lv.label(self)
 		powerLabel.set_text("Bluetooth")
-		powerLabel.set_width(120)
+		powerLabel.set_width(148)
 
-		self._powerSwitch = Switch(powerRow)
+		self._powerSwitch = Switch(self)
 		self._powerSwitch.add_event_cb(self._onPowerToggle, lv.EVENT.ALL, None)
 
-		scanRow = lv.obj(self)
-		scanRow.set_size(220, 32)
-		scanRow.set_flex_flow(lv.FLEX_FLOW.ROW)
-		scanRow.set_style_border_width(0, 0)
-		scanRow.set_style_bg_opa(lv.OPA.TRANSP, 0)
-		scanRow.set_style_pad_column(8, 0)
-		scanRow.remove_flag(lv.obj.FLAG.SCROLLABLE)
+		# Row 2: scan button + loader as direct children (button is gridnav-reachable)
+		self._scanBtn = Button(self, lv.SYMBOL.REFRESH + " Scan")
+		self._scanBtn.set_size(100, 28)
+		self._scanBtn.label.center()
+		self._scanBtn.add_event_cb(self._onScan, lv.EVENT.PRESSED, None)
 
-		scanBtn = Button(scanRow, lv.SYMBOL.REFRESH + " Scan")
-		scanBtn.set_size(100, 28)
-		scanBtn.label.center()
-		scanBtn.add_event_cb(self._onScan, lv.EVENT.PRESSED, None)
-
-		self._loader = Loader(scanRow)
+		self._loader = Loader(self)
 		self._loader.set_size(24, 24)
 		self._loader.add_flag(self._loader.FLAG.HIDDEN)
 
+		# Row 3: device list — clickable container with its own inner gridnav
 		self.deviceContainer = lv.obj(self)
-		self.deviceContainer.set_size(220, 140)
+		self.deviceContainer.set_size(224, 156)
 		self.deviceContainer.set_flex_flow(lv.FLEX_FLOW.COLUMN)
 		self.deviceContainer.set_style_pad_row(2, 0)
 		self.deviceContainer.set_style_pad_hor(0, 0)
 		self.deviceContainer.set_style_border_width(1, 0)
+		self.deviceContainer.add_flag(lv.obj.FLAG.CLICKABLE)
+		lv.gridnav_add(self.deviceContainer, lv.GRIDNAV_CTRL.NONE)
 
 		self._scanTimer = lv.timer_create(self._onScanDone, 8000, None)
 		self._scanTimer.pause()
@@ -91,22 +80,19 @@ class BluetoothSubPage(SubPage):
 			name = device["name"]
 			is_connected = mac in connected_macs
 
-			row = lv.obj(self.deviceContainer)
-			row.set_size(210, 26)
-			row.set_flex_flow(lv.FLEX_FLOW.ROW)
-			row.set_style_border_width(0, 0)
-			row.set_style_bg_opa(lv.OPA.TRANSP, 0)
-			row.set_style_pad_column(4, 0)
-			row.remove_flag(lv.obj.FLAG.SCROLLABLE)
+			prefix = lv.SYMBOL.OK + " " if is_connected else "  "
+			btn = Button(self.deviceContainer, prefix + name)
+			btn.set_width(210)
+			btn.set_height(24)
+			btn.set_style_pad_hor(4, 0)
+			btn.set_style_pad_ver(2, 0)
+			btn.label.align(lv.ALIGN.LEFT_MID, 4, 0)
+			btn.label.set_width(155)
+			btn.label.set_long_mode(lv.label.LONG_MODE.CLIP)
 
-			nameLabel = lv.label(row)
-			nameLabel.set_text(name)
-			nameLabel.set_width(130)
-			nameLabel.set_long_mode(lv.label.LONG_MODE.CLIP)
-
-			btn = Button(row, "Disc." if is_connected else "Conn.")
-			btn.set_size(64, 22)
-			btn.label.center()
+			actionLabel = lv.label(btn)
+			actionLabel.set_text("Disc." if is_connected else "Conn.")
+			actionLabel.align(lv.ALIGN.RIGHT_MID, -4, 0)
 
 			def make_cb(m, connected):
 				def cb(obj, e):

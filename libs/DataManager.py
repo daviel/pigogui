@@ -115,7 +115,7 @@ class DataManager(GenericManager):
 
     def checkForUpdate(self):
         t = time.localtime()
-        year, month, day, hour, minute, second, _, _ = t
+        year, month, day, hour, minute, second = t[0], t[1], t[2], t[3], t[4], t[5]
         date = f"{year:04d}-{month:02d}-{day:02d} {hour:02d}:{minute:02d}"
         config = self.get("configuration")
         config["user"]["system"]["updateCheckDate"] = date
