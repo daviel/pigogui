@@ -66,7 +66,7 @@ class UpdateSubPage(SubPage):
 		label.set_width(180)
 		self.checkDate = label
 
-		config = self.singletons["DATA_MANAGER"].updateAvailableCallbacks.append(self.checkUpdateDone)
+		self.singletons["DATA_MANAGER"].updateAvailableCallbacks.append(self.checkUpdateDone)
 		
 	def checkUpdate(self, event):
 		self.loader.remove_flag(self.loader.FLAG.HIDDEN)

@@ -9,17 +9,12 @@ from gui.components.Generic.ActiveRoller import ActiveRoller
 
 
 class UserSubPage(SubPage):
-	label = ""
-	data = ""
-	colors = []
 	primaryColor = ""
 	darkTheme = False
 
-	primaryColorRoller = ""
-	darkThemeRoller = ""
-
 	def __init__(self, container, singletons):
 		super().__init__(container, singletons)
+		self.colors = []
 		# Create sub pages
 		self.set_width(240)
 		self.set_style_pad_column(8, 0)

@@ -57,9 +57,10 @@ class SoundSubPage(SubPage):
 		if code == lv.EVENT.KEY:
 			key = e.get_key()
 			if key == lv.KEY.LEFT or key == lv.KEY.RIGHT:
+				value = self.volumeSlider.get_value()
 				config = self.singletons["DATA_MANAGER"].get("configuration")
-				print("volume changed", self.volumeSlider.get_value())
-				config["user"]["sound"]["volume"] = self.volumeSlider.get_value()
+				config["user"]["sound"]["volume"] = value
+				self.singletons["AUDIO_MANAGER"].set_volume(value * 10)
 		pass
 
 	def setMenuVolume(self, e):

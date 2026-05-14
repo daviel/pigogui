@@ -83,7 +83,7 @@ def set_cmdline_option(filename, option, value):
 
     new_content = " ".join(parts) + "\n"
     
-    file = io.open(filename, 'rw')
+    file = io.open(filename, 'w')
     content = file.write(new_content)
     file.close()
 
@@ -122,7 +122,7 @@ def add_or_replace_in_file(filename, new_string, identifier=None, replace_line=F
     if not found:
         lines.append(" " + new_string)
 
-    file = io.open(filename, 'rw')
+    file = io.open(filename, 'w')
     content = file.write("\n".join(lines))
     file.close()
 
