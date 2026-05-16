@@ -4,7 +4,7 @@ import uctypes
 
 from libs.ffishell import fopen, fclose, fwrite
 
-libcurl = ffi.open("libcurl.so")
+libcurl = ffi.open("libcurl.so.4")
 
 
 CURLOPTTYPE_LONG =          0
