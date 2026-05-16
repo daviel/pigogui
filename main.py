@@ -1,7 +1,6 @@
 import time
 import usys as sys
 import lvgl as lv
-lv.init()
 
 import uasyncio as asyncio
 
