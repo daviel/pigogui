@@ -87,12 +87,14 @@ class ApplicationManager(GenericManager):
             if(self.keymap_pid == 0):
                 print("/usr/bin/python", config["keymapperpath"] + " " + keymap)
                 
+                str_refs = []
                 args = array.array("L")
-                args.append(uctypes.addressof(bytes('python', 'utf8')))
-                args.append(uctypes.addressof(bytearray(config["keymapperpath"], 'utf8')))
-                for key in keymap.split(" "):
-                    args.append(uctypes.addressof(bytearray(key, 'utf8')))
-                
+                for s in [bytes('python', 'utf8'), bytearray(config["keymapperpath"], 'utf8')] + \
+                         [bytearray(k, 'utf8') for k in keymap.split(" ")]:
+                    str_refs.append(s)
+                    args.append(uctypes.addressof(s))
+                args.append(0)
+
                 ret = execv("/usr/bin/python", args)
             else:
                 print(self.keymap_pid)
