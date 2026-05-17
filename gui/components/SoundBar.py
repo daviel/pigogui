@@ -104,7 +104,7 @@ class SoundBar(lv.obj):
 		
 		config = self.singletons["DATA_MANAGER"].get("configuration")
 		if config["debug"] == False:
-			handle = runShellCommand_bg("amixer set PCM " + str(self.currentValue) + "%")
+			handle = runShellCommand_bg("pactl set-sink-volume @DEFAULT_SINK@ " + str(self.currentValue) + "%")
 		config["user"]["sound"]["volume"] = self.currentValue
 		self.singletons["DATA_MANAGER"].saveAll()
 
