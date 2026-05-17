@@ -1,4 +1,6 @@
 import time
+import io
+import json
 import usys as sys
 import lvgl as lv
 
@@ -15,25 +17,23 @@ SDL_ShowCursor(0)
 
 from libs.Singletons import *
 
+try:
+    _f = io.open("./data/configuration.json", "r")
+except Exception:
+    _f = io.open("./data/configurationDefault.json", "r")
+_cfg = json.loads(" ".join(map(str, _f.readlines())))
+_f.close()
+_colors = lv.PALETTE.__dict__
+_primary = _colors[_cfg["user"]["theme"]["primaryColor"]]
+_dark = _cfg["user"]["theme"]["darkTheme"]
+
+lv.theme_default_init(lv.display_get_default(),
+                        lv.palette_main(_primary),
+                        lv.palette_main(lv.PALETTE.GREY),
+                        _dark,
+                        lv.font_montserrat_16)
 
 SINGLETONS = SingletonsClass()
-config = SINGLETONS.singletons["DATA_MANAGER"].get("configuration")
-primary_color = config["user"]["theme"]["primaryColor"]
-darkTheme = config["user"]["theme"]["darkTheme"]
-
-colors = lv.PALETTE.__dict__
-primary_color = colors[primary_color]
-
-lv.theme_default_init(lv.display_get_default(), 
-						lv.palette_main(primary_color), 
-						lv.palette_main(lv.PALETTE.GREY), 
-						darkTheme, 
-						lv.font_montserrat_16)
-
-lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
-lv.layer_bottom().set_style_bg_opa(lv.OPA.TRANSP, 0)
-lv.screen_active().set_style_bg_opa(lv.OPA.TRANSP, 0)
-lv.screen_active().set_style_bg_opa(lv.OPA._0, 0)
 
 
 async def main():
