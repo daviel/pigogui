@@ -65,16 +65,14 @@ class GameIcon(lv.button):
 	def startGame(self, e):
 		code = e.get_code()
 		if code == lv.EVENT.PRESSED:
-			key = e.get_key()
-			print("Game started: ", self.data["title"])
-
-			if self.data["executable"] != "":
+			executable = self.data.get("executable", "")
+			if executable:
 				config = self.singletons["DATA_MANAGER"].get("configuration")
 				self.singletons["APPLICATION_MANAGER"].startApp(
-					config["gamesdir"] + self.data["dirname"] + "/" + self.data["executable"],
-					self.data["keymap"]
+					config["gamesdir"] + self.data["dirname"] + "/" + executable,
+					self.data.get("keymap", "")
 				)
-			
+
 			if(self.pressCallback):
 				self.pressCallback(self, e)
 		

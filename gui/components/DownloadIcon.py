@@ -10,6 +10,7 @@ class DownloadIcon(lv.button):
     titleScreen = ""
     data = {}
     installProgressLabel = ""
+    statusLabel = ""
 
     pressCallback = None
     handle = ""
@@ -19,33 +20,28 @@ class DownloadIcon(lv.button):
         self.singletons = container.singletons
         self.data = data
 
-        if data['main_image'] == None:
+        config = self.singletons["DATA_MANAGER"].get("configuration")
+        gameImage = None
+        if data['main_image'] is not None:
+            gameImage = loadImageAndConvert(config["pigoguidir"] + data["main_image"])
+
+        if gameImage is None:
             self.label = lv.label(self)
             self.label.set_text(data['title'])
         else:
-            config = self.singletons["DATA_MANAGER"].get("configuration")
-            gameImage = loadImageAndConvert(
-                config["pigoguidir"] + data["main_image"]
-            )
             titleScreen = lv.image(self)
             titleScreen.set_size(92, 164)
             titleScreen.set_src(gameImage)
             titleScreen.align(lv.ALIGN.CENTER, 0, 0)
 
-            downloadImage = loadImageAndConvert(
-                config["imgdir"] + "/icons/import.png"
-            )
-            downloadImg = lv.image(titleScreen)
-            downloadImg.set_size(24, 24)
-            downloadImg.set_src(downloadImage)
-            downloadImg.set_pos(2, 2)
+            statusLabel = lv.label(titleScreen)
+            statusLabel.set_pos(4, 4)
+            self.statusLabel = statusLabel
 
             installProgressLabel = lv.label(titleScreen)
-            installProgressLabel.set_size(92, 48)
+            installProgressLabel.set_size(92, 32)
             installProgressLabel.set_pos(0, 64)
             installProgressLabel.set_style_text_align(lv.TEXT_ALIGN.CENTER, 0)
-            #installProgressLabel.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
-            installProgressLabel.set_text("")
             self.installProgressLabel = installProgressLabel
 
             gameName = lv.label(titleScreen)
@@ -57,10 +53,34 @@ class DownloadIcon(lv.button):
             self.gameName = gameName
 
             self.titleScreen = titleScreen
-            
+            self._refreshStatus()
+
         self.set_size(100, 172)
         self.add_event_cb(self.handleKey, lv.EVENT.KEY, None)
-        self.add_event_cb(self.installGame, lv.EVENT.PRESSED, None)
+        self.add_event_cb(self.installGame, lv.EVENT.CLICKED, None)
+
+    def _getInstalledGame(self):
+        for game in self.singletons["DATA_MANAGER"].get("games"):
+            if game.get("dirname") == self.data["dirname"]:
+                return game
+        return None
+
+    def _hasUpdate(self, installed):
+        return self.data.get("version", "") != installed.get("version", "")
+
+    def _refreshStatus(self):
+        if not self.installProgressLabel:
+            return
+        installed = self._getInstalledGame()
+        if installed and not self._hasUpdate(installed):
+            self.statusLabel.set_text(lv.SYMBOL.OK)
+            self.installProgressLabel.set_text("Installed")
+        elif installed and self._hasUpdate(installed):
+            self.statusLabel.set_text(lv.SYMBOL.REFRESH)
+            self.installProgressLabel.set_text("Update v" + self.data.get("version", ""))
+        else:
+            self.statusLabel.set_text(lv.SYMBOL.DOWNLOAD)
+            self.installProgressLabel.set_text("")
 
     def handleKey(self, e):
         code = e.get_code()
@@ -71,24 +91,29 @@ class DownloadIcon(lv.button):
                 self.singletons["PAGE_MANAGER"].setCurrentPage("gamedetailspage", True, self.data)
 
     def installGame(self, e):
-        code = e.get_code()
-        if code == lv.EVENT.PRESSED:
-            key = e.get_key()
-            
-            if "installing" not in self.data:
-                config = self.singletons["DATA_MANAGER"].get("configuration")
-                downloadPath = config["user"]["store"]["downloadpath"]
-                self.handle = runShellCommand_bg("wget --progress=dot " + self.data["file_url"] + " -P " + downloadPath, on_line=self.downloadProgress, on_done=self.downloadDone)
-                self.data["installing"] = True
+        installed = self._getInstalledGame()
+        if installed and not self._hasUpdate(installed):
+            return
 
-            if(self.pressCallback):
-                self.pressCallback(self, e)
+        if "installing" not in self.data:
+            config = self.singletons["DATA_MANAGER"].get("configuration")
+            downloadPath = config["user"]["store"]["downloadpath"]
+            self.handle = runShellCommand_bg(
+                "wget --progress=dot " + self.data["file_url"] + " -P " + downloadPath,
+                on_line=self.downloadProgress,
+                on_done=self.downloadDone
+            )
+            self.data["installing"] = True
+
+        if self.pressCallback:
+            self.pressCallback(self, e)
 
     def downloadProgress(self, s: str):
-        progressArray = s.split(" ")
-        for val in progressArray:
+        if not self.installProgressLabel:
+            return
+        for val in s.split(" "):
             if val.find("%") != -1:
-                self.installProgressLabel.set_text("Download: " + val)
+                self.installProgressLabel.set_text("DL: " + val)
                 break
 
     def downloadDone(self, rc):
@@ -96,17 +121,19 @@ class DownloadIcon(lv.button):
         config = self.singletons["DATA_MANAGER"].get("configuration")
         downloadPath = config["user"]["store"]["downloadpath"]
         gamePath = config["gamesdir"]
-        print("7z -y -bso0 x " + downloadPath + self.data["filename"] + " -o"+gamePath)
-        self.handle = runShellCommand_bg("7z -y x " + downloadPath + self.data["filename"] + " -o"+gamePath, on_line=self.extractingProgress, on_done=self.extractionDone)
-        pass
+        self.handle = runShellCommand_bg(
+            "7z -y x " + downloadPath + self.data["filename"] + " -o" + gamePath,
+            on_line=self.extractingProgress,
+            on_done=self.extractionDone
+        )
 
     def extractingProgress(self, s: str):
-        #print("extract progress")
-        self.installProgressLabel.set_text("Extracting")
-        pass
+        if self.installProgressLabel:
+            self.installProgressLabel.set_text("Extracting...")
 
     def extractionDone(self, rc):
-        #print("extraction done")
-        self.installProgressLabel.set_text("Installed")
-        self.singletons["DATA_MANAGER"].findGames(self.singletons["DATA_MANAGER"].get("configuration")["gamesdir"])
-        pass
+        self.data.pop("installing", None)
+        self.singletons["DATA_MANAGER"].findGames(
+            self.singletons["DATA_MANAGER"].get("configuration")["gamesdir"]
+        )
+        self._refreshStatus()

@@ -24,6 +24,7 @@ class GamesCarousel(lv.obj):
 	def __init__(self, container):
 		super().__init__(container)
 		self.singletons = container.singletons
+		self.games = []
 
 		self.set_size(320, 200)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)

@@ -28,6 +28,8 @@ def loadImage(src):
 
 def loadImageAndConvert(src):
     img_data = loadImage(src)
+    if img_data is None:
+        return None
     return lv.image_dsc_t({
         'data_size': len(img_data),
         'data': img_data
