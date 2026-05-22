@@ -19,6 +19,8 @@ class GameDetailsPage(GenericPage):
 		self.animOut = lv.SCR_LOAD_ANIM.FADE_OUT
 		self._screenshotImages = []
 		self._overlay = None
+		self._overlayImg = None
+		self._currentScreenshotIndex = 0
 
 		self.add_style(SETUP_PAGE_STYLE, 0)
 		self.set_flex_flow(lv.FLEX_FLOW.ROW)
@@ -65,23 +67,27 @@ class GameDetailsPage(GenericPage):
 
 		# Titel (1 Zeile, scrollend)
 		self.gameTitle = lv.label(rc)
-		self.gameTitle.set_size(212, 18)
-		self.gameTitle.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
+		self.gameTitle.set_size(212, 16)
+		self.gameTitle.set_long_mode(lv.label.LONG_MODE.DOTS)
 
-		# Größe + Genre (1 Zeile, scrollend)
-		self.infoLine = lv.label(rc)
-		self.infoLine.set_size(212, 16)
-		self.infoLine.set_long_mode(lv.label.LONG_MODE.SCROLL_CIRCULAR)
+		# Größe (statisch, kein Scroll nötig)
+		self.sizeLabel = lv.label(rc)
+		self.sizeLabel.set_size(212, 14)
+
+		# Genre / Tags (abgeschnitten mit „…" wenn zu lang)
+		self.genreLabel = lv.label(rc)
+		self.genreLabel.set_size(212, 14)
+		self.genreLabel.set_long_mode(lv.label.LONG_MODE.DOTS)
 
 		# Beschreibung (2 Zeilen, abgeschnitten mit „…")
+		# Höhe: 240 - 2×4pad - 4×4gap - 16 - 14 - 14 - 30 = 140 für Screenshots
 		self.description = lv.label(rc)
-		self.description.set_size(212, 34)
+		self.description.set_size(212, 30)
 		self.description.set_long_mode(lv.label.LONG_MODE.DOTS)
 
 		# Screenshot-Streifen
-		# Höhe: 240 - 2×4pad - 3×4gap - 18 - 16 - 34 = 152 px → 144 mit Abstand
 		ic = lv.obj(rc)
-		ic.set_size(212, 144)
+		ic.set_size(212, 140)
 		ic.set_flex_flow(lv.FLEX_FLOW.ROW)
 		ic.set_flex_align(lv.FLEX_ALIGN.START, lv.FLEX_ALIGN.CENTER, lv.FLEX_ALIGN.CENTER)
 		ic.set_style_pad_column(4, 0)
@@ -115,10 +121,16 @@ class GameDetailsPage(GenericPage):
 			self.deleteButton.remove_flag(lv.obj.FLAG.HIDDEN)
 
 		self.gameTitle.set_text(game['title'])
+		self.sizeLabel.set_text(lv.SYMBOL.SD_CARD + " " + str(game.get('size', '')) + " MB")
 
-		tags = ' · '.join(game.get('tags', []))
-		size = str(game.get('size', ''))
-		self.infoLine.set_text(lv.SYMBOL.SD_CARD + " " + size + " MB   " + lv.SYMBOL.LIST + " " + tags)
+		tags = []
+		for s in self.singletons["DATA_MANAGER"].get("store"):
+			if s.get("dirname") == game.get("dirname"):
+				tags = s.get("tags", [])
+				break
+		if not tags:
+			tags = game.get('tags', [])
+		self.genreLabel.set_text(lv.SYMBOL.LIST + " " + ' · '.join(tags))
 
 		self.description.set_text(game.get('description', ''))
 
@@ -143,6 +155,7 @@ class GameDetailsPage(GenericPage):
 		img_dsc = loadImageAndConvert(src)
 		if img_dsc is None:
 			return
+		index = len(self._screenshotImages)
 		self._screenshotImages.append(img_dsc)
 
 		size = 130
@@ -161,15 +174,18 @@ class GameDetailsPage(GenericPage):
 		img.set_style_clip_corner(4, 0)
 		img.align(lv.ALIGN.CENTER, 0, 0)
 
-		btn.add_event_cb(self._makeClickHandler(img_dsc), lv.EVENT.CLICKED, None)
+		btn.add_event_cb(self._makeClickHandler(index), lv.EVENT.CLICKED, None)
 
-	def _makeClickHandler(self, img_dsc):
+	def _makeClickHandler(self, index):
 		def handler(e):
-			self._showScreenshotOverlay(img_dsc)
+			self._showScreenshotOverlay(index)
 		return handler
 
-	def _showScreenshotOverlay(self, img_dsc):
+	def _showScreenshotOverlay(self, index):
+		self._currentScreenshotIndex = index
+
 		if self._overlay:
+			self._overlayImg.set_src(self._screenshotImages[index])
 			return
 
 		overlay = lv.obj(lv.layer_top())
@@ -183,7 +199,7 @@ class GameDetailsPage(GenericPage):
 
 		img = lv.image(overlay)
 		img.set_size(320, 240)
-		img.set_src(img_dsc)
+		img.set_src(self._screenshotImages[index])
 		try:
 			img.set_inner_align(lv.IMAGE_ALIGN.STRETCH)
 		except Exception:
@@ -191,18 +207,33 @@ class GameDetailsPage(GenericPage):
 		img.align(lv.ALIGN.CENTER, 0, 0)
 
 		self._overlay = overlay
+		self._overlayImg = img
 
 		overlay_group = lv.group_create()
 		overlay_group.add_obj(overlay)
 		indev1.set_group(overlay_group)
 
 		overlay.add_event_cb(self._closeOverlay, lv.EVENT.CLICKED, None)
-		overlay.add_event_cb(self._closeOverlay, lv.EVENT.KEY, None)
+		overlay.add_event_cb(self._onOverlayKey, lv.EVENT.KEY, None)
+
+	def _onOverlayKey(self, e):
+		key = e.get_key()
+		if key == lv.KEY.LEFT:
+			new = self._currentScreenshotIndex - 1
+			if new >= 0:
+				self._showScreenshotOverlay(new)
+		elif key == lv.KEY.RIGHT:
+			new = self._currentScreenshotIndex + 1
+			if new < len(self._screenshotImages):
+				self._showScreenshotOverlay(new)
+		else:
+			self._closeOverlay(e)
 
 	def _closeOverlay(self, e):
 		if self._overlay:
 			self._overlay.delete()
 			self._overlay = None
+			self._overlayImg = None
 			indev1.set_group(self.group)
 
 	# ── Helpers ───────────────────────────────────────────────────────────────

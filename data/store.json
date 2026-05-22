@@ -3,7 +3,8 @@
     "file_url": "https://github.com/daviel/pigo-games/releases/download/picowar-v0.2.1/picowar.zip",
     "tags": [
       "Strategy",
-      "godot"
+      "godot",
+      "RTS"
     ],
     "small_image": "/data/store/picowar.png",
     "dirname": "picowar",
